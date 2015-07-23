@@ -9,6 +9,7 @@ program
   .version(require('../package').version)
   .description('A simplified Browserify CLI')
   .arguments('<files...>')
+  // jscs:disable maximumLineLength
   .option('-o, --outfile <filespec>', 'The output file or directory. May include a filename pattern (e.g. "*.bundle.js")')
   .option('-u, --exclude <filespec>', 'File path or glob pattern to exclude')
   .option('-s, --standalone <name>', 'Export as a named UMD bundle')

@@ -11,7 +11,7 @@ describe('simplifyify --help', function() {
         return done(err);
       }
 
-      expect(stdout).to.match(/^Usage: simplifyify \[options\] \<files\.\.\.\>/);
+      expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
       helper.assert.noFilesWereCreated();
       done();
     });
@@ -23,7 +23,7 @@ describe('simplifyify --help', function() {
         return done(err);
       }
 
-      expect(stdout).to.match(/^Usage: simplifyify \[options\] \<files\.\.\.\>/);
+      expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
       helper.assert.noFilesWereCreated();
       done();
     });
@@ -35,7 +35,7 @@ describe('simplifyify --help', function() {
         return done(err);
       }
 
-      expect(stdout).to.match(/^Usage: simplifyify \[options\] \<files\.\.\.\>/);
+      expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
       helper.assert.noFilesWereCreated();
       done();
     });

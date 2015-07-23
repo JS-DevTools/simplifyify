@@ -1,0 +1,62 @@
+{
+  "name": "simplifyify",
+  "version": "1.0.0",
+  "description": "A simplified Browserify and Watchify CLI",
+  "keywords": [
+    "browserify",
+    "browserify-plugin",
+    "watchify",
+    "cli",
+    "minify",
+    "uglify",
+    "uglifyify",
+    "sourcemap",
+    "source-map",
+    "source map",
+    "exorcist",
+    "istanbul"
+  ],
+  "author": {
+    "name": "James Messinger",
+    "url": "http://jamesmessinger.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/BigstickCarpet/simplifyify",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "jshint . --verbose && jscs . --verbose",
+    "test": "mocha --bail --recursive tests",
+    "upgrade": "npm-check-updates -u && npm update",
+    "bump": "bump --prompt --tag --push --all",
+    "release": "npm run upgrade && npm run build && npm test && npm run bump && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BigstickCarpet/simplifyify.git"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.17",
+    "mocha": "^2.2.5",
+    "chai": "^3.2.0",
+    "sinon": "^1.15.4",
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0",
+    "npm-check-updates": "^1.5.1",
+    "version-bump-prompt": "^1.4.1",
+    "rimraf": "^2.4.2"
+  },
+  "dependencies": {
+    "browserify": "^11.0.0",
+    "browserify-istanbul": "^0.2.1",
+    "commander": "^2.8.1",
+    "exorcist": "^0.4.0",
+    "glob": "^5.0.14",
+    "mkdirp": "^0.5.1",
+    "touch": "^1.0.0",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.3.0"
+  },
+  "bin": {
+    "simplifyify": "bin/simplifyify.js"
+  }
+}

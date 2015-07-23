@@ -1,0 +1,8 @@
+**/*~
+**/._*
+**/.DS_Store
+npm-debug.log
+/.idea
+/.*
+/test-app
+/tests

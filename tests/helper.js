@@ -24,12 +24,15 @@ module.exports = {
 };
 
 beforeEach(function(done) {
-  // Clear the output directory before each test
-  rimraf(path.join(__dirname, '../test-app/dist'), done);
-
   // Increase the test timeout, since some tests have to allow time for multiple Browserify builds
   this.currentTest.timeout(5000);
   this.currentTest.slow(3000);
+
+  // Clear the output directory before each test
+  rimraf(path.join(__dirname, '../test-app/dist'), function() {
+    // Allow extra time for the file system to catch up
+    setTimeout(done, 500);
+  });
 });
 
 /**

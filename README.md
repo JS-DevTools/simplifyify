@@ -2,10 +2,11 @@ Simplifyify
 ============================
 #### A simplified Browserify and Watchify CLI
 
+[![Build Status](https://img.shields.io/travis/BigstickCarpet/simplifyify.svg)](https://travis-ci.org/BigstickCarpet/simplifyify)
+[![Codacy Score](http://img.shields.io/codacy/e7d74b7748674054be73556c87475c49.svg)](https://www.codacy.com/public/jamesmessinger/simplifyify)
 [![Code Climate Score](https://img.shields.io/codeclimate/github/BigstickCarpet/simplifyify.svg)](https://codeclimate.com/github/BigstickCarpet/simplifyify)
 [![Dependencies](https://img.shields.io/david/BigstickCarpet/simplifyify.svg)](https://david-dm.org/BigstickCarpet/simplifyify)
 [![Inline docs](http://inch-ci.org/github/BigstickCarpet/simplifyify.svg?branch=master&style=shields)](http://inch-ci.org/github/BigstickCarpet/simplifyify)
-[![Downloads](https://img.shields.io/npm/dm/simplifyify.svg)](https://www.npmjs.com/package/simplifyify)
 
 [![npm](http://img.shields.io/npm/v/simplifyify.svg)](https://www.npmjs.com/package/simplifyify)
 [![License](https://img.shields.io/npm/l/simplifyify.svg)](LICENSE)
@@ -16,7 +17,7 @@ Features
 --------------------------
 * Supports [globs](https://github.com/isaacs/node-glob#glob-primer), even on Windows
 * Builds separate Browserify bundles for each entry file
-* One command outputs all the files you need &mdash; unminified, minified, source maps, code coverage
+* One command outputs all the files you need &mdash; unminified, minified, source maps, coverage
 * Writes _external_ source-maps (`.map`) using [exorcist](https://www.npmjs.com/package/exorcist)
 * Outputs a minified copy of the bundle (`.min.js`) using [uglifyify](https://www.npmjs.com/package/uglifyify)
 * Outputs a test bundle with code-coverage instrumentation (`.test.js`) using [istanbul](https://www.npmjs.com/package/istanbul)

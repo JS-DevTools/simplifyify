@@ -5,7 +5,7 @@ var helper = require('./helper'),
 
 describe('simplifyify --test', function() {
   it('should add code-coverage to a single file', function(done) {
-    helper.run('"test-app/lib/index.js" --test --outfile test-app/dist/',
+    helper.run('test-app/lib/index.js --test --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -36,7 +36,7 @@ describe('simplifyify --test', function() {
   });
 
   it('should add code-coverage to multiple files', function(done) {
-    helper.run('"test-app/lib/**/index.js" --test --outfile test-app/dist/',
+    helper.run('test-app/lib/**/index.js --test --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -71,7 +71,7 @@ describe('simplifyify --test', function() {
   });
 
   it('should append ".test" when renaming output files', function(done) {
-    helper.run('"test-app/lib/**/*.js" --test --minify --debug --outfile test-app/dist/*.foo.es5',
+    helper.run('test-app/lib/**/*.js --test --minify --debug --outfile test-app/dist/*.foo.es5',
       function(err, stdout) {
         if (err) {
           return done(err);

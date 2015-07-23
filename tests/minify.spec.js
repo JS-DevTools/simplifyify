@@ -5,7 +5,7 @@ var helper = require('./helper'),
 
 describe('simplifyify --minify', function() {
   it('should minify a single file', function(done) {
-    helper.run('"test-app/lib/index.js" --minify --outfile test-app/dist/',
+    helper.run('test-app/lib/index.js --minify --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -36,7 +36,7 @@ describe('simplifyify --minify', function() {
   });
 
   it('should minify multiple files', function(done) {
-    helper.run('"test-app/lib/**/index.js" --minify --outfile test-app/dist/',
+    helper.run('test-app/lib/**/index.js --minify --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -71,7 +71,7 @@ describe('simplifyify --minify', function() {
   });
 
   it('should append ".min" when renaming output files', function(done) {
-    helper.run('"test-app/lib/**/*.js" --minify --outfile test-app/dist/*.foo.es5',
+    helper.run('test-app/lib/**/*.js --minify --outfile test-app/dist/*.foo.es5',
       function(err, stdout) {
         if (err) {
           return done(err);

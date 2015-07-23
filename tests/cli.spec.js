@@ -106,7 +106,7 @@ describe('failure tests', function() {
   });
 
   it('should error if all matching files are excluded', function(done) {
-    helper.run('"lib/**/*.js" --exclude "**/*.js" --outfile dist/', function(err, stdout, stderr) {
+    helper.run('"lib/**/*.js" --exclude **/*.js --outfile dist/', function(err, stdout, stderr) {
       expect(err).to.be.an.instanceOf(Error);
       expect(stderr).to.equal('No matching entry files were found');
       helper.assert.noFilesWereCreated();

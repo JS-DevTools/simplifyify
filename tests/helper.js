@@ -1,10 +1,11 @@
 'use strict';
 
-var exec   = require('child_process').exec,
-    rimraf = require('rimraf'),
-    fs     = require('fs'),
-    path   = require('path'),
-    expect = require('chai').expect;
+var spawn      = require('child_process').spawn,
+    rimraf    = require('rimraf'),
+    fs        = require('fs'),
+    path      = require('path'),
+    expect    = require('chai').expect,
+    isWindows = /^win/.test(process.platform);
 
 module.exports = {
   run: run,
@@ -29,10 +30,7 @@ beforeEach(function(done) {
   this.currentTest.slow(3000);
 
   // Clear the output directory before each test
-  rimraf(path.join(__dirname, '../test-app/dist'), function() {
-    // Allow extra time for the file system to catch up
-    setTimeout(done, 500);
-  });
+  rimraf(path.join(__dirname, '../test-app/dist'), done);
 });
 
 /**
@@ -43,17 +41,52 @@ beforeEach(function(done) {
  * @returns {ChildProcess}
  */
 function run(args, callback) {
-  // Run Simplifyify
-  return exec('node bin/simplifyify ' + args, function(err, stdout, stderr) {
-    stdout = stdout.toString().trim();
-    stderr = stderr.toString().trim();
+  var exited = false, stdout = '', stderr = '';
 
-    if (stderr && !err) {
-      console.warn('Simplifyify exited with 0, but also wrote to stderr.\n\n' + stderr);
+  // Run simplifyify
+  args = ['bin/simplifyify'].concat(args ? args.split(' ') : []);
+  var simplifyify = spawn('node', args);
+
+  // Capture stdout and stderr
+  simplifyify.stdout.on('data', function(data) {
+    stdout += data.toString();
+  });
+  simplifyify.stderr.on('data', function(data) {
+    stderr += data.toString();
+  });
+
+  // Handle exits (successful or failure)
+  simplifyify.on('exit', onExit);
+  simplifyify.on('error', onExit);
+
+  function onExit(code) {
+    // onExit can sometimes fire multiple times, so ignore duplicates
+    if (exited) {
+      return;
+    }
+    exited = true;
+
+    var err = null;
+    if (code > 0) {
+      err = new Error('Exit Code: ' + code);
+    }
+    else if (code === 0 && stderr) {
+      err = new Error('Simplifyify exited with 0, but also wrote to stderr.\n\n' + stderr);
+    }
+    else if (code instanceof Error) {
+      err = code;
     }
 
-    callback(err, stdout, stderr);
-  });
+    if (isWindows) {
+      // Replace Windows path separators with POSIX separators
+      stdout = stdout.replace(/\\/g, '/');
+      stderr = stderr.replace(/\\/g, '/');
+    }
+
+    callback(err, stdout.trim(), stderr.trim());
+  }
+
+  return simplifyify;
 }
 
 /**
@@ -66,8 +99,17 @@ function fileContents(files, fn) {
   files = Array.isArray(files) ? files : [files];
   files.forEach(function(file) {
     var contents = fs.readFileSync(path.join('test-app/dist', file)).toString();
+
     if (file.substr(-4) === '.map') {
+      // Parse source-map files, and return a POJO instead of a string
       contents = JSON.parse(contents);
+
+      if (isWindows) {
+        // Replace Windows path separators with POSIX separators
+        contents.sources = contents.sources.map(function(source) {
+          return source.replace(/\\/g, '/');
+        });
+      }
     }
     fn(contents);
   });
@@ -87,7 +129,7 @@ function ls(dir) {
       var fullName = path.join(dir, name);
       if (fs.statSync(fullName).isDirectory()) {
         ls(fullName).forEach(function(nested) {
-          contents.push(path.join(name, nested));
+          contents.push(name + '/' + nested);   // Don't use path.join() here, because of Windows
         });
       }
       else {
@@ -175,7 +217,12 @@ function isMinified(contents) {
  * @param {string} contents
  */
 function notMinified(contents) {
-  expect(contents).to.match(/'use strict';\n\s+/);
+  if (isWindows) {
+    expect(contents).to.match(/'use strict';\r\n\s+/);
+  }
+  else {
+    expect(contents).to.match(/'use strict';\n\s+/);
+  }
 }
 
 /**

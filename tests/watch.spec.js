@@ -7,13 +7,13 @@ var helper = require('./helper'),
 
 describe('simplifyify --watch', function() {
   it('should rebuild a single output file', function(done) {
-    this.timeout(20000);
+    this.timeout(10000);
 
     // Run Watchify
     var watchify = helper.run('test-app/lib/index.js --watch --outfile test-app/dist/my-file.js', onExit);
 
     // Check the initial outputs after a few seconds
-    setTimeout(firstCheck, 6000);
+    setTimeout(firstCheck, 3000);
 
     function firstCheck() {
       checkOutputFiles();
@@ -24,7 +24,7 @@ describe('simplifyify --watch', function() {
         touch('test-app/lib/say/index.js');
 
         // Check the outputs again after a few seconds
-        setTimeout(secondCheck, 6000);
+        setTimeout(secondCheck, 3000);
       });
     }
 
@@ -55,18 +55,18 @@ describe('simplifyify --watch', function() {
   });
 
   it('should rebuild multiple output files', function(done) {
-    this.timeout(20000);
+    this.timeout(10000);
 
     // Run Watchify
     // jscs:disable maximumLineLength
     var watchify = helper.run(
-      '"test-app/lib/**/*.js" --watch --debug --minify --test --standalone Fizz.Buzz --outfile test-app/dist/*.bundle.js',
+      'test-app/lib/**/*.js --watch --debug --minify --test --standalone Fizz.Buzz --outfile test-app/dist/*.bundle.js',
       onExit
     );
     // jscs:enable maximumLineLength
 
     // Check the initial outputs after a few seconds
-    setTimeout(firstCheck, 6000);
+    setTimeout(firstCheck, 3000);
 
     function firstCheck() {
       helper.assert.filesWereCreated([
@@ -135,7 +135,7 @@ describe('simplifyify --watch', function() {
         touch('test-app/lib/hello-world.js');
 
         // Check the outputs again after a few seconds
-        setTimeout(secondCheck, 6000);
+        setTimeout(secondCheck, 3000);
       });
     }
 

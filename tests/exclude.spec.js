@@ -5,7 +5,7 @@ var helper = require('./helper'),
 
 describe('simplifyify --exclude', function() {
   it('should not exclude anything if nothing matches', function(done) {
-    helper.run('"test-app/lib/**/*.js" --exclude "test-app/lib/**/*-foo.js" --outfile test-app/dist/',
+    helper.run('test-app/lib/**/*.js --exclude test-app/lib/**/*-foo.js --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -32,7 +32,7 @@ describe('simplifyify --exclude', function() {
   });
 
   it('should exclude a single file', function(done) {
-    helper.run('"test-app/lib/**/*.js" --exclude test-app/lib/say/index.js --outfile test-app/dist/',
+    helper.run('test-app/lib/**/*.js --exclude test-app/lib/say/index.js --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -58,7 +58,7 @@ describe('simplifyify --exclude', function() {
   });
 
   it('should exclude multiple files', function(done) {
-    helper.run('"test-app/lib/**/*.js" --exclude "test-app/lib/**/index.js" --outfile test-app/dist/',
+    helper.run('test-app/lib/**/*.js --exclude test-app/lib/**/index.js --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);

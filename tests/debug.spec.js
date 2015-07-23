@@ -38,7 +38,7 @@ describe('simplifyify --debug', function() {
   });
 
   it('should create source maps for multiple files', function(done) {
-    helper.run('"test-app/lib/**/*.js" --debug --outfile test-app/dist/',
+    helper.run('test-app/lib/**/*.js --debug --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -89,7 +89,7 @@ describe('simplifyify --debug', function() {
   });
 
   it('should create source maps for multiple minified files', function(done) {
-    helper.run('"test-app/lib/**/index.js" --debug --minify --outfile test-app/dist/',
+    helper.run('test-app/lib/**/index.js --debug --minify --outfile test-app/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -145,7 +145,7 @@ describe('simplifyify --debug', function() {
   });
 
   it('should append ".map" when renaming output files', function(done) {
-    helper.run('"test-app/lib/**/*.js" --debug --minify --outfile test-app/dist/*.bundle.es',
+    helper.run('test-app/lib/**/*.js --debug --minify --outfile test-app/dist/*.bundle.es',
       function(err, stdout) {
         if (err) {
           return done(err);

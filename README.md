@@ -2,10 +2,10 @@ Simplifyify
 ============================
 #### A simplified Browserify and Watchify CLI
 
-[![Build Status](https://img.shields.io/travis/BigstickCarpet/simplifyify.svg)](https://travis-ci.org/BigstickCarpet/simplifyify)
-[![Codacy Score](http://img.shields.io/codacy/e7d74b7748674054be73556c87475c49.svg)](https://www.codacy.com/public/jamesmessinger/simplifyify)
-[![Code Climate Score](https://img.shields.io/codeclimate/github/BigstickCarpet/simplifyify.svg)](https://codeclimate.com/github/BigstickCarpet/simplifyify)
-[![Dependencies](https://img.shields.io/david/BigstickCarpet/simplifyify.svg)](https://david-dm.org/BigstickCarpet/simplifyify)
+[![Build Status](https://api.travis-ci.org/BigstickCarpet/simplifyify.svg)](https://travis-ci.org/BigstickCarpet/simplifyify)
+[![Dependencies](https://david-dm.org/BigstickCarpet/simplifyify.svg)](https://david-dm.org/BigstickCarpet/simplifyify)
+[![Code Climate Score](https://codeclimate.com/github/BigstickCarpet/simplifyify/badges/gpa.svg)](https://codeclimate.com/github/BigstickCarpet/simplifyify)
+[![Codacy Score](https://www.codacy.com/project/badge/e7d74b7748674054be73556c87475c49)](https://www.codacy.com/public/jamesmessinger/simplifyify)
 [![Inline docs](http://inch-ci.org/github/BigstickCarpet/simplifyify.svg?branch=master&style=shields)](http://inch-ci.org/github/BigstickCarpet/simplifyify)
 
 [![npm](http://img.shields.io/npm/v/simplifyify.svg)](https://www.npmjs.com/package/simplifyify)

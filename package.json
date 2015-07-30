@@ -35,15 +35,15 @@
     "url": "https://github.com/BigstickCarpet/simplifyify.git"
   },
   "devDependencies": {
-    "istanbul": "^0.3.17",
-    "mocha": "^2.2.5",
     "chai": "^3.2.0",
-    "sinon": "^1.15.4",
-    "jscs": "^1.13.1",
+    "del": "^1.2.0",
+    "istanbul": "^0.3.17",
+    "jscs": "^2.0.0",
     "jshint": "^2.8.0",
-    "npm-check-updates": "^1.5.1",
-    "version-bump-prompt": "^1.4.1",
-    "rimraf": "^2.4.2"
+    "mocha": "^2.2.5",
+    "npm-check-updates": "^2.0.1",
+    "sinon": "^1.15.4",
+    "version-bump-prompt": "^1.4.1"
   },
   "dependencies": {
     "browserify": "^11.0.0",

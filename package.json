@@ -24,7 +24,8 @@
   "homepage": "https://github.com/BigstickCarpet/simplifyify",
   "main": "lib/index.js",
   "scripts": {
-    "build": "jshint . --verbose && jscs . --verbose",
+    "lint": "jshint . --verbose && jscs . --verbose",
+    "build": "npm run lint",
     "test": "mocha --bail --recursive tests",
     "upgrade": "ncu -u && npm update",
     "bump": "bump --prompt --tag --push --all",

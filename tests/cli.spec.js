@@ -78,15 +78,6 @@ describe('failure tests', function() {
     });
   });
 
-  it('should error if called without an outfile', function(done) {
-    helper.run('lib/index.js', function(err, stdout, stderr) {
-      expect(err).to.be.an.instanceOf(Error);
-      expect(stderr).to.equal('No output file/directory was specified');
-      helper.assert.noFilesWereCreated();
-      done();
-    });
-  });
-
   it('should error if the entry file does not exist', function(done) {
     helper.run('some/file/that/does/not/exist.js --outfile dist/', function(err, stdout, stderr) {
       expect(err).to.be.an.instanceOf(Error);

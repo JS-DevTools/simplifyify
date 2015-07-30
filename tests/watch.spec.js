@@ -2,7 +2,7 @@
 
 var helper = require('./helper'),
     expect = require('chai').expect,
-    rimraf = require('rimraf'),
+    del    = require('del'),
     touch  = require('touch');
 
 describe('simplifyify --watch', function() {
@@ -19,7 +19,7 @@ describe('simplifyify --watch', function() {
       checkOutputFiles();
 
       // Delete the output
-      rimraf('test-app/dist', function() {
+      del('test-app/dist', function() {
         // Touch a file, to trigger Watchify again
         touch('test-app/lib/say/index.js');
 
@@ -129,7 +129,7 @@ describe('simplifyify --watch', function() {
       });
 
       // Delete the output
-      rimraf('test-app/dist', function() {
+      del('test-app/dist', function() {
         // Touch a file, to trigger Watchify again
         // NOTE: Only two of the three entry files will be re-build, since the third doesn't reference this file
         touch('test-app/lib/hello-world.js');

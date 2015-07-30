@@ -1,7 +1,7 @@
 'use strict';
 
-var spawn      = require('child_process').spawn,
-    rimraf    = require('rimraf'),
+var spawn     = require('child_process').spawn,
+    del       = require('del'),
     fs        = require('fs'),
     path      = require('path'),
     expect    = require('chai').expect,
@@ -29,8 +29,13 @@ beforeEach(function(done) {
   this.currentTest.timeout(5000);
   this.currentTest.slow(3000);
 
-  // Clear the output directory before each test
-  rimraf(path.join(__dirname, '../test-app/dist'), done);
+  // Clear the output files before each test
+  del([
+      path.join(__dirname, '../test-app/dist'),
+      path.join(__dirname, '../test-app/lib/**/*.bundle.*')
+    ],
+    done
+  );
 });
 
 /**
@@ -159,10 +164,11 @@ function noFilesWereCreated() {
 /**
  * Asserts that the given files were created, and no others.
  *
- * @param {string[]} files
+ * @param {string[]}  files - The files to check for
+ * @param {string}    [dir] - The directory to check (defaults to "../test-app/dist")
  */
-function filesWereCreated(files) {
-  var outfiles = ls();
+function filesWereCreated(files, dir) {
+  var outfiles = ls(dir);
   expect(outfiles).to.have.same.members(files);
 }
 

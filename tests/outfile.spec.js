@@ -154,7 +154,7 @@ describe('simplifyify --outfile', function() {
           ],
           function(contents) {
             helper.assert.hasPreamble(contents);
-            helper.assert.isMinified(contents);
+            helper.assert.isMinified(contents, true);
             helper.assert.noSourceMap(contents);
             helper.assert.hasCoverage(contents);
           }

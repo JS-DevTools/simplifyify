@@ -211,10 +211,25 @@ function noSourceMap(contents) {
 /**
  * Asserts that the given file contents are minified
  *
- * @param {string} contents
+ * @param {string}  contents
+ * @param {boolean} stripComments - Whether the contents should include comments or not
  */
-function isMinified(contents) {
+function isMinified(contents, stripComments) {
+  // Single-quotes become double-quotes, and newline is removed
   expect(contents).to.match(/"use strict";\S+/);
+
+  if (stripComments) {
+    // All comments are removed
+    expect(contents).not.to.match(/\/\//);
+  }
+  else {
+    // Non-important comments are removed
+    expect(contents).not.to.match(/\* @param \{string\}/);
+    expect(contents).not.to.match(/\/\/ This is NOT an important comment/);
+
+    // Important comments are preserved
+    expect(contents).to.match(/This is an important comment/);
+  }
 }
 
 /**
@@ -223,12 +238,20 @@ function isMinified(contents) {
  * @param {string} contents
  */
 function notMinified(contents) {
+  // Single-quotes and newline are preserved
   if (isWindows) {
     expect(contents).to.match(/'use strict';\r\n\s+/);
   }
   else {
     expect(contents).to.match(/'use strict';\n\s+/);
   }
+
+  // Non-important comments are preserved
+  expect(contents).to.match(/\* @param \{string\}/);
+  expect(contents).to.match(/\/\/ This is NOT an important comment/);
+
+  // Important comments are also preserved
+  expect(contents).to.match(/This is an important comment/);
 }
 
 /**
@@ -237,6 +260,7 @@ function notMinified(contents) {
  * @param {string} contents
  */
 function hasCoverage(contents) {
+  // Check for __cov_ wrappers
   expect(contents).to.match(/__cov(_[a-zA-Z0-9$]+)+\.__coverage__/);
 }
 

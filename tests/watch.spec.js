@@ -104,7 +104,7 @@ describe('simplifyify --watch', function() {
       helper.fileContents(['index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'],
         function(contents) {
           helper.assert.hasUmdPreamble(contents);
-          helper.assert.isMinified(contents);
+          helper.assert.isMinified(contents, true);
           helper.assert.noSourceMap(contents);
           helper.assert.hasCoverage(contents);
         });
@@ -170,7 +170,7 @@ describe('simplifyify --watch', function() {
       helper.fileContents(['index.bundle.test.js', 'hello-world.bundle.test.js'],
         function(contents) {
           helper.assert.hasUmdPreamble(contents);
-          helper.assert.isMinified(contents);
+          helper.assert.isMinified(contents, true);
           helper.assert.noSourceMap(contents);
           helper.assert.hasCoverage(contents);
         });

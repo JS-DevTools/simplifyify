@@ -27,7 +27,7 @@ describe('simplifyify --test', function() {
         });
         helper.fileContents('index.test.js', function(contents) {
           helper.assert.hasPreamble(contents);
-          helper.assert.isMinified(contents);
+          helper.assert.isMinified(contents, true);
           helper.assert.noSourceMap(contents);
           helper.assert.hasCoverage(contents);
         });
@@ -62,7 +62,7 @@ describe('simplifyify --test', function() {
         });
         helper.fileContents(['index.test.js', 'say/index.test.js'], function(contents) {
           helper.assert.hasPreamble(contents);
-          helper.assert.isMinified(contents);
+          helper.assert.isMinified(contents, true);
           helper.assert.noSourceMap(contents);
           helper.assert.hasCoverage(contents);
         });
@@ -127,7 +127,7 @@ describe('simplifyify --test', function() {
         helper.fileContents(['index.foo.test.es5', 'hello-world.foo.test.es5', 'say/index.foo.test.es5'],
           function(contents) {
             helper.assert.hasPreamble(contents);
-            helper.assert.isMinified(contents);
+            helper.assert.isMinified(contents, true);
             helper.assert.noSourceMap(contents);
             helper.assert.hasCoverage(contents);
           });

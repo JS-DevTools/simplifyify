@@ -216,4 +216,26 @@ describe('simplifyify --watch', function() {
       done();
     }
   });
+
+  it('should report errors', function(done) {
+    this.timeout(10000);
+
+    // Run Watchify
+    var watchify = helper.run('test-app/error/error.js --watch --outfile test-app/dist/error.js', onExit);
+
+    // Check the initial outputs after a few seconds
+    setTimeout(firstCheck, 3000);
+
+    function firstCheck() {
+      watchify.kill();
+    }
+
+    // Verify the final results
+    function onExit(err, stdout, stderr) {
+      expect(stderr).to.be.ok;
+      done();
+    }
+
+  });
+
 });

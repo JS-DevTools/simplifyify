@@ -66,16 +66,18 @@ program
       })
       .on('error', function(err, fileSet) {
         // Log an error
-        var message = process.env.DEBUG ? err.stack : err.message;
-        if (fileSet && fileSet.entry) {
-          console.error('Error bundling %s\n%s', fileSet.entry, message);
+        if (fileSet && fileSet.entryFile) {
+          console.error('Error bundling %s\n%s', fileSet.entryFile, err);
         }
         else {
+          var message = process.env.DEBUG ? err.stack : err.message;
           console.error(message);
         }
 
         // Exit the app with an error code
-        process.exit(1);
+        if (!program.watch) {
+          process.exit(1);
+        }
       });
   });
 

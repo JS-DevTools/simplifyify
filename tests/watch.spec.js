@@ -223,19 +223,46 @@ describe('simplifyify --watch', function() {
     // Run Watchify
     var watchify = helper.run('test-app/error/error.js --watch --outfile test-app/dist/error.js', onExit);
 
-    // Check the initial outputs after a few seconds
+    // Check the outputs after a few seconds
     setTimeout(firstCheck, 3000);
 
     function firstCheck() {
+      checkOutputFiles();
+
+      // Delete the output
+      del('test-app/dist', function() {
+        // Touch a file, to trigger Watchify again
+        touch('test-app/error/error.js');
+
+        // Check the outputs again after a few seconds
+        setTimeout(secondCheck, 3000);
+      });
+    }
+
+    function secondCheck() {
+      checkOutputFiles();
       watchify.kill();
     }
 
     // Verify the final results
     function onExit(err, stdout, stderr) {
-      expect(stderr).to.be.ok;
+      expect(stderr).to.match(/^Error bundling test-app\/error\/error.js\n/); // Error message
+      expect(stderr).to.contain('console.log(\'this is an error\'))');        // Stack trace
+      expect(stdout).to.equal('');
       done();
     }
 
+    function checkOutputFiles() {
+      // The output file should be created, even though an error occurred
+      helper.assert.filesWereCreated(['error.js']);
+
+      // The output file should be empty
+      helper.fileContents('error.js', function(contents) {
+        expect(contents).to.equal('');
+      });
+
+      watchify.kill();
+    }
   });
 
 });

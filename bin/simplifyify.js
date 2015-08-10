@@ -58,7 +58,7 @@ program
         console.log(msg);
       })
       .on('end', function(fileSet) {
-        // Log the output files that were writen
+        // Log the output files that were written
         console.log('%s --> %s', fileSet.entryFile, fileSet.outputFile);
         if (fileSet.mapFile) {
           console.log('%s --> %s', fileSet.entryFile, fileSet.mapFile);
@@ -74,7 +74,8 @@ program
           console.error(message);
         }
 
-        // Exit the app with an error code
+        // Exit the app with an error code,
+        // unless we're in "Watchify" mode, in which case, we just keep watching
         if (!program.watch) {
           process.exit(1);
         }

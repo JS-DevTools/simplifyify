@@ -24,10 +24,11 @@
   "homepage": "https://github.com/BigstickCarpet/simplifyify",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "jshint . --verbose && jscs . --verbose",
+    "lint": "eslint lib && jscs lib --verbose",
     "build": "npm run lint",
-    "test": "istanbul cover _mocha -- --bail --recursive tests",
-    "mocha": "mocha --bail --recursive tests",
+    "mocha": "mocha --bail --recursive tests/fixtures tests/specs",
+    "istanbul": "istanbul cover _mocha --dir coverage/node -- --bail --recursive tests/fixtures tests/specs",
+    "test": "npm run istanbul",
     "upgrade": "ncu --upgradeAll && npm update",
     "bump": "bump --prompt --tag --push --all",
     "release": "npm run upgrade && npm run build && npm test && npm run bump && npm publish"
@@ -37,27 +38,27 @@
     "url": "https://github.com/BigstickCarpet/simplifyify.git"
   },
   "devDependencies": {
-    "istanbul": "^0.3.17",
-    "coveralls": "^2.11.3",
-    "mocha": "^2.2.5",
-    "chai": "^3.2.0",
-    "sinon": "^1.15.4",
-    "jscs": "^2.0.0",
-    "jshint": "^2.8.0",
-    "npm-check-updates": "^2.2.0",
-    "version-bump-prompt": "^1.5.0",
-    "del": "^1.2.0"
+    "istanbul": "^0.4.0",
+    "coveralls": "^2.11.4",
+    "mocha": "^2.3.3",
+    "chai": "^3.4.1",
+    "sinon": "^1.17.2",
+    "jscs": "^2.5.1",
+    "eslint": "^1.9.0",
+    "npm-check-updates": "^2.4.1",
+    "version-bump-prompt": "^1.5.2",
+    "del": "^2.0.2"
   },
   "dependencies": {
-    "browserify": "^11.0.1",
+    "browserify": "^12.0.1",
     "browserify-istanbul": "^0.2.1",
-    "commander": "^2.8.1",
+    "commander": "^2.9.0",
     "exorcist": "^0.4.0",
-    "glob": "^5.0.14",
+    "glob": "^5.0.15",
     "mkdirp": "^0.5.1",
     "touch": "^1.0.0",
     "uglifyify": "^3.0.1",
-    "watchify": "^3.3.1"
+    "watchify": "^3.6.0"
   },
   "bin": {
     "simplifyify": "bin/simplifyify.js"

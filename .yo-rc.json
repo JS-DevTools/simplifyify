@@ -7,6 +7,8 @@
       "cordova": false
     },
     "githubUsername": "BigstickCarpet",
-    "tests": true
+    "tests": true,
+    "cli": true,
+    "es6": false
   }
 }

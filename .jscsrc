@@ -82,7 +82,6 @@
     "checkRedundantAccess": "enforceLeadingUnderscore",
     "leadingUnderscoreAccess": true,
     "requireHyphenBeforeDescription": true,
-    "requireNewlineAfterDescription": true,
-    "requireParamDescription": true
+    "requireNewlineAfterDescription": true
   }
 }

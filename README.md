@@ -113,6 +113,34 @@ dist/module-two.bundle.min.js.map
 ```
 
 
+API
+--------------------------
+Simplifyify also has a programmatic API, so you can use it directly in your build scripts (Gulp, Grunt, Broccoli, etc.)
+
+[Here's the API definition](https://github.com/BigstickCarpet/simplifyify/blob/eba983197e0512619c8818b53f7752e795b42b0b/lib/index.js#L9-L28), and [here's a full example](https://github.com/BigstickCarpet/simplifyify/blob/ce6b47b94f524ed9e66396fb3b5b951b655328ad/bin/simplifyify.js#L51-L75). Just pass an array of strings (file paths and/or glob patterns) and an options param.  You get back an [`EventEmitter`](https://nodejs.org/api/events.html#events_class_events_eventemitter), which fires all the Browserify &amp; Watchify events.
+
+```javascript
+var simplifyify = require("simplifyify");
+
+gulp.task("browserify", function(done) {
+  simplifyify("lib/*.module.js",
+    {
+        outfile: "dist/*.bundle.js",
+        debug: true,
+        minify: true
+    })
+    .on("end", function() {
+        // Finished successfully!
+        done();
+    })
+    .on("error", function(err) {
+        // Something went wrong
+        done(err);
+    });
+});
+```
+
+
 Contributing
 --------------------------
 I welcome any contributions, enhancements, and bug-fixes.  [File an issue](https://github.com/BigstickCarpet/simplifyify/issues) on GitHub and [submit a pull request](https://github.com/BigstickCarpet/simplifyify/pulls).
@@ -137,3 +165,4 @@ To build the project locally on your computer:
 License
 --------------------------
 Simplifyify is 100% free and open-source, under the [MIT license](LICENSE). Use it however you want.
+I

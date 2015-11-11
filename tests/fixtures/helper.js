@@ -235,12 +235,7 @@ function isMinified(contents, stripComments) {
  */
 function notMinified(contents) {
   // Single-quotes and newline are preserved
-  if (isWindows) {
-    expect(contents).to.match(/'use strict';\r\n\s+/);
-  }
-  else {
-    expect(contents).to.match(/'use strict';\n\s+/);
-  }
+  expect(contents).to.match(/'use strict';\r?\n\s+/);
 
   // Non-important comments are preserved
   expect(contents).to.match(/\* @param \{string\}/);

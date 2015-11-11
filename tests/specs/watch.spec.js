@@ -6,14 +6,21 @@ var helper = require('../fixtures/helper'),
     touch  = require('touch');
 
 describe('simplifyify --watch', function() {
-  it('should rebuild a single output file', function(done) {
-    this.timeout(10000);
+  var waitForBrowserify;
 
+  beforeEach(function() {
+    // Increase the test timeouts to allow sufficient time for multiple Browserify builds
+    var isSlowEnvironment = !!process.env.CI;
+    this.currentTest.timeout(isSlowEnvironment ? 35000 : 10000);
+    waitForBrowserify = isSlowEnvironment ? 12000 : 4000;
+  });
+
+  it('should rebuild a single output file', function(done) {
     // Run Watchify
     var watchify = helper.run('test-app/lib/index.js --watch --outfile test-app/dist/my-file.js', onExit);
 
     // Check the initial outputs after a few seconds
-    setTimeout(firstCheck, 3000);
+    setTimeout(firstCheck, waitForBrowserify);
 
     function firstCheck() {
       checkOutputFiles();
@@ -25,7 +32,7 @@ describe('simplifyify --watch', function() {
           touch('test-app/lib/say/index.js');
 
           // Check the outputs again after a few seconds
-          setTimeout(secondCheck, 3000);
+          setTimeout(secondCheck, waitForBrowserify);
         })
         .catch(done);
     }
@@ -57,8 +64,6 @@ describe('simplifyify --watch', function() {
   });
 
   it('should rebuild multiple output files', function(done) {
-    this.timeout(10000);
-
     // Run Watchify
     // jscs:disable maximumLineLength
     var watchify = helper.run(
@@ -68,7 +73,7 @@ describe('simplifyify --watch', function() {
     // jscs:enable maximumLineLength
 
     // Check the initial outputs after a few seconds
-    setTimeout(firstCheck, 3000);
+    setTimeout(firstCheck, waitForBrowserify);
 
     function firstCheck() {
       helper.assert.filesWereCreated([
@@ -138,7 +143,7 @@ describe('simplifyify --watch', function() {
           touch('test-app/lib/hello-world.js');
 
           // Check the outputs again after a few seconds
-          setTimeout(secondCheck, 3000);
+          setTimeout(secondCheck, waitForBrowserify);
         })
         .catch(done);
     }
@@ -222,13 +227,11 @@ describe('simplifyify --watch', function() {
   });
 
   it('should report errors', function(done) {
-    this.timeout(10000);
-
     // Run Watchify
     var watchify = helper.run('test-app/error/error.js --watch --outfile test-app/dist/error.js', onExit);
 
     // Check the outputs after a few seconds
-    setTimeout(firstCheck, 3000);
+    setTimeout(firstCheck, waitForBrowserify);
 
     function firstCheck() {
       checkOutputFiles();
@@ -240,7 +243,7 @@ describe('simplifyify --watch', function() {
           touch('test-app/error/error.js');
 
           // Check the outputs again after a few seconds
-          setTimeout(secondCheck, 3000);
+          setTimeout(secondCheck, waitForBrowserify);
         })
         .catch(done);
     }

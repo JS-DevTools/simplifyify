@@ -1,11 +1,12 @@
 'use strict';
 
-var spawn     = require('child_process').spawn,
-    del       = require('del'),
-    fs        = require('fs'),
-    path      = require('path'),
-    expect    = require('chai').expect,
-    isWindows = /^win/.test(process.platform);
+var spawn      = require('child_process').spawn,
+    del        = require('del'),
+    fs         = require('fs'),
+    path       = require('path'),
+    expect     = require('chai').expect,
+    isWindows  = /^win/.test(process.platform),
+    testAppDir = path.join(__dirname, '..', '..', 'test-app');
 
 module.exports = {
   run: run,
@@ -25,17 +26,12 @@ module.exports = {
 };
 
 beforeEach(function(done) {
-  // Increase the test timeout, since some tests have to allow time for multiple Browserify builds
-  this.currentTest.timeout(5000);
-  this.currentTest.slow(3000);
-
   // Clear the output files before each test
-  del([
-      path.join(__dirname, '../test-app/dist'),
-      path.join(__dirname, '../test-app/lib/**/*.bundle.*')
-    ],
-    done
-  );
+  del(['dist', 'lib/**/*.bundle.*'], {cwd: testAppDir})
+    .then(function() {
+      done();
+    })
+    .catch(done);
 });
 
 /**
@@ -129,7 +125,7 @@ function ls(dir) {
   try {
     var contents = [];
 
-    dir = dir || path.join(__dirname, '../test-app/dist');
+    dir = dir || path.join(testAppDir, 'dist');
     fs.readdirSync(dir).forEach(function(name) {
       var fullName = path.join(dir, name);
       if (fs.statSync(fullName).isDirectory()) {

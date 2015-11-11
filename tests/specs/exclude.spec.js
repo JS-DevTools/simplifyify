@@ -1,6 +1,6 @@
 'use strict';
 
-var helper = require('./helper'),
+var helper = require('../fixtures/helper'),
     expect = require('chai').expect;
 
 describe('simplifyify --exclude', function() {

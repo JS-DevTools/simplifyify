@@ -1,16 +1,13 @@
 'use strict';
 
-var helper  = require('./helper'),
+var helper  = require('../fixtures/helper'),
     expect  = require('chai').expect,
-    version = require('../package').version;
+    version = require('../../package').version;
 
 describe('simplifyify --help', function() {
   it('should show help if called without any args', function(done) {
     helper.run('', function(err, stdout) {
-      if (err) {
-        return done(err);
-      }
-
+      expect(err).to.be.an.instanceOf(Error);
       expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
       helper.assert.noFilesWereCreated();
       done();
@@ -19,10 +16,7 @@ describe('simplifyify --help', function() {
 
   it('should show help if called --help', function(done) {
     helper.run('--help', function(err, stdout) {
-      if (err) {
-        return done(err);
-      }
-
+      expect(err).to.be.an.instanceOf(Error);
       expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
       helper.assert.noFilesWereCreated();
       done();
@@ -31,10 +25,7 @@ describe('simplifyify --help', function() {
 
   it('should show help if called -h', function(done) {
     helper.run('--help', function(err, stdout) {
-      if (err) {
-        return done(err);
-      }
-
+      expect(err).to.be.an.instanceOf(Error);
       expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
       helper.assert.noFilesWereCreated();
       done();

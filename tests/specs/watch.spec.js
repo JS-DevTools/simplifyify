@@ -1,6 +1,6 @@
 'use strict';
 
-var helper = require('./helper'),
+var helper = require('../fixtures/helper'),
     expect = require('chai').expect,
     del    = require('del'),
     touch  = require('touch');
@@ -19,13 +19,15 @@ describe('simplifyify --watch', function() {
       checkOutputFiles();
 
       // Delete the output
-      del('test-app/dist', function() {
-        // Touch a file, to trigger Watchify again
-        touch('test-app/lib/say/index.js');
+      del('test-app/dist')
+        .then(function() {
+          // Touch a file, to trigger Watchify again
+          touch('test-app/lib/say/index.js');
 
-        // Check the outputs again after a few seconds
-        setTimeout(secondCheck, 3000);
-      });
+          // Check the outputs again after a few seconds
+          setTimeout(secondCheck, 3000);
+        })
+        .catch(done);
     }
 
     function secondCheck() {
@@ -129,14 +131,16 @@ describe('simplifyify --watch', function() {
       });
 
       // Delete the output
-      del('test-app/dist', function() {
-        // Touch a file, to trigger Watchify again
-        // NOTE: Only two of the three entry files will be re-build, since the third doesn't reference this file
-        touch('test-app/lib/hello-world.js');
+      del('test-app/dist')
+        .then(function() {
+          // Touch a file, to trigger Watchify again
+          // NOTE: Only two of the three entry files will be re-build, since the third doesn't reference this file
+          touch('test-app/lib/hello-world.js');
 
-        // Check the outputs again after a few seconds
-        setTimeout(secondCheck, 3000);
-      });
+          // Check the outputs again after a few seconds
+          setTimeout(secondCheck, 3000);
+        })
+        .catch(done);
     }
 
     function secondCheck() {
@@ -230,13 +234,15 @@ describe('simplifyify --watch', function() {
       checkOutputFiles();
 
       // Delete the output
-      del('test-app/dist', function() {
-        // Touch a file, to trigger Watchify again
-        touch('test-app/error/error.js');
+      del('test-app/dist')
+        .then(function() {
+          // Touch a file, to trigger Watchify again
+          touch('test-app/error/error.js');
 
-        // Check the outputs again after a few seconds
-        setTimeout(secondCheck, 3000);
-      });
+          // Check the outputs again after a few seconds
+          setTimeout(secondCheck, 3000);
+        })
+        .catch(done);
     }
 
     function secondCheck() {

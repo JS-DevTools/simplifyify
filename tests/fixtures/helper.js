@@ -154,7 +154,13 @@ function ls(dir) {
  */
 function noFilesWereCreated() {
   var outfiles = ls();
-  expect(outfiles).to.have.same.members([]);
+  try {
+    expect(outfiles).to.have.same.members([]);
+  }
+  catch (e) {
+    console.error('Expected: []\n\nActual: %s', JSON.stringify(outfiles, null, 2));
+    throw e;
+  }
 }
 
 /**
@@ -165,7 +171,14 @@ function noFilesWereCreated() {
  */
 function filesWereCreated(files, dir) {
   var outfiles = ls(dir);
-  expect(outfiles).to.have.same.members(files);
+  try {
+    expect(outfiles).to.have.same.members(files);
+  }
+  catch (e) {
+    console.error('Expected: %s\n\nActual: %s',
+      JSON.stringify(files, null, 2), JSON.stringify(outfiles, null, 2));
+    throw e;
+  }
 }
 
 /**

@@ -1,82 +1,83 @@
 'use strict';
 
-var helper = require('../fixtures/helper'),
+var cli    = require('../fixtures/cli'),
+    assert = require('../fixtures/assert'),
     expect = require('chai').expect;
 
 describe('simplifyify --exclude', function() {
   it('should not exclude anything if nothing matches', function(done) {
-    helper.run('test-app/lib/**/*.js --exclude test-app/lib/**/*-foo.js --outfile test-app/dist/',
+    cli.run('es5/lib/**/*.js --exclude es5/lib/**/*-foo.js --outfile es5/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
         }
 
-        expect(stdout).to.contain('test-app/lib/index.js --> test-app/dist/index.js');
-        expect(stdout).to.contain('test-app/lib/hello-world.js --> test-app/dist/hello-world.js');
-        expect(stdout).to.contain('test-app/lib/say/index.js --> test-app/dist/say/index.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.js');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.js');
 
-        helper.assert.filesWereCreated([
+        assert.directoryContents('es5/dist', [
           'index.js',
           'hello-world.js',
           'say/index.js'
         ]);
 
-        helper.fileContents(['index.js', 'hello-world.js', 'say/index.js'], function(contents) {
-          helper.assert.hasPreamble(contents);
-          helper.assert.notMinified(contents);
-          helper.assert.noSourceMap(contents);
-          helper.assert.noCoverage(contents);
+        assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], function(contents) {
+          assert.hasPreamble(contents);
+          assert.notMinified(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
         });
         done();
       });
   });
 
   it('should exclude a single file', function(done) {
-    helper.run('test-app/lib/**/*.js --exclude test-app/lib/say/index.js --outfile test-app/dist/',
+    cli.run('es5/lib/**/*.js --exclude es5/lib/say/index.js --outfile es5/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
         }
 
-        expect(stdout).to.contain('test-app/lib/index.js --> test-app/dist/index.js');
-        expect(stdout).to.contain('test-app/lib/hello-world.js --> test-app/dist/hello-world.js');
-        expect(stdout).not.to.contain('test-app/lib/say/index.js --> test-app/dist/say/index.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.js');
+        expect(stdout).not.to.contain('es5/lib/say/index.js --> es5/dist/say/index.js');
 
-        helper.assert.filesWereCreated([
+        assert.directoryContents('es5/dist', [
           'index.js',
           'hello-world.js'
         ]);
 
-        helper.fileContents(['index.js', 'hello-world.js'], function(contents) {
-          helper.assert.hasPreamble(contents);
-          helper.assert.notMinified(contents);
-          helper.assert.noSourceMap(contents);
-          helper.assert.noCoverage(contents);
+        assert.fileContents('es5/dist', ['index.js', 'hello-world.js'], function(contents) {
+          assert.hasPreamble(contents);
+          assert.notMinified(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
         });
         done();
       });
   });
 
   it('should exclude multiple files', function(done) {
-    helper.run('test-app/lib/**/*.js --exclude test-app/lib/**/index.js --outfile test-app/dist/',
+    cli.run('es5/lib/**/*.js --exclude es5/lib/**/index.js --outfile es5/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
         }
 
-        expect(stdout).to.contain('test-app/lib/hello-world.js --> test-app/dist/hello-world.js');
-        expect(stdout).not.to.contain('test-app/lib/index.js --> test-app/dist/index.js');
-        expect(stdout).not.to.contain('test-app/lib/say/index.js --> test-app/dist/say/index.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.js');
+        expect(stdout).not.to.contain('es5/lib/index.js --> es5/dist/index.js');
+        expect(stdout).not.to.contain('es5/lib/say/index.js --> es5/dist/say/index.js');
 
-        helper.assert.filesWereCreated([
+        assert.directoryContents('es5/dist', [
           'hello-world.js'
         ]);
 
-        helper.fileContents(['hello-world.js'], function(contents) {
-          helper.assert.hasPreamble(contents);
-          helper.assert.notMinified(contents);
-          helper.assert.noSourceMap(contents);
-          helper.assert.noCoverage(contents);
+        assert.fileContents('es5/dist', ['hello-world.js'], function(contents) {
+          assert.hasPreamble(contents);
+          assert.notMinified(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
         });
         done();
       });

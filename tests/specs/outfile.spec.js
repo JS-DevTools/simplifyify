@@ -1,64 +1,65 @@
 'use strict';
 
-var helper = require('../fixtures/helper'),
+var cli    = require('../fixtures/cli'),
+    assert = require('../fixtures/assert'),
     expect = require('chai').expect;
 
 describe('simplifyify --outfile', function() {
   it('should create a single output file, with the an explicit name', function(done) {
-    helper.run('test-app/lib/index.js --outfile test-app/dist/my-file.js', function(err, stdout) {
+    cli.run('es5/lib/index.js --outfile es5/dist/my-file.js', function(err, stdout) {
       if (err) {
         return done(err);
       }
 
-      expect(stdout).to.equal('test-app/lib/index.js --> test-app/dist/my-file.js');
+      expect(stdout).to.equal('es5/lib/index.js --> es5/dist/my-file.js');
 
-      helper.assert.filesWereCreated(['my-file.js']);
+      assert.directoryContents('es5/dist', 'my-file.js');
 
-      helper.fileContents('my-file.js', function(contents) {
-        helper.assert.hasPreamble(contents);
-        helper.assert.notMinified(contents);
-        helper.assert.noSourceMap(contents);
-        helper.assert.noCoverage(contents);
+      assert.fileContents('es5/dist/my-file.js', function(contents) {
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
       });
       done();
     });
   });
 
   it('should create a single output file, with the entry file name', function(done) {
-    helper.run('test-app/lib/index.js --outfile test-app/dist', function(err, stdout) {
+    cli.run('es5/lib/index.js --outfile es5/dist', function(err, stdout) {
       if (err) {
         return done(err);
       }
 
-      expect(stdout).to.equal('test-app/lib/index.js --> test-app/dist/index.js');
+      expect(stdout).to.equal('es5/lib/index.js --> es5/dist/index.js');
 
-      helper.assert.filesWereCreated(['index.js']);
+      assert.directoryContents('es5/dist', 'index.js');
 
-      helper.fileContents('index.js', function(contents) {
-        helper.assert.hasPreamble(contents);
-        helper.assert.notMinified(contents);
-        helper.assert.noSourceMap(contents);
-        helper.assert.noCoverage(contents);
+      assert.fileContents('es5/dist/index.js', function(contents) {
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
       });
       done();
     });
   });
 
   it('should create a single output file, with the patterned file name', function(done) {
-    helper.run('test-app/lib/index.js --outfile test-app/dist/*.foo-bar.es6', function(err, stdout) {
+    cli.run('es5/lib/index.js --outfile es5/dist/*.foo-bar.es6', function(err, stdout) {
       if (err) {
         return done(err);
       }
 
-      expect(stdout).to.equal('test-app/lib/index.js --> test-app/dist/index.foo-bar.es6');
+      expect(stdout).to.equal('es5/lib/index.js --> es5/dist/index.foo-bar.es6');
 
-      helper.assert.filesWereCreated(['index.foo-bar.es6']);
+      assert.directoryContents('es5/dist', 'index.foo-bar.es6');
 
-      helper.fileContents('index.foo-bar.es6', function(contents) {
-        helper.assert.hasPreamble(contents);
-        helper.assert.notMinified(contents);
-        helper.assert.noSourceMap(contents);
-        helper.assert.noCoverage(contents);
+      assert.fileContents('es5/dist/index.foo-bar.es6', function(contents) {
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
       });
       done();
     });
@@ -66,50 +67,51 @@ describe('simplifyify --outfile', function() {
 
   describe('no --outfile specified', function() {
     it('should create a single output file, in the entry file directory', function(done) {
-      helper.run('test-app/lib/index.js', function(err, stdout) {
+      cli.run('es5/lib/index.js', function(err, stdout) {
         if (err) {
           return done(err);
         }
 
-        expect(stdout).to.equal('test-app/lib/index.js --> test-app/lib/index.bundle.js');
+        expect(stdout).to.equal('es5/lib/index.js --> es5/lib/index.bundle.js');
 
         var filesThatAlreadyExisted = ['hello-world.js', 'index.js', 'say/index.js'];
-        helper.assert.filesWereCreated(['index.bundle.js'].concat(filesThatAlreadyExisted), 'test-app/lib');
+        assert.directoryContents('es5/lib',
+          ['index.bundle.js'].concat(filesThatAlreadyExisted));
 
-        helper.fileContents('../lib/index.bundle.js', function(contents) {
-          helper.assert.hasPreamble(contents);
-          helper.assert.notMinified(contents);
-          helper.assert.noSourceMap(contents);
-          helper.assert.noCoverage(contents);
+        assert.fileContents('es5/lib/index.bundle.js', function(contents) {
+          assert.hasPreamble(contents);
+          assert.notMinified(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
         });
         done();
       });
     });
 
     it('should create a multiple output files, in the entry file directories', function(done) {
-      helper.run('test-app/lib/**/*.js --debug --minify --test', function(err, stdout) {
+      cli.run('es5/lib/**/*.js --debug --minify --test', function(err, stdout) {
         if (err) {
           return done(err);
         }
 
-        expect(stdout).to.contain('test-app/lib/index.js --> test-app/lib/index.bundle.js');
-        expect(stdout).to.contain('test-app/lib/index.js --> test-app/lib/index.bundle.js.map');
-        expect(stdout).to.contain('test-app/lib/index.js --> test-app/lib/index.bundle.min.js');
-        expect(stdout).to.contain('test-app/lib/index.js --> test-app/lib/index.bundle.min.js.map');
-        expect(stdout).to.contain('test-app/lib/index.js --> test-app/lib/index.bundle.test.js');
-        expect(stdout).to.contain('test-app/lib/hello-world.js --> test-app/lib/hello-world.bundle.js');
-        expect(stdout).to.contain('test-app/lib/hello-world.js --> test-app/lib/hello-world.bundle.js.map');
-        expect(stdout).to.contain('test-app/lib/hello-world.js --> test-app/lib/hello-world.bundle.min.js');
-        expect(stdout).to.contain('test-app/lib/hello-world.js --> test-app/lib/hello-world.bundle.min.js.map');
-        expect(stdout).to.contain('test-app/lib/hello-world.js --> test-app/lib/hello-world.bundle.test.js');
-        expect(stdout).to.contain('test-app/lib/say/index.js --> test-app/lib/say/index.bundle.js');
-        expect(stdout).to.contain('test-app/lib/say/index.js --> test-app/lib/say/index.bundle.js.map');
-        expect(stdout).to.contain('test-app/lib/say/index.js --> test-app/lib/say/index.bundle.min.js');
-        expect(stdout).to.contain('test-app/lib/say/index.js --> test-app/lib/say/index.bundle.min.js.map');
-        expect(stdout).to.contain('test-app/lib/say/index.js --> test-app/lib/say/index.bundle.test.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.js.map');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.min.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.min.js.map');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.test.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.js.map');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.min.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.min.js.map');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.test.js');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.js');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.js.map');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.min.js');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.min.js.map');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.test.js');
 
         var filesThatAlreadyExisted = ['hello-world.js', 'index.js', 'say/index.js'];
-        helper.assert.filesWereCreated([
+        assert.directoryContents('es5/lib', [
             'index.bundle.js',
             'index.bundle.js.map',
             'index.bundle.min.js',
@@ -125,42 +127,41 @@ describe('simplifyify --outfile', function() {
             'say/index.bundle.min.js',
             'say/index.bundle.min.js.map',
             'say/index.bundle.test.js'
-          ].concat(filesThatAlreadyExisted),
-          'test-app/lib'
+          ].concat(filesThatAlreadyExisted)
         );
 
-        helper.fileContents([
-            '../lib/index.bundle.js', '../lib/hello-world.bundle.js', '../lib/say/index.bundle.js'
+        assert.fileContents('es5/lib', [
+            'index.bundle.js', 'hello-world.bundle.js', 'say/index.bundle.js'
           ],
           function(contents) {
-            helper.assert.hasPreamble(contents);
-            helper.assert.notMinified(contents);
-            helper.assert.hasSourceMap(contents);
-            helper.assert.noCoverage(contents);
+            assert.hasPreamble(contents);
+            assert.notMinified(contents);
+            assert.hasSourceMap(contents);
+            assert.noCoverage(contents);
           }
         );
-        helper.fileContents([
-            '../lib/index.bundle.min.js', '../lib/hello-world.bundle.min.js', '../lib/say/index.bundle.min.js'
+        assert.fileContents('es5/lib', [
+            'index.bundle.min.js', 'hello-world.bundle.min.js', 'say/index.bundle.min.js'
           ],
           function(contents) {
-            helper.assert.hasPreamble(contents);
-            helper.assert.isMinified(contents);
-            helper.assert.hasSourceMap(contents);
-            helper.assert.noCoverage(contents);
+            assert.hasPreamble(contents);
+            assert.isMinified(contents);
+            assert.hasSourceMap(contents);
+            assert.noCoverage(contents);
           }
         );
-        helper.fileContents([
-            '../lib/index.bundle.test.js', '../lib/hello-world.bundle.test.js', '../lib/say/index.bundle.test.js'
+        assert.fileContents('es5/lib', [
+            'index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'
           ],
           function(contents) {
-            helper.assert.hasPreamble(contents);
-            helper.assert.isMinified(contents, true);
-            helper.assert.noSourceMap(contents);
-            helper.assert.hasCoverage(contents);
+            assert.hasPreamble(contents);
+            assert.isMinified(contents, true);
+            assert.noSourceMap(contents);
+            assert.hasCoverage(contents);
           }
         );
 
-        helper.fileContents(['../lib/index.bundle.js.map', '../lib/index.bundle.min.js.map'],
+        assert.fileContents('es5/lib', ['index.bundle.js.map', 'index.bundle.min.js.map'],
           function(contents) {
             expect(contents.sources).to.contain.members([
               'hello-world.js',
@@ -169,7 +170,7 @@ describe('simplifyify --outfile', function() {
             ]);
           }
         );
-        helper.fileContents(['../lib/hello-world.bundle.js.map', '../lib/hello-world.bundle.min.js.map'],
+        assert.fileContents('es5/lib', ['hello-world.bundle.js.map', 'hello-world.bundle.min.js.map'],
           function(contents) {
             expect(contents.sources).to.contain.members([
               'hello-world.js',
@@ -177,7 +178,7 @@ describe('simplifyify --outfile', function() {
             ]);
           }
         );
-        helper.fileContents(['../lib/say/index.bundle.js.map', '../lib/say/index.bundle.min.js.map'],
+        assert.fileContents('es5/lib', ['say/index.bundle.js.map', 'say/index.bundle.min.js.map'],
           function(contents) {
             expect(contents.sources).to.contain.members([
               'index.js'

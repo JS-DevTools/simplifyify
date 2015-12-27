@@ -1,8 +1,7 @@
 {
   "excludeFiles": [
     "node_modules/**",
-    "test-app/dist/**",
-    "test-app/error/**",
+    "tests/test-apps/**",
     "tests/**"
   ],
   "requireCurlyBraces": [

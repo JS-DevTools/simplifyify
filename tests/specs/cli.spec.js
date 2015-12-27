@@ -14,20 +14,40 @@ describe('simplifyify --help', function() {
     });
   });
 
-  it('should show help if called --help', function(done) {
-    helper.run('--help', function(err, stdout) {
+  it('should exit with a nonzero if called without any args', function(done) {
+    helper.run('', function(err, stdout) {
       expect(err).to.be.an.instanceOf(Error);
+      expect(err.code).to.equal(1);
+      done();
+    });
+  });
+
+  it('should show help if called with --help', function(done) {
+    helper.run('--help', function(err, stdout) {
       expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
       helper.assert.noFilesWereCreated();
       done();
     });
   });
 
-  it('should show help if called -h', function(done) {
+  it('should exit with zero if called with --help', function(done) {
     helper.run('--help', function(err, stdout) {
-      expect(err).to.be.an.instanceOf(Error);
+      expect(err).to.be.null;
+      done();
+    });
+  });
+
+  it('should show help if called with -h', function(done) {
+    helper.run('--help', function(err, stdout) {
       expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
       helper.assert.noFilesWereCreated();
+      done();
+    });
+  });
+
+  it('should exit with zero if called with -h', function(done) {
+    helper.run('--help', function(err, stdout) {
+      expect(err).to.be.null;
       done();
     });
   });

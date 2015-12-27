@@ -51,13 +51,13 @@ function parseArguments() {
         '      dist/module-two.bundle.js\n' +
         '      dist/module-two.bundle.min.js\n'
       );
-      process.exit(1);
     })
     .parse(process.argv);
 
   // Show help if no options were given
   if (program.args.length === 0) {
     program.outputHelp();
+    process.exit(1);
   }
 }
 

@@ -4,6 +4,7 @@ var del         = require('del'),
     touch       = require('touch'),
     fs          = require('fs'),
     path        = require('path'),
+    ono         = require('ono'),
     expect      = require('chai').expect,
     isWindows   = /^win/.test(process.platform),
     testAppsDir = path.resolve(__dirname, '../test-apps');
@@ -65,7 +66,8 @@ exports.fileContents = function(dir, files, fn) {
   files = Array.isArray(files) ? files : [files];
 
   files.forEach(function(file) {
-    var contents = fs.readFileSync(path.join(dir, file)).toString();
+    var fullPath = path.join(dir, file);
+    var contents = fs.readFileSync(fullPath).toString();
 
     if (file.substr(-4) === '.map') {
       // Parse source-map files, and return a POJO instead of a string
@@ -78,7 +80,13 @@ exports.fileContents = function(dir, files, fn) {
         });
       }
     }
-    fn(contents);
+
+    try {
+      fn(contents);
+    }
+    catch (e) {
+      throw ono.syntax(e, file, 'failed an assertion:');
+    }
   });
 }
 
@@ -149,8 +157,8 @@ exports.isMinified = function(contents, stripComments) {
  * @param {string} contents
  */
 exports.notMinified = function(contents) {
-  // Single-quotes and newline are preserved
-  expect(contents).to.match(/'use strict';\r?\n\s+/);
+  // Newlines are preserved
+  expect(contents).to.match(/['"]use strict['"];\r?\n\s+/);
 
   // Non-important comments are preserved
   expect(contents).to.match(/\* @param \{string\}/);
@@ -158,6 +166,15 @@ exports.notMinified = function(contents) {
 
   // Important comments are also preserved
   expect(contents).to.match(/This is an important comment/);
+}
+
+/**
+ * Asserts that the given file contents have been transformed by Babelify
+ *
+ * @param {string} contents
+ */
+exports.isBabelified = function(contents) {
+  expect(contents).to.match(/Object\.defineProperty\(exports,\s*"__esModule"/);
 }
 
 /**

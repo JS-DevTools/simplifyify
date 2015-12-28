@@ -17,13 +17,16 @@ I constantly find myself using the same Browserify plug-ins and transforms on ev
 
 Features
 --------------------------
-* Supports [globs](https://github.com/isaacs/node-glob#glob-primer), even on Windows
-* Builds separate Browserify bundles for each entry file
-* One command outputs all the files you need &mdash; unminified, minified, source maps, coverage
-* Writes _external_ source-maps (`.map`) using [exorcist](https://www.npmjs.com/package/exorcist)
-* Outputs a minified copy of the bundle (`.min.js`) using [uglifyify](https://www.npmjs.com/package/uglifyify)
-* Outputs a test bundle with code-coverage instrumentation (`.test.js`) using [istanbul](https://www.npmjs.com/package/istanbul)
-* Fast, differential re-builds as files change, via [watchify](https://www.npmjs.com/package/watchify)
+- Supports [globs](https://github.com/isaacs/node-glob#glob-primer), even on Windows
+- Supports Browserify [transforms](#browserify-transforms), such as Babel, CoffeeScript, TypeScript, etc.
+- Has a programmatic [API](#api), for use with build tools like Grunt, Gulp, Broccoli, etc.
+- Bundle everything into one big file, or create different bundles for each part of your app (see [examples below](#examples))
+- One command creates all the files you need:
+    - `--bundle` bundles your code and nothing else. Useful during development
+    - `--debug` creates _external_ source-maps (`.map`) using [exorcist](https://www.npmjs.com/package/exorcist)
+    - `--minify` shrinks your code using [uglifyify](https://www.npmjs.com/package/uglifyify)
+    - `--test` adds code-coverage instrumentation using [istanbul](https://www.npmjs.com/package/istanbul)
+    - `--watch` uses [watchify](https://www.npmjs.com/package/watchify) for _fast_ differential re-builds as files change
 
 
 Related Projects
@@ -55,13 +58,16 @@ Options:
                             Don't forget to put quotes around glob patterns
 
   -s, --standalone <name>   Export as a named UMD bundle
-                            For example: my.cool.package
+                            For example: my.cool.module
 
-  -d, --debug               Output source maps for debugging (.map)
+  -b, --bundle              Create a non-minified bundle for development (.js)
+                            This is the default if no other output option is set
 
-  -m, --minify              Output a minified copy of the bundle (.min.js)
+  -d, --debug               Create a source map for debugging (.js.map)
 
-  -v, --test                Output a bundle with code-coverage instrumentation for testing (.test.js)
+  -m, --minify              Create a minified bundle for production (.min.js)
+
+  -v, --test                Create a bundle with code-coverage instrumentation for testing (.test.js)
 
   -w, --watch               Watch source file(s) and rebuild the bundle(s) automatically
 
@@ -76,41 +82,134 @@ Arguments:
 
 Examples
 --------------------------
-#### One entry file -> multiple output files
+#### One entry file --> one output file
+In the simplest usage, you can use Simplifyify to bundle all of your code into a single file:
 
 ```bash
-simplifyify src/index.js --outfile dist/bundle.js --debug --minify --test
+simplifyify src/index.js
+
+src/index.js --> src/index.bundle.js                # <-- unminified code
 ```
 
-This command will output the main bundle file (unminified) and its source-map, a minified bundle and its source-map, and a test bundle with code-coverage instrumentation:
-
-```
-dist/bundle.js
-dist/bundle.js.map
-dist/bundle.min.js
-dist/bundle.min.js.map
-dist/bundle.test.js
-```
-
-#### Multiple entry files -> multiple output files each
+By default, the output file is at the same path as the entry file, but with a `.bundle.js` extension.  You can customize this using the `--outfile` argument:
 
 ```bash
-simplifyify "src/module-*.js" --outfile "dist/*.bundle.js" --minify --debug
+simplifyify src/index.js --outfile dist/my-package.js
+
+src/index.js --> dist/my-package.js                 # <-- unminified code
 ```
 
-This command will output **four** files for each entry file: an unminified bundle and its source-map, and a minified bundle and its source-map.  Also notice that `.bundle` is appended to each file name due to the naming pattern in the `--outfile` argument.
+If you want the bundled code to be minified, then add the `--minify` flag:
 
-```
-dist/module-one.bundle.js
-dist/module-one.bundle.js.map
-dist/module-one.bundle.min.js
-dist/module-one.bundle.min.js.map
+```bash
+simplifyify src/index.js --outfile dist/my-package.js --minify
 
-dist/module-two.bundle.js
-dist/module-two.bundle.js.map
-dist/module-two.bundle.min.js
-dist/module-two.bundle.min.js.map
+src/index.js --> dist/my-package.js                 # <-- minified code
 ```
+
+What if you also want a source map (`.map`) file?  Just add the `--debug` flag.
+
+```bash
+simplifyify src/index.js --outfile dist/my-package.js --minify --debug
+
+src/index.js --> dist/my-package.js                 # <-- minified code
+src/index.js --> dist/my-package.js.map             # <-- source map
+```
+
+
+
+#### One entry file --> multiple output files
+Simplifyify can output multiple bundles of your code in a single command.  Let's say you want to create an unminified bundle for development (with a source map), a minified bundle for production (with a source map), and a test bundle (with code-coverage instrumentation) for testing:
+
+```bash
+simplifyify src/index.js --outfile dist/my-package.js --bundle --debug --minify --test
+
+src/index.js --> dist/my-package.js                 # <-- unminified code
+src/index.js --> dist/my-package.js.map             # <-- source map
+src/index.js --> dist/my-package.min.js             # <-- minified code
+src/index.js --> dist/my-package.min.js.map         # <-- source map
+src/index.js --> dist/my-package.test.js            # <-- code-coverage
+```
+
+
+
+#### Multiple entry files --> multiple output files _for each_
+In many applications, it doesn't make sense for _all_ of your code to be bundled into one huge file.  Maybe you want to create separate bundles for each folder, or for each component or section of your app.  Simplifyify makes this easy.  It will create separate bundles for each entry file that you specify.  For example:
+
+```bash
+simplifyify src/store.js src/cart.js src/checkout.js --outfile dist --bundle --minify --debug
+
+src/store.js --> dist/store.js                      # <-- unminified code
+src/store.js --> dist/store.js.map                  # <-- source map
+src/store.js --> dist/store.min.js                  # <-- minified code
+src/store.js --> dist/store.min.js.map              # <-- source map
+src/cart.js --> dist/cart.js                        # <-- unminified code
+src/cart.js --> dist/cart.js.map                    # <-- source map
+src/cart.js --> dist/cart.min.js                    # <-- minified code
+src/cart.js --> dist/cart.min.js.map                # <-- source map
+src/checkout.js --> dist/checkout.js                # <-- unminified code
+src/checkout.js --> dist/checkout.js.map            # <-- source map
+src/checkout.js --> dist/checkout.min.js            # <-- minified code
+src/checkout.js --> dist/checkout.min.js.map        # <-- source map
+```
+
+Specifying each entry file can quickly become cumbersome though.  That's where [globs](https://github.com/isaacs/node-glob#glob-primer) come in.  You can specify one or more globs, and Simplifyify will create a separate bundle for each file that matches the glob pattern.  For example:
+
+```bash
+simplifyify "src/*/index.js" --outfile "dist/*.bundle.js" --bundle --minify --debug
+
+src/store/index.js --> dist/store/index.bundle.js               # <-- unminified code
+src/store/index.js --> dist/store/index.bundle.js.map           # <-- source map
+src/store/index.js --> dist/store/index.bundle.min.js           # <-- minified code
+src/store/index.js --> dist/store/index.bundle.min.js.map       # <-- source map
+src/cart/index.js --> dist/cart/index.bundle.js                 # <-- unminified code
+src/cart/index.js --> dist/cart/index.bundle.js.map             # <-- source map
+src/cart/index.js --> dist/cart/index.bundle.min.js             # <-- minified code
+src/cart/index.js --> dist/cart/index.bundle.min.js.map         # <-- source map
+src/checkout/index.js --> dist/checkout/index.bundle.js         # <-- unminified code
+src/checkout/index.js --> dist/checkout/index.bundle.js.map     # <-- source map
+src/checkout/index.js --> dist/checkout/index.bundle.min.js     # <-- minified code
+src/checkout/index.js --> dist/checkout/index.bundle.min.js.map # <-- source map
+```
+
+> **TIP:** Don't forget to put quotes around your glob patterns! Otherwise, some shells (e.g. Bash) will try to expand them themselves, which may or may not work
+
+
+
+Browserify Transforms
+--------------------------
+Simplifyify honors the [`browserify.transform`](https://github.com/substack/node-browserify#browserifytransform) field in your `package.json` file.  For example, the following configuration would use [Babelify](https://github.com/babel/babelify) to transform your ES6 code to ES5:
+
+```json
+{
+  "name": "my-package",
+  "version": "1.2.3",
+  "browserify": {
+    "transform": ["babelify"]
+  },
+  "devDependencies": {
+    "babelify": "^7.2.0",
+  }
+}
+```
+
+You can also specify options for your transforms.  The exact options depend on the transform you're using.  Here's an example for Babelify:
+
+```json
+{
+  "name": "my-package",
+  "version": "1.2.3",
+  "browserify": {
+    "transform": [
+        ["babelify", { "presets": ["es2015"] }]
+    ]
+  },
+  "devDependencies": {
+    "babelify": "^7.2.0",
+  }
+}
+```
+
 
 
 API

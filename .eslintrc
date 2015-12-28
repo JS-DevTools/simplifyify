@@ -172,7 +172,7 @@
     ////////// Node.js //////////
 
     "callback-return":                  2,                // enforce return after a callback
-    "global-require":                   2,                // disallow require() outside of the top-level module scope
+    "global-require":                   0,                // disallow require() outside of the top-level module scope
     "handle-callback-err":              0,                // enforces error handling in callbacks (off by default) (on by default in the node environment)
     "no-mixed-requires":                0,                // disallow mixing regular variable and require declarations (off by default) (on by default in the node environment)
     "no-new-require":                   2,                // disallow use of new operator with the require function (off by default) (on by default in the node environment)

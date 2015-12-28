@@ -89,7 +89,7 @@ describe('simplifyify --outfile', function() {
     });
 
     it('should create a multiple output files, in the entry file directories', function(done) {
-      cli.run('es5/lib/**/*.js --debug --minify --test', function(err, stdout) {
+      cli.run('es5/lib/**/*.js --bundle --debug --minify --test', function(err, stdout) {
         if (err) {
           return done(err);
         }

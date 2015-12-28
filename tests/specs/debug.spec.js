@@ -90,7 +90,7 @@ describe('simplifyify --debug', function() {
   });
 
   it('should create source maps for multiple minified files', function(done) {
-    cli.run('es5/lib/**/index.js --debug --minify --outfile es5/dist/',
+    cli.run('es5/lib/**/index.js --bundle --debug --minify --outfile es5/dist/',
       function(err, stdout) {
         if (err) {
           return done(err);
@@ -146,7 +146,7 @@ describe('simplifyify --debug', function() {
   });
 
   it('should append ".map" when renaming output files', function(done) {
-    cli.run('es5/lib/**/*.js --debug --minify --outfile es5/dist/*.bundle.es',
+    cli.run('es5/lib/**/*.js --bundle --debug --minify --outfile es5/dist/*.bundle.es',
       function(err, stdout) {
         if (err) {
           return done(err);

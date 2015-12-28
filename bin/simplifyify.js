@@ -18,9 +18,10 @@ function parseArguments() {
     .option('-o, --outfile <filespec>', 'The output file or directory. May include a filename pattern (e.g. "*.bundle.js")')
     .option('-u, --exclude <filespec>', 'File path or glob pattern to exclude')
     .option('-s, --standalone <name>', 'Export as a named UMD bundle')
-    .option('-d, --debug', 'Output source maps for debugging (.map)')
-    .option('-m, --minify', 'Output a minified copy of the bundle (.min.js)')
-    .option('-v, --test', 'Output a bundle with code-coverage instrumentation for testing (.test.js)')
+    .option('-b, --bundle', 'Create a non-minified bundle for development (.js)')
+    .option('-d, --debug', 'Create a source map for debugging (.js.map)')
+    .option('-m, --minify', 'Create a minified bundle for production (.min.js)')
+    .option('-v, --test', 'Create a bundle with code-coverage instrumentation for testing (.test.js)')
     .option('-w, --watch', 'Watch source file(s) and rebuild the bundle(s) automatically')
     .on('--help', function() {
       console.log(
@@ -33,7 +34,7 @@ function parseArguments() {
         '\n' +
         '  Examples:\n' +
         '\n' +
-        '    simplifyify src/index.js --outfile dist/bundle.js --debug --minify --test\n' +
+        '    simplifyify src/index.js --outfile dist/bundle.js --bundle --debug --minify --test\n' +
         '\n' +
         '    Output Files: \n' +
         '      dist/bundle.js\n' +
@@ -43,7 +44,7 @@ function parseArguments() {
         '      dist/bundle.test.js\n' +
         '\n' +
         '\n' +
-        '    simplifyify "src/module-*.js" --outfile "dist/*.bundle.js" --minify\n' +
+        '    simplifyify "src/module-*.js" --outfile "dist/*.bundle.js" --bundle --minify\n' +
         '\n' +
         '    Output Files: \n' +
         '      dist/module-one.bundle.js\n' +

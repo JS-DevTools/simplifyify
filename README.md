@@ -216,7 +216,7 @@ API
 --------------------------
 Simplifyify also has a programmatic API, so you can use it directly in your build scripts (Gulp, Grunt, Broccoli, etc.)
 
-[Here's the API definition](https://github.com/BigstickCarpet/simplifyify/blob/eba983197e0512619c8818b53f7752e795b42b0b/lib/index.js#L9-L28), and [here's a full example](https://github.com/BigstickCarpet/simplifyify/blob/ce6b47b94f524ed9e66396fb3b5b951b655328ad/bin/simplifyify.js#L51-L75). Just pass an array of strings (file paths and/or glob patterns) and an options param.  You get back an [`EventEmitter`](https://nodejs.org/api/events.html#events_class_events_eventemitter), which fires all the Browserify &amp; Watchify events.
+[Here's the API definition](https://github.com/BigstickCarpet/simplifyify/blob/6709bb5bbf59b327b4ced3e833078de8db006b5a/lib/index.js#L9-L28), and [here's a full example](https://github.com/BigstickCarpet/simplifyify/blob/6709bb5bbf59b327b4ced3e833078de8db006b5a/bin/simplifyify.js#L71-L102). Just pass an array of strings (file paths and/or glob patterns) and an options param.  You get back an [`EventEmitter`](https://nodejs.org/api/events.html#events_class_events_eventemitter), which fires all the Browserify &amp; Watchify events.
 
 ```javascript
 var simplifyify = require("simplifyify");

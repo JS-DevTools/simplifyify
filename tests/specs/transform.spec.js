@@ -5,6 +5,12 @@ var cli    = require('../fixtures/cli'),
     expect = require('chai').expect;
 
 describe('browserify transforms', function() {
+  beforeEach(function() {
+    // Increase the test timeouts to allow sufficient time for Browserify transforms
+    var isSlowEnvironment = !!process.env.CI;
+    this.currentTest.timeout(isSlowEnvironment ? 35000 : 15000);
+  });
+
   it('should use the browserify.transform field in package.json', function(done) {
     cli.run('transform/src/**/*.js --bundle --minify --debug --test --outfile transform/dist/',
       function(err, stdout) {

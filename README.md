@@ -2,7 +2,7 @@ Simplifyify
 ============================
 #### A simplified Browserify and Watchify CLI
 
-[![Build Status](https://api.travis-ci.org/BigstickCarpet/simplifyify.svg)](https://travis-ci.org/BigstickCarpet/simplifyify)
+[![Build Status](https://api.travis-ci.org/BigstickCarpet/simplifyify.svg?branch=master)](https://travis-ci.org/BigstickCarpet/simplifyify)
 [![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/BigstickCarpet/simplifyify?svg=true&failingText=Windows%20build%20failing&passingText=Windows%20build%20passing)](https://ci.appveyor.com/project/BigstickCarpet/simplifyify)
 
 [![Dependencies](https://david-dm.org/BigstickCarpet/simplifyify.svg)](https://david-dm.org/BigstickCarpet/simplifyify)

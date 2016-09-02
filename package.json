@@ -55,6 +55,7 @@
     "commander": "^2.9.0",
     "exorcist": "^0.4.0",
     "glob": "^7.0.6",
+    "istanbul": "^0.4.5",
     "mkdirp": "^0.5.1",
     "ono": "^2.2.1",
     "touch": "^1.0.0",

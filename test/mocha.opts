@@ -1,0 +1,3 @@
+ --bail
+test/fixtures/*.js
+test/specs/*.js

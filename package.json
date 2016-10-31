@@ -43,8 +43,6 @@
     "babel-preset-es2015": "^6.18.0",
     "babelify": "^7.3.0",
     "chai": "^3.5.0",
-    "codacy-coverage": "^2.0.0",
-    "coveralls": "^2.11.14",
     "del": "^2.2.2",
     "eslint": "^3.9.0",
     "eslint-config-modular": "^1.0.1",

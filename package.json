@@ -23,6 +23,10 @@
   "license": "MIT",
   "homepage": "https://github.com/BigstickCarpet/simplifyify",
   "main": "lib/index.js",
+  "files": [
+    "bin",
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint lib test --fix",
     "build": "npm run lint",

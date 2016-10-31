@@ -38,4 +38,4 @@ node_modules
 # Test output
 lib-cov
 /coverage
-/tests/test-apps/*/dist
+/test/test-apps/*/dist

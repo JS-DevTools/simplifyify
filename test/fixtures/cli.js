@@ -49,6 +49,13 @@ exports.run = function run (args, callback) {
     }
     exited = true;
 
+    // TEMPORARY HACK to workaround a deprecation warning in Node 7.
+    // TODO: Remove this code once all dependencies have been updated to eliminate this warning
+    if (stderr && process.version.substr(0, 3) === 'v7.' &&
+    /^\(node:\d+\) DeprecationWarning: Using Buffer without `new` will soon stop working/.test(stderr)) {
+      stderr = '';
+    }
+
     var err = null;
     if (code > 0 || stderr) {
       err = new Error(stderr);

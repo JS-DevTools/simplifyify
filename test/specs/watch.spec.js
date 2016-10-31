@@ -27,10 +27,10 @@ describe('simplifyify --watch', function() {
       checkOutputFiles();
 
       // Delete the output
-      del('tests/test-apps/es5/dist')
+      del('test/test-apps/es5/dist')
         .then(function() {
           // Touch a file, to trigger Watchify again
-          touch('tests/test-apps/es5/lib/say/index.js');
+          touch('test/test-apps/es5/lib/say/index.js');
 
           // Check the outputs again after a few seconds
           setTimeout(secondCheck, waitForBrowserify);
@@ -137,11 +137,11 @@ describe('simplifyify --watch', function() {
       });
 
       // Delete the output
-      del('tests/test-apps/es5/dist')
+      del('test/test-apps/es5/dist')
         .then(function() {
           // Touch a file, to trigger Watchify again
           // NOTE: Only two of the three entry files will be re-build, since the third doesn't reference this file
-          touch('tests/test-apps/es5/lib/hello-world.js');
+          touch('test/test-apps/es5/lib/hello-world.js');
 
           // Check the outputs again after a few seconds
           setTimeout(secondCheck, waitForBrowserify);
@@ -238,10 +238,10 @@ describe('simplifyify --watch', function() {
       checkOutputFiles();
 
       // Delete the output
-      del('tests/test-apps/es5/dist')
+      del('test/test-apps/es5/dist')
         .then(function() {
           // Touch a file, to trigger Watchify again
-          touch('tests/test-apps/error/error.js');
+          touch('test/test-apps/error/error.js');
 
           // Check the outputs again after a few seconds
           setTimeout(secondCheck, waitForBrowserify);

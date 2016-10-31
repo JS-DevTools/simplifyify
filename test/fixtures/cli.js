@@ -1,16 +1,16 @@
 'use strict';
 
-var spawn       = require('child_process').spawn,
-    del         = require('del'),
-    path        = require('path'),
-    isWindows   = /^win/.test(process.platform),
-    cliPath     = path.resolve(__dirname, '../../bin/simplifyify'),
-    testAppsDir = path.resolve(__dirname, '../test-apps');
+var spawn = require('child_process').spawn;
+var del = require('del');
+var path = require('path');
+var isWindows = /^win/.test(process.platform);
+var cliPath = path.resolve(__dirname, '../../bin/simplifyify');
+var testAppsDir = path.resolve(__dirname, '../test-apps');
 
-beforeEach(function(done) {
+beforeEach(function (done) {
   // Clear the output files before each test
-  del(['*/dist', '**/*.bundle.*'], {cwd: testAppsDir})
-    .then(function() {
+  del(['*/dist', '**/*.bundle.*'], { cwd: testAppsDir })
+    .then(function () {
       done();
     })
     .catch(done);
@@ -23,18 +23,18 @@ beforeEach(function(done) {
  * @param {function} callback
  * @returns {ChildProcess}
  */
-exports.run = function run(args, callback) {
+exports.run = function run (args, callback) {
   var exited = false, stdout = '', stderr = '';
 
   // Run simplifyify
   args = [cliPath].concat(args ? args.split(' ') : []);
-  var simplifyify = spawn('node', args, {cwd: testAppsDir});
+  var simplifyify = spawn('node', args, { cwd: testAppsDir });
 
   // Capture stdout and stderr
-  simplifyify.stdout.on('data', function(data) {
+  simplifyify.stdout.on('data', function (data) {
     stdout += data.toString();
   });
-  simplifyify.stderr.on('data', function(data) {
+  simplifyify.stderr.on('data', function (data) {
     stderr += data.toString();
   });
 
@@ -42,7 +42,7 @@ exports.run = function run(args, callback) {
   simplifyify.on('exit', onExit);
   simplifyify.on('error', onExit);
 
-  function onExit(code) {
+  function onExit (code) {
     // onExit can sometimes fire multiple times, so ignore duplicates
     if (exited) {
       return;

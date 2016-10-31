@@ -28,7 +28,7 @@
     "lib"
   ],
   "scripts": {
-    "lint": "eslint lib test --fix",
+    "lint": "eslint lib test/fixtures test/specs --fix",
     "build": "npm run lint",
     "test": "mocha",
     "upgrade": "npm-check -u",

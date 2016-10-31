@@ -1,20 +1,18 @@
 'use strict';
 
-var del         = require('del'),
-    touch       = require('touch'),
-    fs          = require('fs'),
-    path        = require('path'),
-    ono         = require('ono'),
-    expect      = require('chai').expect,
-    isWindows   = /^win/.test(process.platform),
-    testAppsDir = path.resolve(__dirname, '../test-apps');
+var fs = require('fs');
+var path = require('path');
+var ono = require('ono');
+var expect = require('chai').expect;
+var isWindows = /^win/.test(process.platform);
+var testAppsDir = path.resolve(__dirname, '../test-apps');
 
 /**
  * Asserts that the given folder is empty.
  *
  * @param {string}    dir - The directory to check
  */
-exports.directoryIsEmpty = function(dir) {
+exports.directoryIsEmpty = function (dir) {
   var outfiles = ls(dir);
   try {
     expect(outfiles).to.have.same.members([]);
@@ -23,7 +21,7 @@ exports.directoryIsEmpty = function(dir) {
     console.error('Expected: []\n\nActual: %s', JSON.stringify(outfiles, null, 2));
     throw e;
   }
-}
+};
 
 /**
  * Asserts that the directory contains the given files, and no others.
@@ -31,7 +29,7 @@ exports.directoryIsEmpty = function(dir) {
  * @param {string}    [dir] - The directory to check
  * @param {string[]}  files - The files to check for
  */
-exports.directoryContents = function(dir, files) {
+exports.directoryContents = function (dir, files) {
   if (arguments.length === 1) {
     dir = '.';
     files = dir;
@@ -47,7 +45,7 @@ exports.directoryContents = function(dir, files) {
       JSON.stringify(files, null, 2), JSON.stringify(outfiles, null, 2));
     throw e;
   }
-}
+};
 
 /**
  * Calls the given function for the given file(s), passing the contents of the file.
@@ -56,7 +54,7 @@ exports.directoryContents = function(dir, files) {
  * @param {string|string[]} files
  * @param {function} fn
  */
-exports.fileContents = function(dir, files, fn) {
+exports.fileContents = function (dir, files, fn) {
   if (typeof files === 'function') {
     fn = files;
     files = dir;
@@ -65,7 +63,7 @@ exports.fileContents = function(dir, files, fn) {
   dir = resolve(dir);
   files = Array.isArray(files) ? files : [files];
 
-  files.forEach(function(file) {
+  files.forEach(function (file) {
     var fullPath = path.join(dir, file);
     var contents = fs.readFileSync(fullPath).toString();
 
@@ -75,7 +73,7 @@ exports.fileContents = function(dir, files, fn) {
 
       if (isWindows) {
         // Replace Windows path separators with POSIX separators
-        contents.sources = contents.sources.map(function(source) {
+        contents.sources = contents.sources.map(function (source) {
           return source.replace(/\\/g, '/');
         });
       }
@@ -88,7 +86,7 @@ exports.fileContents = function(dir, files, fn) {
       throw ono.syntax(e, file, 'failed an assertion:');
     }
   });
-}
+};
 
 
 /**
@@ -96,36 +94,36 @@ exports.fileContents = function(dir, files, fn) {
  *
  * @param {string} contents
  */
-exports.hasPreamble = function(contents) {
+exports.hasPreamble = function (contents) {
   expect(contents).to.match(/^\(function \w\(\w,\w,\w\)\{function /);
-}
+};
 
 /**
  * Asserts that the given file contents contain the Browserify UMD preamble
  *
  * @param {string} contents
  */
-exports.hasUmdPreamble = function(contents) {
+exports.hasUmdPreamble = function (contents) {
   expect(contents).to.match(/^\(function\(\w\)\{if\(typeof exports==="object"/);
-}
+};
 
 /**
  * Asserts that the given file contents contain an external source map
  *
  * @param {string} contents
  */
-exports.hasSourceMap = function(contents) {
+exports.hasSourceMap = function (contents) {
   expect(contents).to.match(/\/\/\# sourceMappingURL=.*\.map\n$/);
-}
+};
 
 /**
  * Asserts that the given file contents DO NOT contain a source map
  *
  * @param {string} contents
  */
-exports.noSourceMap = function(contents) {
+exports.noSourceMap = function (contents) {
   expect(contents).not.to.match(/\/\/\# sourceMap/);
-}
+};
 
 /**
  * Asserts that the given file contents are minified
@@ -133,7 +131,7 @@ exports.noSourceMap = function(contents) {
  * @param {string}  contents
  * @param {boolean} stripComments - Whether the contents should include comments or not
  */
-exports.isMinified = function(contents, stripComments) {
+exports.isMinified = function (contents, stripComments) {
   // Single-quotes become double-quotes, and newline is removed
   expect(contents).to.match(/"use strict";\S+/);
 
@@ -149,14 +147,14 @@ exports.isMinified = function(contents, stripComments) {
     // Important comments are preserved
     expect(contents).to.match(/This is an important comment/);
   }
-}
+};
 
 /**
  * Asserts that the given file contents ARE NOT minified
  *
  * @param {string} contents
  */
-exports.notMinified = function(contents) {
+exports.notMinified = function (contents) {
   // Newlines are preserved
   expect(contents).to.match(/['"]use strict['"];\r?\n\s+/);
 
@@ -166,40 +164,40 @@ exports.notMinified = function(contents) {
 
   // Important comments are also preserved
   expect(contents).to.match(/This is an important comment/);
-}
+};
 
 /**
  * Asserts that the given file contents have been transformed by Babelify
  *
  * @param {string} contents
  */
-exports.isBabelified = function(contents) {
+exports.isBabelified = function (contents) {
   expect(contents).to.match(/Object\.defineProperty\(exports,\s*"__esModule"/);
-}
+};
 
 /**
  * Asserts that the given file contents contain code-coverage instrumentation
  *
  * @param {string} contents
  */
-exports.hasCoverage = function(contents) {
+exports.hasCoverage = function (contents) {
   // Check for __cov_ wrappers
   expect(contents).to.match(/__cov(_[a-zA-Z0-9$]+)+\.__coverage__/);
-}
+};
 
 /**
  * Asserts that the given file contents DO NOT contain code-coverage instrumentation
  *
  * @param {string} contents
  */
-exports.noCoverage = function(contents) {
+exports.noCoverage = function (contents) {
   expect(contents).not.to.match(/__cov_/);
-}
+};
 
 /**
  * Resolves a path, relative to the "test-apps" folder
  */
-function resolve(fileOrFolder) {
+function resolve (fileOrFolder) {
   if (path.isAbsolute(fileOrFolder)) {
     return fileOrFolder;
   }
@@ -213,15 +211,15 @@ function resolve(fileOrFolder) {
  *
  * @param {string} [dir] - The directory to list
  */
-function ls(dir) {
+function ls (dir) {
   try {
     var contents = [];
     dir = resolve(dir);
 
-    fs.readdirSync(dir).forEach(function(name) {
+    fs.readdirSync(dir).forEach(function (name) {
       var fullName = path.join(dir, name);
       if (fs.statSync(fullName).isDirectory()) {
-        ls(fullName).forEach(function(nested) {
+        ls(fullName).forEach(function (nested) {
           contents.push(name + '/' + nested);   // Don't use path.join() here, because of Windows
         });
       }

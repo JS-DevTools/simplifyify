@@ -1,19 +1,19 @@
 'use strict';
 
-var cli    = require('../fixtures/cli'),
-    assert = require('../fixtures/assert'),
-    expect = require('chai').expect;
+var cli = require('../fixtures/cli');
+var assert = require('../fixtures/assert');
+var expect = require('chai').expect;
 
-describe('browserify transforms', function() {
-  beforeEach(function() {
+describe('browserify transforms', function () {
+  beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for Browserify transforms
     var isSlowEnvironment = !!process.env.CI;
     this.currentTest.timeout(isSlowEnvironment ? 35000 : 15000);
   });
 
-  it('should use the browserify.transform field in package.json', function(done) {
+  it('should use the browserify.transform field in package.json', function (done) {
     cli.run('transform/src/**/*.js --bundle --minify --debug --test --outfile transform/dist/',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -52,7 +52,7 @@ describe('browserify transforms', function() {
           'say/index.test.js',
         ]);
 
-        assert.fileContents('transform/dist', ['index.js', 'hello-world.js', 'say/index.js'], function(contents) {
+        assert.fileContents('transform/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -60,7 +60,7 @@ describe('browserify transforms', function() {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function(contents) {
+        assert.fileContents('transform/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -68,7 +68,7 @@ describe('browserify transforms', function() {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function(contents) {
+        assert.fileContents('transform/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
@@ -76,7 +76,7 @@ describe('browserify transforms', function() {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform/dist', ['index.js.map', 'index.min.js.map'], function(contents) {
+        assert.fileContents('transform/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/index.js',
@@ -84,14 +84,14 @@ describe('browserify transforms', function() {
           ]);
         });
 
-        assert.fileContents('transform/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function(contents) {
+        assert.fileContents('transform/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/say/index.js'
           ]);
         });
 
-        assert.fileContents('transform/dist/say', ['index.js.map', 'index.min.js.map'], function(contents) {
+        assert.fileContents('transform/dist/say', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../../src/say/index.js'
           ]);
@@ -101,9 +101,9 @@ describe('browserify transforms', function() {
       });
   });
 
-  it('should use the transform options in the browserify.transform field', function(done) {
+  it('should use the transform options in the browserify.transform field', function (done) {
     cli.run('transform-with-options/src/**/*.js --bundle --minify --debug --test --outfile transform-with-options/dist/',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -142,7 +142,7 @@ describe('browserify transforms', function() {
           'say/index.test.js',
         ]);
 
-        assert.fileContents('transform-with-options/dist', ['index.js', 'hello-world.js', 'say/index.js'], function(contents) {
+        assert.fileContents('transform-with-options/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -150,7 +150,7 @@ describe('browserify transforms', function() {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform-with-options/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function(contents) {
+        assert.fileContents('transform-with-options/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -158,7 +158,7 @@ describe('browserify transforms', function() {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform-with-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function(contents) {
+        assert.fileContents('transform-with-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
@@ -166,7 +166,7 @@ describe('browserify transforms', function() {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform-with-options/dist', ['index.js.map', 'index.min.js.map'], function(contents) {
+        assert.fileContents('transform-with-options/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/index.js',
@@ -174,14 +174,14 @@ describe('browserify transforms', function() {
           ]);
         });
 
-        assert.fileContents('transform-with-options/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function(contents) {
+        assert.fileContents('transform-with-options/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/say/index.js'
           ]);
         });
 
-        assert.fileContents('transform-with-options/dist/say', ['index.js.map', 'index.min.js.map'], function(contents) {
+        assert.fileContents('transform-with-options/dist/say', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../../src/say/index.js'
           ]);

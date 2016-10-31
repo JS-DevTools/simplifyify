@@ -1,13 +1,13 @@
 'use strict';
 
-var cli    = require('../fixtures/cli'),
-    assert = require('../fixtures/assert'),
-    expect = require('chai').expect;
+var cli = require('../fixtures/cli');
+var assert = require('../fixtures/assert');
+var expect = require('chai').expect;
 
-describe('simplifyify --exclude', function() {
-  it('should not exclude anything if nothing matches', function(done) {
+describe('simplifyify --exclude', function () {
+  it('should not exclude anything if nothing matches', function (done) {
     cli.run('es5/lib/**/*.js --exclude es5/lib/**/*-foo.js --outfile es5/dist/',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -22,7 +22,7 @@ describe('simplifyify --exclude', function() {
           'say/index.js'
         ]);
 
-        assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], function(contents) {
+        assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
@@ -32,9 +32,9 @@ describe('simplifyify --exclude', function() {
       });
   });
 
-  it('should exclude a single file', function(done) {
+  it('should exclude a single file', function (done) {
     cli.run('es5/lib/**/*.js --exclude es5/lib/say/index.js --outfile es5/dist/',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -48,7 +48,7 @@ describe('simplifyify --exclude', function() {
           'hello-world.js'
         ]);
 
-        assert.fileContents('es5/dist', ['index.js', 'hello-world.js'], function(contents) {
+        assert.fileContents('es5/dist', ['index.js', 'hello-world.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
@@ -58,9 +58,9 @@ describe('simplifyify --exclude', function() {
       });
   });
 
-  it('should exclude multiple files', function(done) {
+  it('should exclude multiple files', function (done) {
     cli.run('es5/lib/**/*.js --exclude es5/lib/**/index.js --outfile es5/dist/',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -73,7 +73,7 @@ describe('simplifyify --exclude', function() {
           'hello-world.js'
         ]);
 
-        assert.fileContents('es5/dist', ['hello-world.js'], function(contents) {
+        assert.fileContents('es5/dist', ['hello-world.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);

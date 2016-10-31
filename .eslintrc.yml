@@ -1,0 +1,5 @@
+extends:
+  - modular/best-practices
+  - modular/style
+  - modular/node
+  - modular/es5

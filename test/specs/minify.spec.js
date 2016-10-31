@@ -1,13 +1,13 @@
 'use strict';
 
-var cli    = require('../fixtures/cli'),
-    assert = require('../fixtures/assert'),
-    expect = require('chai').expect;
+var cli = require('../fixtures/cli');
+var assert = require('../fixtures/assert');
+var expect = require('chai').expect;
 
-describe('simplifyify --minify', function() {
-  it('should minify a single file', function(done) {
+describe('simplifyify --minify', function () {
+  it('should minify a single file', function (done) {
     cli.run('es5/lib/index.js --minify --outfile es5/dist/',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -16,7 +16,7 @@ describe('simplifyify --minify', function() {
 
         assert.directoryContents('es5/dist', 'index.js');
 
-        assert.fileContents('es5/dist/index.js', function(contents) {
+        assert.fileContents('es5/dist/index.js', function (contents) {
           assert.hasPreamble(contents);
           assert.isMinified(contents);
           assert.noSourceMap(contents);
@@ -26,9 +26,9 @@ describe('simplifyify --minify', function() {
       });
   });
 
-  it('should create a minified and non-minified file', function(done) {
+  it('should create a minified and non-minified file', function (done) {
     cli.run('es5/lib/index.js --bundle --minify --outfile es5/dist/',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -41,13 +41,13 @@ describe('simplifyify --minify', function() {
           'index.min.js'
         ]);
 
-        assert.fileContents('es5/dist/index.js', function(contents) {
+        assert.fileContents('es5/dist/index.js', function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
           assert.noCoverage(contents);
         });
-        assert.fileContents('es5/dist/index.min.js', function(contents) {
+        assert.fileContents('es5/dist/index.min.js', function (contents) {
           assert.hasPreamble(contents);
           assert.isMinified(contents);
           assert.noSourceMap(contents);
@@ -57,9 +57,9 @@ describe('simplifyify --minify', function() {
       });
   });
 
-  it('should minify multiple files', function(done) {
+  it('should minify multiple files', function (done) {
     cli.run('es5/lib/**/index.js --minify --outfile es5/dist/',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -72,7 +72,7 @@ describe('simplifyify --minify', function() {
           'say/index.js',
         ]);
 
-        assert.fileContents('es5/dist', ['index.js', 'say/index.js'], function(contents) {
+        assert.fileContents('es5/dist', ['index.js', 'say/index.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.isMinified(contents);
           assert.noSourceMap(contents);
@@ -82,9 +82,9 @@ describe('simplifyify --minify', function() {
       });
   });
 
-  it('should NOT append ".min" when renaming output files', function(done) {
+  it('should NOT append ".min" when renaming output files', function (done) {
     cli.run('es5/lib/**/*.js --minify --outfile es5/dist/*.foo.es5',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -99,19 +99,19 @@ describe('simplifyify --minify', function() {
           'say/index.foo.es5',
         ]);
 
-        assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], function(contents) {
-            assert.hasPreamble(contents);
-            assert.isMinified(contents);
-            assert.noSourceMap(contents);
-            assert.noCoverage(contents);
-          });
+        assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], function (contents) {
+          assert.hasPreamble(contents);
+          assert.isMinified(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
+        });
         done();
       });
   });
 
-  it('should append ".min" when renaming output files and producing multiple bundles', function(done) {
+  it('should append ".min" when renaming output files and producing multiple bundles', function (done) {
     cli.run('es5/lib/**/*.js --bundle --minify --outfile es5/dist/*.foo.es5',
-      function(err, stdout) {
+      function (err, stdout) {
         if (err) {
           return done(err);
         }
@@ -132,14 +132,14 @@ describe('simplifyify --minify', function() {
           'say/index.foo.min.es5'
         ]);
 
-        assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], function(contents) {
+        assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
           assert.noCoverage(contents);
         });
         assert.fileContents('es5/dist', ['index.foo.min.es5', 'hello-world.foo.min.es5', 'say/index.foo.min.es5'],
-          function(contents) {
+          function (contents) {
             assert.hasPreamble(contents);
             assert.isMinified(contents);
             assert.noSourceMap(contents);

@@ -28,7 +28,7 @@
     "lib"
   ],
   "scripts": {
-    "lint": "eslint lib test/fixtures test/specs --fix",
+    "lint": "eslint bin lib test/fixtures test/specs --fix",
     "build": "npm run lint",
     "test": "mocha",
     "upgrade": "npm-check -u",
@@ -60,6 +60,7 @@
     "mkdirp": "^0.5.1",
     "ono": "^2.2.1",
     "touch": "^1.0.0",
+    "uglify-js": "^2.7.4",
     "uglifyify": "^3.0.4",
     "watchify": "^3.7.0"
   },

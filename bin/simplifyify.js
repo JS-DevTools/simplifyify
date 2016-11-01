@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 'use strict';
 
-var program     = require('commander'),
-    path        = require('path'),
-    manifest    = require('../package'),
-    simplifyify = require('../');
+let program = require('commander');
+let path = require('path');
+let manifest = require('../package');
+let simplifyify = require('../');
 
 /**
  * Parse command-line arguments
  */
-function parseArguments() {
+function parseArguments () {
   // jscs:disable maximumLineLength
   program
     .version(manifest.version)
@@ -23,7 +23,7 @@ function parseArguments() {
     .option('-m, --minify', 'Create a minified bundle for production (.min.js)')
     .option('-v, --test', 'Create a bundle with code-coverage instrumentation for testing (.test.js)')
     .option('-w, --watch', 'Watch source file(s) and rebuild the bundle(s) automatically')
-    .on('--help', function() {
+    .on('--help', function () {
       console.log(
         '  Arguments:\n' +
         '\n' +
@@ -65,32 +65,32 @@ function parseArguments() {
 /**
  * Program entry point
  */
-function main() {
+function main () {
   parseArguments();
 
   simplifyify(program.args, program)
-    .on('update', function(file) {
+    .on('update', function (file) {
       // Log that a file change has been detected
       console.log('%s has changed', path.relative(process.cwd(), file));
     })
-    .on('log', function(msg) {
+    .on('log', function (msg) {
       // Log # of bytes written & time taken
       console.log(msg);
     })
-    .on('end', function(fileSet) {
+    .on('end', function (fileSet) {
       // Log the output files that were written
       console.log('%s --> %s', fileSet.entryFile, fileSet.outputFile);
       if (fileSet.mapFile) {
         console.log('%s --> %s', fileSet.entryFile, fileSet.mapFile);
       }
     })
-    .on('error', function(err, fileSet) {
+    .on('error', function (err, fileSet) {
       // Log an error
       if (fileSet && fileSet.entryFile) {
         console.error('Error bundling %s\n%s', fileSet.entryFile, err);
       }
       else {
-        var message = process.env.DEBUG ? err.stack : err.message;
+        let message = process.env.DEBUG ? err.stack : err.message;
         console.error(message);
       }
 

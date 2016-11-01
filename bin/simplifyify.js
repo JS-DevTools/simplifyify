@@ -23,7 +23,7 @@ function parseArguments () {
     .option('-m, --minify', 'Create a minified bundle for production (.min.js)')
     .option('-v, --test', 'Create a bundle with code-coverage instrumentation for testing (.test.js)')
     .option('-w, --watch', 'Watch source file(s) and rebuild the bundle(s) automatically')
-    .on('--help', function () {
+    .on('--help', () => {
       console.log(
         '  Arguments:\n' +
         '\n' +
@@ -69,22 +69,22 @@ function main () {
   parseArguments();
 
   simplifyify(program.args, program)
-    .on('update', function (file) {
+    .on('update', (file) => {
       // Log that a file change has been detected
       console.log('%s has changed', path.relative(process.cwd(), file));
     })
-    .on('log', function (msg) {
+    .on('log', (msg) => {
       // Log # of bytes written & time taken
       console.log(msg);
     })
-    .on('end', function (fileSet) {
+    .on('end', (fileSet) => {
       // Log the output files that were written
       console.log('%s --> %s', fileSet.entryFile, fileSet.outputFile);
       if (fileSet.mapFile) {
         console.log('%s --> %s', fileSet.entryFile, fileSet.mapFile);
       }
     })
-    .on('error', function (err, fileSet) {
+    .on('error', (err, fileSet) => {
       // Log an error
       if (fileSet && fileSet.entryFile) {
         console.error('Error bundling %s\n%s', fileSet.entryFile, err);

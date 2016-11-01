@@ -1,11 +1,11 @@
 'use strict';
 
-var spawn = require('child_process').spawn;
-var del = require('del');
-var path = require('path');
-var isWindows = /^win/.test(process.platform);
-var cliPath = path.resolve(__dirname, '../../bin/simplifyify');
-var testAppsDir = path.resolve(__dirname, '../test-apps');
+const spawn = require('child_process').spawn;
+const del = require('del');
+const path = require('path');
+const isWindows = /^win/.test(process.platform);
+const cliPath = path.resolve(__dirname, '../../bin/simplifyify');
+const testAppsDir = path.resolve(__dirname, '../test-apps');
 
 beforeEach(function (done) {
   // Clear the output files before each test
@@ -24,11 +24,11 @@ beforeEach(function (done) {
  * @returns {ChildProcess}
  */
 exports.run = function run (args, callback) {
-  var exited = false, stdout = '', stderr = '';
+  let exited = false, stdout = '', stderr = '';
 
   // Run simplifyify
   args = [cliPath].concat(args ? args.split(' ') : []);
-  var simplifyify = spawn('node', args, { cwd: testAppsDir });
+  let simplifyify = spawn('node', args, { cwd: testAppsDir });
 
   // Capture stdout and stderr
   simplifyify.stdout.on('data', function (data) {
@@ -56,7 +56,7 @@ exports.run = function run (args, callback) {
       stderr = '';
     }
 
-    var err = null;
+    let err = null;
     if (code > 0 || stderr) {
       err = new Error(stderr);
       err.code = code;

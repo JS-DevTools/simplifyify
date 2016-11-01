@@ -1,9 +1,9 @@
 'use strict';
 
-var cli = require('../fixtures/cli');
-var assert = require('../fixtures/assert');
-var expect = require('chai').expect;
-var version = require('../../package').version;
+const cli = require('../fixtures/cli');
+const assert = require('../fixtures/assert');
+const expect = require('chai').expect;
+const version = require('../../package').version;
 
 describe('simplifyify --help', function () {
   it('should show help if called without any args', function (done) {

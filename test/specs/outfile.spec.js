@@ -1,8 +1,8 @@
 'use strict';
 
-var cli = require('../fixtures/cli');
-var assert = require('../fixtures/assert');
-var expect = require('chai').expect;
+const cli = require('../fixtures/cli');
+const assert = require('../fixtures/assert');
+const expect = require('chai').expect;
 
 describe('simplifyify --outfile', function () {
   it('should create a single output file, with the an explicit name', function (done) {
@@ -74,7 +74,7 @@ describe('simplifyify --outfile', function () {
 
         expect(stdout).to.equal('es5/lib/index.js --> es5/lib/index.bundle.js');
 
-        var filesThatAlreadyExisted = ['hello-world.js', 'index.js', 'say/index.js'];
+        let filesThatAlreadyExisted = ['hello-world.js', 'index.js', 'say/index.js'];
         assert.directoryContents('es5/lib',
           ['index.bundle.js'].concat(filesThatAlreadyExisted));
 
@@ -110,7 +110,7 @@ describe('simplifyify --outfile', function () {
         expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.min.js.map');
         expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.test.js');
 
-        var filesThatAlreadyExisted = ['hello-world.js', 'index.js', 'say/index.js'];
+        let filesThatAlreadyExisted = ['hello-world.js', 'index.js', 'say/index.js'];
         assert.directoryContents('es5/lib', [
           'index.bundle.js',
           'index.bundle.js.map',

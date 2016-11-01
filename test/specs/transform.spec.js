@@ -1,13 +1,13 @@
 'use strict';
 
-var cli = require('../fixtures/cli');
-var assert = require('../fixtures/assert');
-var expect = require('chai').expect;
+const cli = require('../fixtures/cli');
+const assert = require('../fixtures/assert');
+const expect = require('chai').expect;
 
 describe('browserify transforms', function () {
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for Browserify transforms
-    var isSlowEnvironment = !!process.env.CI;
+    let isSlowEnvironment = !!process.env.CI;
     this.currentTest.timeout(isSlowEnvironment ? 35000 : 15000);
   });
 

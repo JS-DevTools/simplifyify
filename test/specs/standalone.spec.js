@@ -1,8 +1,8 @@
 'use strict';
 
-var cli = require('../fixtures/cli');
-var assert = require('../fixtures/assert');
-var expect = require('chai').expect;
+const cli = require('../fixtures/cli');
+const assert = require('../fixtures/assert');
+const expect = require('chai').expect;
 
 describe('simplifyify --standalone', function () {
   it('should create a UMD module with the given name', function (done) {

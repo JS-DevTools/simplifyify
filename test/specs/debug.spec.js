@@ -1,8 +1,8 @@
 'use strict';
 
-var cli = require('../fixtures/cli');
-var assert = require('../fixtures/assert');
-var expect = require('chai').expect;
+const cli = require('../fixtures/cli');
+const assert = require('../fixtures/assert');
+const expect = require('chai').expect;
 
 describe('simplifyify --debug', function () {
   it('should create source map for a single file', function (done) {

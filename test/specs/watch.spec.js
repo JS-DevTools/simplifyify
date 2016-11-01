@@ -1,24 +1,24 @@
 'use strict';
 
-var cli = require('../fixtures/cli');
-var assert = require('../fixtures/assert');
-var expect = require('chai').expect;
-var del = require('del');
-var touch = require('touch');
+const cli = require('../fixtures/cli');
+const assert = require('../fixtures/assert');
+const expect = require('chai').expect;
+const del = require('del');
+const touch = require('touch');
 
 describe('simplifyify --watch', function () {
-  var waitForBrowserify;
+  let waitForBrowserify;
 
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for multiple Browserify builds
-    var isSlowEnvironment = !!process.env.CI;
+    let isSlowEnvironment = !!process.env.CI;
     this.currentTest.timeout(isSlowEnvironment ? 35000 : 10000);
     waitForBrowserify = isSlowEnvironment ? 12000 : 4000;
   });
 
   it('should rebuild a single output file', function (done) {
     // Run Watchify
-    var watchify = cli.run('es5/lib/index.js --watch --outfile es5/dist/my-file.js', onExit);
+    let watchify = cli.run('es5/lib/index.js --watch --outfile es5/dist/my-file.js', onExit);
 
     // Check the initial outputs after a few seconds
     setTimeout(firstCheck, waitForBrowserify);
@@ -67,7 +67,7 @@ describe('simplifyify --watch', function () {
   it('should rebuild multiple output files', function (done) {
     // Run Watchify
     // jscs:disable maximumLineLength
-    var watchify = cli.run(
+    let watchify = cli.run(
       'es5/lib/**/*.js --watch --bundle --debug --minify --test --standalone Fizz.Buzz --outfile es5/dist/*.bundle.js',
       onExit
     );
@@ -229,7 +229,7 @@ describe('simplifyify --watch', function () {
 
   it('should report errors', function (done) {
     // Run Watchify
-    var watchify = cli.run('error/error.js --watch --outfile es5/dist/error.js', onExit);
+    let watchify = cli.run('error/error.js --watch --outfile es5/dist/error.js', onExit);
 
     // Check the outputs after a few seconds
     setTimeout(firstCheck, waitForBrowserify);

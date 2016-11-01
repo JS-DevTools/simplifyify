@@ -1,11 +1,11 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var ono = require('ono');
-var expect = require('chai').expect;
-var isWindows = /^win/.test(process.platform);
-var testAppsDir = path.resolve(__dirname, '../test-apps');
+const fs = require('fs');
+const path = require('path');
+const ono = require('ono');
+const expect = require('chai').expect;
+const isWindows = /^win/.test(process.platform);
+const testAppsDir = path.resolve(__dirname, '../test-apps');
 
 /**
  * Asserts that the given folder is empty.
@@ -13,7 +13,7 @@ var testAppsDir = path.resolve(__dirname, '../test-apps');
  * @param {string}    dir - The directory to check
  */
 exports.directoryIsEmpty = function (dir) {
-  var outfiles = ls(dir);
+  let outfiles = ls(dir);
   try {
     expect(outfiles).to.have.same.members([]);
   }
@@ -36,7 +36,7 @@ exports.directoryContents = function (dir, files) {
   }
   files = Array.isArray(files) ? files : [files];
 
-  var outfiles = ls(dir);
+  let outfiles = ls(dir);
   try {
     expect(outfiles).to.have.same.members(files);
   }
@@ -64,8 +64,8 @@ exports.fileContents = function (dir, files, fn) {
   files = Array.isArray(files) ? files : [files];
 
   files.forEach(function (file) {
-    var fullPath = path.join(dir, file);
-    var contents = fs.readFileSync(fullPath).toString();
+    let fullPath = path.join(dir, file);
+    let contents = fs.readFileSync(fullPath).toString();
 
     if (file.substr(-4) === '.map') {
       // Parse source-map files, and return a POJO instead of a string
@@ -213,11 +213,11 @@ function resolve (fileOrFolder) {
  */
 function ls (dir) {
   try {
-    var contents = [];
+    let contents = [];
     dir = resolve(dir);
 
     fs.readdirSync(dir).forEach(function (name) {
-      var fullName = path.join(dir, name);
+      let fullName = path.join(dir, name);
       if (fs.statSync(fullName).isDirectory()) {
         ls(fullName).forEach(function (nested) {
           contents.push(name + '/' + nested);   // Don't use path.join() here, because of Windows

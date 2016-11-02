@@ -44,10 +44,22 @@ npm install simplifyify
 
 Usage
 --------------------------
-```bash
-Usage: simplifyify [options] <files...>
+```
+Usage: simplifyify [options] <source-files...>
 
 Options:
+
+  -b, --bundle              Create a non-minified bundle (*.js) for each source file.
+                            This is the default if no other output option is set.
+
+  -m, --minify              Create a minified bundle (*.min.js) for each source file.
+
+  -v, --test                Create a bundle with code-coverage instrumentation
+                            (*.test.js) for each source file.
+
+  -d, --debug               Create a source map (*.js.map) for each bundle
+
+  -w, --watch               Watch source file(s) and rebuild the bundle(s) automatically
 
   -o, --outfile <filespec>  The output file or directory.
                             May include a filename pattern (e.g. "*.bundle.js")
@@ -58,23 +70,12 @@ Options:
   -s, --standalone <name>   Export as a named UMD bundle
                             For example: my.cool.module
 
-  -b, --bundle              Create a non-minified bundle for development (.js)
-                            This is the default if no other output option is set
-
-  -d, --debug               Create a source map for debugging (.js.map)
-
-  -m, --minify              Create a minified bundle for production (.min.js)
-
-  -v, --test                Create a bundle with code-coverage instrumentation for testing (.test.js)
-
-  -w, --watch               Watch source file(s) and rebuild the bundle(s) automatically
-
 Arguments:
 
-  <files...>                One or more entry-file paths and/or glob patterns.
+  <source-files...>         One or more file paths and/or glob patterns.
                             Don't forget to put quotes around glob patterns.
                             A separate Browserify bundle will be created
-                            for each entry file.
+                            for each source file.
 ```
 
 
@@ -191,7 +192,7 @@ Simplifyify honors the [`browserify.transform`](https://github.com/substack/node
 }
 ```
 
-You can also specify options for your transforms.  The exact options depend on the transform you're using.  Here's an example for Babelify:
+You can also specify options for your transforms.  The exact options depend on the transform you're using.  Here's an example that configures Babelify:
 
 ```json
 {

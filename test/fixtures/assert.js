@@ -90,12 +90,22 @@ exports.fileContents = function (dir, files, fn) {
 
 
 /**
- * Asserts that the given file contents contain the Browserify preamble
+ * Asserts that the given file contents contain the Browserify preamble (non-UMD)
  *
  * @param {string} contents
  */
 exports.hasPreamble = function (contents) {
   expect(contents).to.match(/^\(function \w\(\w,\w,\w\)\{function /);
+};
+
+/**
+ * Asserts that the given file contents contain the minified version of the
+ * Browserify preamble (non-UMD)
+ *
+ * @param {string} contents
+ */
+exports.hasMinifiedPreamble = function (contents) {
+  expect(contents).to.match(/^\!function \w\(\w,\w,\w\)\{function /);
 };
 
 /**
@@ -108,12 +118,22 @@ exports.hasUmdPreamble = function (contents) {
 };
 
 /**
+ * Asserts that the given file contents contain the minified version of the
+ * Browserify UMD preamble
+ *
+ * @param {string} contents
+ */
+exports.hasMinifiedUmdPreamble = function (contents) {
+  expect(contents).to.match(/^\!function\(\w\)\{if\("object"==typeof exports\&\&"undefined"\!=typeof module/);
+};
+
+/**
  * Asserts that the given file contents contain an external source map
  *
  * @param {string} contents
  */
 exports.hasSourceMap = function (contents) {
-  expect(contents).to.match(/\/\/\# sourceMappingURL=.*\.map\n$/);
+  expect(contents).to.match(/\/\/\# sourceMappingURL=.*\.map\n?$/);
 };
 
 /**
@@ -172,7 +192,7 @@ exports.notMinified = function (contents) {
  * @param {string} contents
  */
 exports.isBabelified = function (contents) {
-  expect(contents).to.match(/Object\.defineProperty\(exports,\s*"__esModule"/);
+  expect(contents).to.match(/Object\.defineProperty\(exports,\s*['"]__esModule['"]/);
 };
 
 /**

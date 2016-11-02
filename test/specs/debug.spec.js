@@ -123,7 +123,7 @@ describe('simplifyify --debug', function () {
           assert.noCoverage(contents);
         });
         assert.fileContents('es5/dist', ['index.min.js', 'say/index.min.js'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
@@ -189,7 +189,7 @@ describe('simplifyify --debug', function () {
           });
         assert.fileContents('es5/dist', ['index.bundle.min.es', 'hello-world.bundle.min.es', 'say/index.bundle.min.es'],
           function (contents) {
-            assert.hasPreamble(contents);
+            assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents);
             assert.hasSourceMap(contents);
             assert.noCoverage(contents);

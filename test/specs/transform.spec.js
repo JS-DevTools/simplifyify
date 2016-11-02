@@ -61,7 +61,7 @@ describe('browserify transforms', function () {
         });
 
         assert.fileContents('transform/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
@@ -69,7 +69,7 @@ describe('browserify transforms', function () {
         });
 
         assert.fileContents('transform/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);
@@ -151,7 +151,7 @@ describe('browserify transforms', function () {
         });
 
         assert.fileContents('transform-with-options/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
@@ -159,7 +159,7 @@ describe('browserify transforms', function () {
         });
 
         assert.fileContents('transform-with-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);

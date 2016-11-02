@@ -144,7 +144,7 @@ describe('simplifyify --outfile', function () {
           'index.bundle.min.js', 'hello-world.bundle.min.js', 'say/index.bundle.min.js'
         ],
           function (contents) {
-            assert.hasPreamble(contents);
+            assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents);
             assert.hasSourceMap(contents);
             assert.noCoverage(contents);
@@ -154,7 +154,7 @@ describe('simplifyify --outfile', function () {
           'index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'
         ],
           function (contents) {
-            assert.hasPreamble(contents);
+            assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents, true);
             assert.noSourceMap(contents);
             assert.hasCoverage(contents);

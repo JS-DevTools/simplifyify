@@ -12,8 +12,8 @@ describe('simplifyify --watch', function () {
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for multiple Browserify builds
     let isSlowEnvironment = !!process.env.CI;
-    this.currentTest.timeout(isSlowEnvironment ? 35000 : 10000);
-    waitForBrowserify = isSlowEnvironment ? 12000 : 4000;
+    this.currentTest.timeout(isSlowEnvironment ? 45000 : 15000);
+    waitForBrowserify = isSlowEnvironment ? 15000 : 5000;
   });
 
   it('should rebuild a single output file', function (done) {
@@ -104,14 +104,14 @@ describe('simplifyify --watch', function () {
         });
       assert.fileContents('es5/dist', ['index.bundle.min.js', 'hello-world.bundle.min.js', 'say/index.bundle.min.js'],
         function (contents) {
-          assert.hasUmdPreamble(contents);
+          assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
         });
       assert.fileContents('es5/dist', ['index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'],
         function (contents) {
-          assert.hasUmdPreamble(contents);
+          assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);
@@ -172,14 +172,14 @@ describe('simplifyify --watch', function () {
         });
       assert.fileContents('es5/dist', ['index.bundle.min.js', 'hello-world.bundle.min.js'],
         function (contents) {
-          assert.hasUmdPreamble(contents);
+          assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
         });
       assert.fileContents('es5/dist', ['index.bundle.test.js', 'hello-world.bundle.test.js'],
         function (contents) {
-          assert.hasUmdPreamble(contents);
+          assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);

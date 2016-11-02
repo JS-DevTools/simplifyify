@@ -17,7 +17,7 @@ describe('simplifyify --test', function () {
         assert.directoryContents('es5/dist', 'index.js');
 
         assert.fileContents('es5/dist/index.js', function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);
@@ -48,7 +48,7 @@ describe('simplifyify --test', function () {
           assert.noCoverage(contents);
         });
         assert.fileContents('es5/dist/index.test.js', function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);
@@ -73,7 +73,7 @@ describe('simplifyify --test', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.js', 'say/index.js'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);
@@ -100,7 +100,7 @@ describe('simplifyify --test', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);
@@ -128,7 +128,7 @@ describe('simplifyify --test', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
           assert.hasCoverage(contents);
@@ -187,14 +187,14 @@ describe('simplifyify --test', function () {
         });
         assert.fileContents('es5/dist', ['index.foo.min.es5', 'hello-world.foo.min.es5', 'say/index.foo.min.es5'],
           function (contents) {
-            assert.hasPreamble(contents);
+            assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents);
             assert.hasSourceMap(contents);
             assert.noCoverage(contents);
           });
         assert.fileContents('es5/dist', ['index.foo.test.es5', 'hello-world.foo.test.es5', 'say/index.foo.test.es5'],
           function (contents) {
-            assert.hasPreamble(contents);
+            assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents, true);
             assert.noSourceMap(contents);
             assert.hasCoverage(contents);

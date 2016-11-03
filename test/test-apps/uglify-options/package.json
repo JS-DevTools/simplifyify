@@ -1,0 +1,26 @@
+{
+  "name": "sample-package",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "browser": "src/index.js",
+  "browserify": {
+    "transform": [
+      ["babelify", {"presets": ["es2015"]}],
+      ["uglifyify", {
+        "mangle": false,
+        "compress": false,
+        "output": {
+          "beautify": true,
+          "indent_start": 2,
+          "indent_level": 2,
+          "quote_style": 1,
+          "comments": true
+        }
+      }]
+    ]
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0"
+  }
+}

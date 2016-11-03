@@ -22,7 +22,7 @@ Features
 - One command creates all the files you need:
     - `--bundle` bundles your code and nothing else. Useful during development
     - `--debug` creates _external_ source-maps (`.map`) using [exorcist](https://www.npmjs.com/package/exorcist)
-    - `--minify` shrinks your code using [uglifyify](https://www.npmjs.com/package/uglifyify)
+    - `--minify` shrinks your code using [uglifyify](https://www.npmjs.com/package/uglifyify) _and_ [UglifyJS](https://github.com/mishoo/UglifyJS2#uglifyjs-2)
     - `--test` adds code-coverage instrumentation using [istanbul](https://www.npmjs.com/package/istanbul)
     - `--watch` uses [watchify](https://www.npmjs.com/package/watchify) for _fast_ differential re-builds as files change
 
@@ -192,7 +192,7 @@ Simplifyify honors the [`browserify.transform`](https://github.com/substack/node
 }
 ```
 
-You can also specify options for your transforms.  The exact options depend on the transform you're using.  Here's an example that configures Babelify:
+You can also specify options for your transforms.  The exact options depend on the transform you're using.  Here's an example that configures [Babelify](https://github.com/babel/babelify) and also modifies Simplifyify's default config for [uglifyify](https://www.npmjs.com/package/uglifyify):
 
 ```json
 {
@@ -200,7 +200,24 @@ You can also specify options for your transforms.  The exact options depend on t
   "version": "1.2.3",
   "browserify": {
     "transform": [
-        ["babelify", { "presets": ["es2015"] }]
+        ["babelify", {
+          "presets": ["es2015"]
+        }],
+        ["uglifyify", {
+          mangle: true,
+          compress: {
+            sequences: true,
+            dead_code: true,
+            booleans: true,
+            conditionals: true,
+            if_return: false,
+            drop_console: false,
+            keep_fnames: true
+          },
+          output: {
+            comments: false
+          }
+        }]
     ]
   },
   "devDependencies": {

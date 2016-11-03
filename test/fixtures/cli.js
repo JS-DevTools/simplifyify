@@ -58,7 +58,7 @@ exports.run = function run (args, callback) {
 
     let err = null;
     if (code > 0 || stderr) {
-      err = new Error(stderr);
+      err = new Error(stderr || 'Simplifyify exited with code ' + code);
       err.code = code;
     }
     else if (code instanceof Error) {

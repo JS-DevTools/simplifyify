@@ -95,7 +95,7 @@ exports.fileContents = function (dir, files, fn) {
  * @param {string} contents
  */
 exports.hasPreamble = function (contents) {
-  expect(contents).to.match(/^\(function \w\(\w,\w,\w\)\{function /);
+  expect(contents).to.match(/^\s*\(function \w\(\w,\s*\w,\s*\w\)\s*\{\s*function/);
 };
 
 /**
@@ -150,10 +150,17 @@ exports.noSourceMap = function (contents) {
  *
  * @param {string}  contents
  * @param {boolean} stripComments - Whether the contents should include comments or not
+ * @param {boolean} beautified - Whether the code has been beautified
  */
-exports.isMinified = function (contents, stripComments) {
-  // Single-quotes become double-quotes, and newline is removed
-  expect(contents).to.match(/"use strict";\S+/);
+exports.isMinified = function (contents, stripComments, beautified) {
+  if (beautified) {
+    // Single-quotes and newlines
+    expect(contents).to.match(/'use strict';\n/);
+  }
+  else {
+    // Single-quotes become double-quotes, and newline is removed
+    expect(contents).to.match(/"use strict";\S+/);
+  }
 
   if (stripComments) {
     // All comments are removed

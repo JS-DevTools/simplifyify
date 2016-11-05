@@ -12,29 +12,29 @@ describe('browserify transforms', function () {
   });
 
   it('should use the browserify.transform field in package.json', function (done) {
-    cli.run('transform/src/**/*.js --bundle --minify --debug --test --outfile transform/dist/',
+    cli.run('es6/src/**/*.js --bundle --minify --debug --test --outfile es6/dist/',
       function (err, stdout) {
         if (err) {
           return done(err);
         }
 
-        expect(stdout).to.contain('transform/src/index.js --> transform/dist/index.js');
-        expect(stdout).to.contain('transform/src/index.js --> transform/dist/index.js.map');
-        expect(stdout).to.contain('transform/src/index.js --> transform/dist/index.min.js');
-        expect(stdout).to.contain('transform/src/index.js --> transform/dist/index.min.js.map');
-        expect(stdout).to.contain('transform/src/index.js --> transform/dist/index.test.js');
-        expect(stdout).to.contain('transform/src/hello-world.js --> transform/dist/hello-world.js');
-        expect(stdout).to.contain('transform/src/hello-world.js --> transform/dist/hello-world.js.map');
-        expect(stdout).to.contain('transform/src/hello-world.js --> transform/dist/hello-world.min.js');
-        expect(stdout).to.contain('transform/src/hello-world.js --> transform/dist/hello-world.min.js.map');
-        expect(stdout).to.contain('transform/src/hello-world.js --> transform/dist/hello-world.test.js');
-        expect(stdout).to.contain('transform/src/say/index.js --> transform/dist/say/index.js');
-        expect(stdout).to.contain('transform/src/say/index.js --> transform/dist/say/index.js.map');
-        expect(stdout).to.contain('transform/src/say/index.js --> transform/dist/say/index.min.js');
-        expect(stdout).to.contain('transform/src/say/index.js --> transform/dist/say/index.min.js.map');
-        expect(stdout).to.contain('transform/src/say/index.js --> transform/dist/say/index.test.js');
+        expect(stdout).to.contain('es6/src/index.js --> es6/dist/index.js');
+        expect(stdout).to.contain('es6/src/index.js --> es6/dist/index.js.map');
+        expect(stdout).to.contain('es6/src/index.js --> es6/dist/index.min.js');
+        expect(stdout).to.contain('es6/src/index.js --> es6/dist/index.min.js.map');
+        expect(stdout).to.contain('es6/src/index.js --> es6/dist/index.test.js');
+        expect(stdout).to.contain('es6/src/hello-world.js --> es6/dist/hello-world.js');
+        expect(stdout).to.contain('es6/src/hello-world.js --> es6/dist/hello-world.js.map');
+        expect(stdout).to.contain('es6/src/hello-world.js --> es6/dist/hello-world.min.js');
+        expect(stdout).to.contain('es6/src/hello-world.js --> es6/dist/hello-world.min.js.map');
+        expect(stdout).to.contain('es6/src/hello-world.js --> es6/dist/hello-world.test.js');
+        expect(stdout).to.contain('es6/src/say/index.js --> es6/dist/say/index.js');
+        expect(stdout).to.contain('es6/src/say/index.js --> es6/dist/say/index.js.map');
+        expect(stdout).to.contain('es6/src/say/index.js --> es6/dist/say/index.min.js');
+        expect(stdout).to.contain('es6/src/say/index.js --> es6/dist/say/index.min.js.map');
+        expect(stdout).to.contain('es6/src/say/index.js --> es6/dist/say/index.test.js');
 
-        assert.directoryContents('transform/dist', [
+        assert.directoryContents('es6/dist', [
           'index.js',
           'index.js.map',
           'index.min.js',
@@ -52,7 +52,7 @@ describe('browserify transforms', function () {
           'say/index.test.js',
         ]);
 
-        assert.fileContents('transform/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+        assert.fileContents('es6/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -60,7 +60,7 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
+        assert.fileContents('es6/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -68,7 +68,7 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
+        assert.fileContents('es6/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
@@ -76,7 +76,7 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
+        assert.fileContents('es6/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/index.js',
@@ -84,14 +84,14 @@ describe('browserify transforms', function () {
           ]);
         });
 
-        assert.fileContents('transform/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function (contents) {
+        assert.fileContents('es6/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/say/index.js'
           ]);
         });
 
-        assert.fileContents('transform/dist/say', ['index.js.map', 'index.min.js.map'], function (contents) {
+        assert.fileContents('es6/dist/say', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../../src/say/index.js'
           ]);
@@ -102,29 +102,29 @@ describe('browserify transforms', function () {
   });
 
   it('should use the transform options in the browserify.transform field', function (done) {
-    cli.run('transform-with-options/src/**/*.js --bundle --minify --debug --test --outfile transform-with-options/dist/',
+    cli.run('es6-with-options/src/**/*.js --bundle --minify --debug --test --outfile es6-with-options/dist/',
       function (err, stdout) {
         if (err) {
           return done(err);
         }
 
-        expect(stdout).to.contain('transform-with-options/src/index.js --> transform-with-options/dist/index.js');
-        expect(stdout).to.contain('transform-with-options/src/index.js --> transform-with-options/dist/index.js.map');
-        expect(stdout).to.contain('transform-with-options/src/index.js --> transform-with-options/dist/index.min.js');
-        expect(stdout).to.contain('transform-with-options/src/index.js --> transform-with-options/dist/index.min.js.map');
-        expect(stdout).to.contain('transform-with-options/src/index.js --> transform-with-options/dist/index.test.js');
-        expect(stdout).to.contain('transform-with-options/src/hello-world.js --> transform-with-options/dist/hello-world.js');
-        expect(stdout).to.contain('transform-with-options/src/hello-world.js --> transform-with-options/dist/hello-world.js.map');
-        expect(stdout).to.contain('transform-with-options/src/hello-world.js --> transform-with-options/dist/hello-world.min.js');
-        expect(stdout).to.contain('transform-with-options/src/hello-world.js --> transform-with-options/dist/hello-world.min.js.map');
-        expect(stdout).to.contain('transform-with-options/src/hello-world.js --> transform-with-options/dist/hello-world.test.js');
-        expect(stdout).to.contain('transform-with-options/src/say/index.js --> transform-with-options/dist/say/index.js');
-        expect(stdout).to.contain('transform-with-options/src/say/index.js --> transform-with-options/dist/say/index.js.map');
-        expect(stdout).to.contain('transform-with-options/src/say/index.js --> transform-with-options/dist/say/index.min.js');
-        expect(stdout).to.contain('transform-with-options/src/say/index.js --> transform-with-options/dist/say/index.min.js.map');
-        expect(stdout).to.contain('transform-with-options/src/say/index.js --> transform-with-options/dist/say/index.test.js');
+        expect(stdout).to.contain('es6-with-options/src/index.js --> es6-with-options/dist/index.js');
+        expect(stdout).to.contain('es6-with-options/src/index.js --> es6-with-options/dist/index.js.map');
+        expect(stdout).to.contain('es6-with-options/src/index.js --> es6-with-options/dist/index.min.js');
+        expect(stdout).to.contain('es6-with-options/src/index.js --> es6-with-options/dist/index.min.js.map');
+        expect(stdout).to.contain('es6-with-options/src/index.js --> es6-with-options/dist/index.test.js');
+        expect(stdout).to.contain('es6-with-options/src/hello-world.js --> es6-with-options/dist/hello-world.js');
+        expect(stdout).to.contain('es6-with-options/src/hello-world.js --> es6-with-options/dist/hello-world.js.map');
+        expect(stdout).to.contain('es6-with-options/src/hello-world.js --> es6-with-options/dist/hello-world.min.js');
+        expect(stdout).to.contain('es6-with-options/src/hello-world.js --> es6-with-options/dist/hello-world.min.js.map');
+        expect(stdout).to.contain('es6-with-options/src/hello-world.js --> es6-with-options/dist/hello-world.test.js');
+        expect(stdout).to.contain('es6-with-options/src/say/index.js --> es6-with-options/dist/say/index.js');
+        expect(stdout).to.contain('es6-with-options/src/say/index.js --> es6-with-options/dist/say/index.js.map');
+        expect(stdout).to.contain('es6-with-options/src/say/index.js --> es6-with-options/dist/say/index.min.js');
+        expect(stdout).to.contain('es6-with-options/src/say/index.js --> es6-with-options/dist/say/index.min.js.map');
+        expect(stdout).to.contain('es6-with-options/src/say/index.js --> es6-with-options/dist/say/index.test.js');
 
-        assert.directoryContents('transform-with-options/dist', [
+        assert.directoryContents('es6-with-options/dist', [
           'index.js',
           'index.js.map',
           'index.min.js',
@@ -142,7 +142,7 @@ describe('browserify transforms', function () {
           'say/index.test.js',
         ]);
 
-        assert.fileContents('transform-with-options/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+        assert.fileContents('es6-with-options/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -150,7 +150,7 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform-with-options/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
+        assert.fileContents('es6-with-options/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -158,7 +158,7 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform-with-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
+        assert.fileContents('es6-with-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
@@ -166,7 +166,7 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('transform-with-options/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
+        assert.fileContents('es6-with-options/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/index.js',
@@ -174,14 +174,14 @@ describe('browserify transforms', function () {
           ]);
         });
 
-        assert.fileContents('transform-with-options/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function (contents) {
+        assert.fileContents('es6-with-options/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/say/index.js'
           ]);
         });
 
-        assert.fileContents('transform-with-options/dist/say', ['index.js.map', 'index.min.js.map'], function (contents) {
+        assert.fileContents('es6-with-options/dist/say', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../../src/say/index.js'
           ]);

@@ -14,23 +14,23 @@ function parseArguments () {
   program
     .version(manifest.version)
     .description(manifest.description)
-    .arguments('<files...>')
+    .arguments('<source-files...>')
+    .option('-b, --bundle', 'Create a non-minified bundle (*.js) for each source file')
+    .option('-m, --minify', 'Create a minified bundle (*.min.js) for each source file')
+    .option('-v, --test', 'Create a bundle with code-coverage instrumentation (*.test.js)')
+    .option('-d, --debug', 'Create a source map (*.js.map) for each bundle')
+    .option('-w, --watch', 'Watch source file(s) and rebuild the bundle(s) automatically')
     .option('-o, --outfile <filespec>', 'The output file or directory. May include a filename pattern (e.g. "*.bundle.js")')
     .option('-u, --exclude <filespec>', 'File path or glob pattern to exclude')
     .option('-s, --standalone <name>', 'Export as a named UMD bundle')
-    .option('-b, --bundle', 'Create a non-minified bundle for development (.js)')
-    .option('-d, --debug', 'Create a source map for debugging (.js.map)')
-    .option('-m, --minify', 'Create a minified bundle for production (.min.js)')
-    .option('-v, --test', 'Create a bundle with code-coverage instrumentation for testing (.test.js)')
-    .option('-w, --watch', 'Watch source file(s) and rebuild the bundle(s) automatically')
     .on('--help', () => {
       console.log(
         '  Arguments:\n' +
         '\n' +
-        '    <files...>                One or more entry-file paths and/or glob patterns.\n' +
+        '    <source-files...>         One or more file paths and/or glob patterns.\n' +
         '                              Don\'t forget to put quotes around glob patterns.\n' +
         '                              A separate Browserify bundle will be created\n' +
-        '                              for each entry file.\n' +
+        '                              for each source file.\n' +
         '\n' +
         '  Examples:\n' +
         '\n' +

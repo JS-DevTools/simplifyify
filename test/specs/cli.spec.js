@@ -9,7 +9,7 @@ describe('simplifyify --help', function () {
   it('should show help if called without any args', function (done) {
     cli.run('', function (err, stdout) {
       expect(err).to.be.an.instanceOf(Error);
-      expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
+      expect(stdout).to.match(/^Usage: simplifyify \[options\] <source-files\.\.\.\>/);
       assert.directoryIsEmpty('es5/dist');
       done();
     });
@@ -25,7 +25,7 @@ describe('simplifyify --help', function () {
 
   it('should show help if called with --help', function (done) {
     cli.run('--help', function (err, stdout) {
-      expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
+      expect(stdout).to.match(/^Usage: simplifyify \[options\] <source-files\.\.\.\>/);
       assert.directoryIsEmpty('es5/dist');
       done();
     });
@@ -40,7 +40,7 @@ describe('simplifyify --help', function () {
 
   it('should show help if called with -h', function (done) {
     cli.run('--help', function (err, stdout) {
-      expect(stdout).to.match(/^Usage: simplifyify \[options\] <files\.\.\.\>/);
+      expect(stdout).to.match(/^Usage: simplifyify \[options\] <source-files\.\.\.\>/);
       assert.directoryIsEmpty('es5/dist');
       done();
     });

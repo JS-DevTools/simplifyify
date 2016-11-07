@@ -21,6 +21,7 @@ describe('simplifyify --debug', function () {
         ]);
 
         assert.fileContents('es5/dist/index.js', function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -62,6 +63,7 @@ describe('simplifyify --debug', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -117,12 +119,14 @@ describe('simplifyify --debug', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.js', 'say/index.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
         });
         assert.fileContents('es5/dist', ['index.min.js', 'say/index.min.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -182,6 +186,7 @@ describe('simplifyify --debug', function () {
 
         assert.fileContents('es5/dist', ['index.bundle.es', 'hello-world.bundle.es', 'say/index.bundle.es'],
           function (contents) {
+            assert.noBanner(contents);
             assert.hasPreamble(contents);
             assert.notMinified(contents);
             assert.hasSourceMap(contents);
@@ -189,6 +194,7 @@ describe('simplifyify --debug', function () {
           });
         assert.fileContents('es5/dist', ['index.bundle.min.es', 'hello-world.bundle.min.es', 'say/index.bundle.min.es'],
           function (contents) {
+            assert.noBanner(contents);
             assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents);
             assert.hasSourceMap(contents);

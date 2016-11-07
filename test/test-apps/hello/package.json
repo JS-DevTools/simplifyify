@@ -1,0 +1,12 @@
+{
+  "name": "hello-world",
+  "version": "1.23.456",
+  "main": "index.js",
+  "description": "Says hello... to the whole world",
+  "author": {
+    "name": "John Doe",
+    "url": "http://john-doe-software.com"
+  },
+  "license": "MIT",
+  "homepage": "https://hello-world.com"
+}

@@ -53,14 +53,16 @@ describe('browserify transforms', function () {
         ]);
 
         assert.fileContents('es6/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
-          assert.hasPreamble(contents);
+          assert.noBanner(contents);
           assert.notMinified(contents);
+          assert.hasPreamble(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
           assert.isBabelified(contents);
         });
 
         assert.fileContents('es6/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -69,6 +71,7 @@ describe('browserify transforms', function () {
         });
 
         assert.fileContents('es6/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
@@ -143,6 +146,7 @@ describe('browserify transforms', function () {
         ]);
 
         assert.fileContents('es6-with-options/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -151,6 +155,7 @@ describe('browserify transforms', function () {
         });
 
         assert.fileContents('es6-with-options/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -159,6 +164,7 @@ describe('browserify transforms', function () {
         });
 
         assert.fileContents('es6-with-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
@@ -191,30 +197,30 @@ describe('browserify transforms', function () {
       });
   });
 
-  it('should use the Uglifyify transform options in the browserify.transform field', function (done) {
-    cli.run('uglify-options/src/**/*.js --bundle --minify --debug --test --outfile uglify-options/dist/',
+  it('should use the browserify.transform field for built-in transforms', function (done) {
+    cli.run('transform-options/src/**/*.js --bundle --minify --debug --test --outfile transform-options/dist/',
       function (err, stdout) {
         if (err) {
           return done(err);
         }
 
-        expect(stdout).to.contain('uglify-options/src/index.js --> uglify-options/dist/index.js');
-        expect(stdout).to.contain('uglify-options/src/index.js --> uglify-options/dist/index.js.map');
-        expect(stdout).to.contain('uglify-options/src/index.js --> uglify-options/dist/index.min.js');
-        expect(stdout).to.contain('uglify-options/src/index.js --> uglify-options/dist/index.min.js.map');
-        expect(stdout).to.contain('uglify-options/src/index.js --> uglify-options/dist/index.test.js');
-        expect(stdout).to.contain('uglify-options/src/hello-world.js --> uglify-options/dist/hello-world.js');
-        expect(stdout).to.contain('uglify-options/src/hello-world.js --> uglify-options/dist/hello-world.js.map');
-        expect(stdout).to.contain('uglify-options/src/hello-world.js --> uglify-options/dist/hello-world.min.js');
-        expect(stdout).to.contain('uglify-options/src/hello-world.js --> uglify-options/dist/hello-world.min.js.map');
-        expect(stdout).to.contain('uglify-options/src/hello-world.js --> uglify-options/dist/hello-world.test.js');
-        expect(stdout).to.contain('uglify-options/src/say/index.js --> uglify-options/dist/say/index.js');
-        expect(stdout).to.contain('uglify-options/src/say/index.js --> uglify-options/dist/say/index.js.map');
-        expect(stdout).to.contain('uglify-options/src/say/index.js --> uglify-options/dist/say/index.min.js');
-        expect(stdout).to.contain('uglify-options/src/say/index.js --> uglify-options/dist/say/index.min.js.map');
-        expect(stdout).to.contain('uglify-options/src/say/index.js --> uglify-options/dist/say/index.test.js');
+        expect(stdout).to.contain('transform-options/src/index.js --> transform-options/dist/index.js');
+        expect(stdout).to.contain('transform-options/src/index.js --> transform-options/dist/index.js.map');
+        expect(stdout).to.contain('transform-options/src/index.js --> transform-options/dist/index.min.js');
+        expect(stdout).to.contain('transform-options/src/index.js --> transform-options/dist/index.min.js.map');
+        expect(stdout).to.contain('transform-options/src/index.js --> transform-options/dist/index.test.js');
+        expect(stdout).to.contain('transform-options/src/hello-world.js --> transform-options/dist/hello-world.js');
+        expect(stdout).to.contain('transform-options/src/hello-world.js --> transform-options/dist/hello-world.js.map');
+        expect(stdout).to.contain('transform-options/src/hello-world.js --> transform-options/dist/hello-world.min.js');
+        expect(stdout).to.contain('transform-options/src/hello-world.js --> transform-options/dist/hello-world.min.js.map');
+        expect(stdout).to.contain('transform-options/src/hello-world.js --> transform-options/dist/hello-world.test.js');
+        expect(stdout).to.contain('transform-options/src/say/index.js --> transform-options/dist/say/index.js');
+        expect(stdout).to.contain('transform-options/src/say/index.js --> transform-options/dist/say/index.js.map');
+        expect(stdout).to.contain('transform-options/src/say/index.js --> transform-options/dist/say/index.min.js');
+        expect(stdout).to.contain('transform-options/src/say/index.js --> transform-options/dist/say/index.min.js.map');
+        expect(stdout).to.contain('transform-options/src/say/index.js --> transform-options/dist/say/index.test.js');
 
-        assert.directoryContents('uglify-options/dist', [
+        assert.directoryContents('transform-options/dist', [
           'index.js',
           'index.js.map',
           'index.min.js',
@@ -232,7 +238,8 @@ describe('browserify transforms', function () {
           'say/index.test.js',
         ]);
 
-        assert.fileContents('uglify-options/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+        assert.fileContents('transform-options/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+          assert.hasBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -240,7 +247,8 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('uglify-options/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
+        assert.fileContents('transform-options/dist', ['index.min.js', 'hello-world.min.js', 'say/index.min.js'], function (contents) {
+          assert.hasBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -248,7 +256,8 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('uglify-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
+        assert.fileContents('transform-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], function (contents) {
+          assert.hasBanner(contents);
           assert.hasPreamble(contents);
           assert.isMinified(contents, true, true);
           assert.noSourceMap(contents);
@@ -256,7 +265,7 @@ describe('browserify transforms', function () {
           assert.isBabelified(contents);
         });
 
-        assert.fileContents('uglify-options/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
+        assert.fileContents('transform-options/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/index.js',
@@ -264,14 +273,14 @@ describe('browserify transforms', function () {
           ]);
         });
 
-        assert.fileContents('uglify-options/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function (contents) {
+        assert.fileContents('transform-options/dist', ['hello-world.js.map', 'hello-world.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../src/hello-world.js',
             '../src/say/index.js'
           ]);
         });
 
-        assert.fileContents('uglify-options/dist/say', ['index.js.map', 'index.min.js.map'], function (contents) {
+        assert.fileContents('transform-options/dist/say', ['index.js.map', 'index.min.js.map'], function (contents) {
           expect(contents.sources).to.contain.members([
             '../../src/say/index.js'
           ]);

@@ -88,6 +88,23 @@ exports.fileContents = function (dir, files, fn) {
   });
 };
 
+/**
+ * Asserts that the given file contents contain a banner
+ *
+ * @param {string} contents
+ */
+exports.hasBanner = function (contents) {
+  expect(contents).to.match(/^\/\*\!\n \* /);
+};
+
+/**
+ * Asserts that the given file contents do not contain a banner
+ *
+ * @param {string} contents
+ */
+exports.noBanner = function (contents) {
+  expect(contents).not.to.match(/^\/\*\!/);
+};
 
 /**
  * Asserts that the given file contents contain the Browserify preamble (non-UMD)
@@ -95,7 +112,7 @@ exports.fileContents = function (dir, files, fn) {
  * @param {string} contents
  */
 exports.hasPreamble = function (contents) {
-  expect(contents).to.match(/^\s*\(function \w\(\w,\s*\w,\s*\w\)\s*\{\s*function/);
+  expect(contents).to.match(/var \w\s*=\s*typeof require\s*==\s*["']function["']\s*\&\&\s*require;/);
 };
 
 /**
@@ -114,7 +131,7 @@ exports.hasMinifiedPreamble = function (contents) {
  * @param {string} contents
  */
 exports.hasUmdPreamble = function (contents) {
-  expect(contents).to.match(/^\(function\(\w\)\{if\(typeof exports==="object"/);
+  expect(contents).to.match(/\(function\(\w\)\{if\(typeof exports==="object"/);
 };
 
 /**
@@ -124,7 +141,7 @@ exports.hasUmdPreamble = function (contents) {
  * @param {string} contents
  */
 exports.hasMinifiedUmdPreamble = function (contents) {
-  expect(contents).to.match(/^\!function\(\w\)\{if\("object"==typeof exports\&\&"undefined"\!=typeof module/);
+  expect(contents).to.match(/\!function\(\w\)\{if\("object"==typeof exports\&\&"undefined"\!=typeof module/);
 };
 
 /**

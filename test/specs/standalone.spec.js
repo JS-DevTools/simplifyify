@@ -17,6 +17,7 @@ describe('simplifyify --standalone', function () {
         assert.directoryContents('es5/dist', 'index.js');
 
         assert.fileContents('es5/dist/index.js', function (contents) {
+          assert.noBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
@@ -39,6 +40,7 @@ describe('simplifyify --standalone', function () {
         assert.directoryContents('es5/dist', 'index.js');
 
         assert.fileContents('es5/dist/index.js', function (contents) {
+          assert.noBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);

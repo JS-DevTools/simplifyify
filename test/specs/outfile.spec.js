@@ -16,6 +16,7 @@ describe('simplifyify --outfile', function () {
       assert.directoryContents('es5/dist', 'my-file.js');
 
       assert.fileContents('es5/dist/my-file.js', function (contents) {
+        assert.noBanner(contents);
         assert.hasPreamble(contents);
         assert.notMinified(contents);
         assert.noSourceMap(contents);
@@ -36,6 +37,7 @@ describe('simplifyify --outfile', function () {
       assert.directoryContents('es5/dist', 'index.js');
 
       assert.fileContents('es5/dist/index.js', function (contents) {
+        assert.noBanner(contents);
         assert.hasPreamble(contents);
         assert.notMinified(contents);
         assert.noSourceMap(contents);
@@ -56,6 +58,7 @@ describe('simplifyify --outfile', function () {
       assert.directoryContents('es5/dist', 'index.foo-bar.es6');
 
       assert.fileContents('es5/dist/index.foo-bar.es6', function (contents) {
+        assert.noBanner(contents);
         assert.hasPreamble(contents);
         assert.notMinified(contents);
         assert.noSourceMap(contents);
@@ -79,6 +82,7 @@ describe('simplifyify --outfile', function () {
           ['index.bundle.js'].concat(filesThatAlreadyExisted));
 
         assert.fileContents('es5/lib/index.bundle.js', function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
@@ -134,6 +138,7 @@ describe('simplifyify --outfile', function () {
           'index.bundle.js', 'hello-world.bundle.js', 'say/index.bundle.js'
         ],
           function (contents) {
+            assert.noBanner(contents);
             assert.hasPreamble(contents);
             assert.notMinified(contents);
             assert.hasSourceMap(contents);
@@ -144,6 +149,7 @@ describe('simplifyify --outfile', function () {
           'index.bundle.min.js', 'hello-world.bundle.min.js', 'say/index.bundle.min.js'
         ],
           function (contents) {
+            assert.noBanner(contents);
             assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents);
             assert.hasSourceMap(contents);
@@ -154,6 +160,7 @@ describe('simplifyify --outfile', function () {
           'index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'
         ],
           function (contents) {
+            assert.noBanner(contents);
             assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents, true);
             assert.noSourceMap(contents);

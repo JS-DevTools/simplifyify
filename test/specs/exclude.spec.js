@@ -23,6 +23,7 @@ describe('simplifyify --exclude', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
@@ -49,6 +50,7 @@ describe('simplifyify --exclude', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.js', 'hello-world.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
@@ -74,6 +76,7 @@ describe('simplifyify --exclude', function () {
         ]);
 
         assert.fileContents('es5/dist', ['hello-world.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);

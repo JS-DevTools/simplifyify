@@ -56,6 +56,7 @@ describe('simplifyify --watch', function () {
       assert.directoryContents('es5/dist', 'my-file.js');
 
       assert.fileContents('es5/dist/my-file.js', function (contents) {
+        assert.noBanner(contents);
         assert.hasPreamble(contents);
         assert.notMinified(contents);
         assert.noSourceMap(contents);
@@ -97,6 +98,7 @@ describe('simplifyify --watch', function () {
 
       assert.fileContents('es5/dist', ['index.bundle.js', 'hello-world.bundle.js', 'say/index.bundle.js'],
         function (contents) {
+          assert.noBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -104,6 +106,7 @@ describe('simplifyify --watch', function () {
         });
       assert.fileContents('es5/dist', ['index.bundle.min.js', 'hello-world.bundle.min.js', 'say/index.bundle.min.js'],
         function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -111,6 +114,7 @@ describe('simplifyify --watch', function () {
         });
       assert.fileContents('es5/dist', ['index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'],
         function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);
@@ -165,6 +169,7 @@ describe('simplifyify --watch', function () {
 
       assert.fileContents('es5/dist', ['index.bundle.js', 'hello-world.bundle.js'],
         function (contents) {
+          assert.noBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
@@ -172,6 +177,7 @@ describe('simplifyify --watch', function () {
         });
       assert.fileContents('es5/dist', ['index.bundle.min.js', 'hello-world.bundle.min.js'],
         function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents);
           assert.hasSourceMap(contents);
@@ -179,6 +185,7 @@ describe('simplifyify --watch', function () {
         });
       assert.fileContents('es5/dist', ['index.bundle.test.js', 'hello-world.bundle.test.js'],
         function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents, true);
           assert.noSourceMap(contents);

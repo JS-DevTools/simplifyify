@@ -17,6 +17,7 @@ describe('simplifyify --minify', function () {
         assert.directoryContents('es5/dist', 'index.js');
 
         assert.fileContents('es5/dist/index.js', function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.noSourceMap(contents);
@@ -42,12 +43,14 @@ describe('simplifyify --minify', function () {
         ]);
 
         assert.fileContents('es5/dist/index.js', function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
           assert.noCoverage(contents);
         });
         assert.fileContents('es5/dist/index.min.js', function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.noSourceMap(contents);
@@ -73,6 +76,7 @@ describe('simplifyify --minify', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.js', 'say/index.js'], function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.noSourceMap(contents);
@@ -100,6 +104,7 @@ describe('simplifyify --minify', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], function (contents) {
+          assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
           assert.noSourceMap(contents);
@@ -133,6 +138,7 @@ describe('simplifyify --minify', function () {
         ]);
 
         assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], function (contents) {
+          assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.noSourceMap(contents);
@@ -140,6 +146,7 @@ describe('simplifyify --minify', function () {
         });
         assert.fileContents('es5/dist', ['index.foo.min.es5', 'hello-world.foo.min.es5', 'say/index.foo.min.es5'],
           function (contents) {
+            assert.noBanner(contents);
             assert.hasMinifiedPreamble(contents);
             assert.isMinified(contents);
             assert.noSourceMap(contents);

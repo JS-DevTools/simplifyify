@@ -3,6 +3,18 @@ All notable changes will be documented in this file.
 `simplifyify` adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [v3.1.0](https://github.com/BigstickCarpet/simplifyify/tree/v3.1.0) (2016-11-06)
+
+#### New Feature: [bannerify](https://www.npmjs.com/package/bannerify) support
+Just add a `banner.txt` file to your project, and it'll automatically be added to your output bundle(s). The `banner.txt` file can contain [Lodash templates](https://lodash.com/docs/4.16.6#template), which have access to the full [lodash](https://lodash.com/docs/4.16.6) library as well as [moment-js](http://momentjs.com/) for date/time formatting.  See [this example](https://github.com/BigstickCarpet/simplifyify/blob/master/test/test-apps/hello/banner.txt).
+
+#### Better performance
+File i/o operations have been optimized in this release. Files that are likely to be needed by multiple entry files are cached so they only need to be read once.  Other file i/o operations that were previously synchronous are now asynchronous.
+
+
+[Full Changelog](https://github.com/BigstickCarpet/simplifyify/compare/v3.0.0...v3.1.0)
+
+
 ## [v3.0.0](https://github.com/BigstickCarpet/simplifyify/tree/v3.0.0) (2016-11-02)
 
 #### Major changes in this release:

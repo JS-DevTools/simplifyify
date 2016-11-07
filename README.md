@@ -19,6 +19,7 @@ Features
 - Supports Browserify [transforms](#browserify-transforms), such as Babel, CoffeeScript, TypeScript, etc.
 - Has a programmatic [API](#api), for use with build tools like Grunt, Gulp, Broccoli, etc.
 - Bundle everything into one big file, or create different bundles for each part of your app (see [examples below](#examples))
+- Add a banner with version, date, license, etc. via [bannerify](https://www.npmjs.com/package/bannerify)
 - One command creates all the files you need:
     - `--bundle` bundles your code and nothing else. Useful during development
     - `--debug` creates _external_ source-maps (`.map`) using [exorcist](https://www.npmjs.com/package/exorcist)

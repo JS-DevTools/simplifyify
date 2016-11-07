@@ -71,7 +71,8 @@ function main () {
   simplifyify(program.args, program)
     .on('update', (file) => {
       // Log that a file change has been detected
-      console.log('%s has changed', path.relative(process.cwd(), file));
+      let relativePath = path.relative(process.cwd(), file);
+      console.log(`${relativePath} has changed`);
     })
     .on('log', (msg) => {
       // Log # of bytes written & time taken
@@ -79,20 +80,19 @@ function main () {
     })
     .on('end', (fileSet) => {
       // Log the output files that were written
-      console.log('%s --> %s', fileSet.entryFile, fileSet.outputFile);
+      console.log(`${fileSet.entryFile} --> ${fileSet.outputFile}`);
       if (fileSet.mapFile) {
-        console.log('%s --> %s', fileSet.entryFile, fileSet.mapFile);
+        console.log(`${fileSet.entryFile} --> ${fileSet.mapFile}`);
       }
     })
     .on('error', (err, fileSet) => {
       // Log an error
       if (fileSet && fileSet.entryFile) {
-        console.error('Error bundling %s\n%s', fileSet.entryFile, err);
+        console.error(`Error bundling ${fileSet.entryFile}`);
       }
-      else {
-        let message = process.env.DEBUG ? err.stack : err.message;
-        console.error(message);
-      }
+
+      let message = process.env.DEBUG ? err.stack : err.message;
+      console.error(message);
 
       // Exit the app with an error code,
       // unless we're in "Watchify" mode, in which case, we just keep watching

@@ -263,8 +263,7 @@ describe('simplifyify --watch', function () {
 
     // Verify the final results
     function onExit (err, stdout, stderr) {
-      expect(stderr).to.match(/^Error bundling error\/error.js\n/); // Error message
-      expect(stderr).to.contain('console.log(\'this is an error\'))');        // Stack trace
+      expect(stderr).to.equal('Error bundling error\/error.js\nUnexpected token');
       expect(stdout).to.equal('');
       done();
     }

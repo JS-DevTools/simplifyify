@@ -19,7 +19,7 @@ Features
 - Supports Browserify [transforms](#browserify-transforms), such as Babel, CoffeeScript, TypeScript, etc.
 - Has a programmatic [API](#api), for use with build tools like Grunt, Gulp, Broccoli, etc.
 - Bundle everything into one big file, or create different bundles for each part of your app (see [examples below](#examples))
-- Add a banner with version, date, license, etc. via [bannerify](https://www.npmjs.com/package/bannerify)
+- Add a banner with version, date, license, etc. via [browserify-banner](https://www.npmjs.com/package/browserify-banner)
 - One command creates all the files you need:
     - `--bundle` bundles your code and nothing else. Useful during development
     - `--debug` creates _external_ source-maps (`.map`) using [exorcist](https://www.npmjs.com/package/exorcist)
@@ -32,6 +32,7 @@ Related Projects
 --------------------------
 * [globify](https://www.npmjs.com/package/globify) - Run browserify and watchify with globs - even on Windows
 * [sourcemapify](https://www.npmjs.com/package/sourcemapify) - Sourcemap plugin for Browserify
+* [browserify-banner](https://www.npmjs.com/package/browserify-banner) - Add a comment (and/or code) to the top of your Browserify bundle
 
 
 Installation
@@ -270,10 +271,7 @@ To build the project locally on your computer:
 2. __Install dependencies__<br>
 `npm install`
 
-3. __Run the build script__<br>
-`npm run build`
-
-4. __Run the tests__<br>
+3. __Run the tests__<br>
 `npm test`
 
 

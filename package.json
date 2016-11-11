@@ -51,16 +51,14 @@
     "version-bump-prompt": "^1.7.2"
   },
   "dependencies": {
-    "browser-pack": "^6.0.1",
     "browserify": "^13.1.1",
+    "browserify-banner": "^1.0.2",
     "browserify-istanbul": "^2.0.0",
     "commander": "^2.9.0",
     "exorcist": "^0.4.0",
     "glob": "^7.1.1",
     "istanbul": "^0.4.5",
-    "lodash": "^4.16.6",
     "mkdirp": "^0.5.1",
-    "moment": "^2.15.2",
     "ono": "^2.2.1",
     "touch": "^1.0.0",
     "uglify-js": "^2.7.4",

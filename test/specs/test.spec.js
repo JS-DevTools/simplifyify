@@ -230,4 +230,33 @@ describe('simplifyify --test', function () {
         done();
       });
   });
+
+  it('should create a test bundle with a banner', function (done) {
+    cli.run('hello/index.js --test --outfile hello/dist/',
+      function (err, stdout) {
+        if (err) {
+          return done(err);
+        }
+
+        expect(stdout).to.contain('hello/index.js --> hello/dist/index.js');
+
+        assert.directoryContents('hello', [
+          'banner.txt',
+          'hello-world.js',
+          'index.js',
+          'package.json',
+          'say/index.js',
+          'dist/index.js',
+        ]);
+
+        assert.fileContents('hello/dist/index.js', function (contents) {
+          assert.hasBanner(contents);
+          assert.hasMinifiedPreamble(contents);
+          assert.isMinified(contents, true);
+          assert.noSourceMap(contents);
+          assert.hasCoverage(contents);
+        });
+        done();
+      });
+  });
 });

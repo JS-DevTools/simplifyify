@@ -1,7 +1,7 @@
-<%= pkg.name %> v<%= pkg.version %> (<%= moment().format('MMMM Do YYYY') %>)
+<%= _.startCase(pkg.name) %> v<%= pkg.version %> (<%= moment().format('MMMM Do YYYY') %>)
 <%= pkg.description %>
 
-<%= _.pick(pkg, 'homepage').homepage %>
+<%= pkg.homepage %>
 
 @author  <%= pkg.author.name %> (<%= pkg.author.url %>)
 @license <%= pkg.license %>

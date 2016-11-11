@@ -83,13 +83,13 @@ exports.fileContents = function (dir, files, fn) {
       fn(contents);
     }
     catch (e) {
-      throw ono.syntax(e, file, 'failed an assertion:');
+      throw ono(e, file, 'failed an assertion:');
     }
   });
 };
 
 /**
- * Asserts that the given file contents contain a banner
+ * Asserts that the given file contents start with a banner
  *
  * @param {string} contents
  */
@@ -122,7 +122,7 @@ exports.hasPreamble = function (contents) {
  * @param {string} contents
  */
 exports.hasMinifiedPreamble = function (contents) {
-  expect(contents).to.match(/^\!function \w\(\w,\w,\w\)\{function /);
+  expect(contents).to.match(/var \w=typeof require=="function"\&\&*require;/);
 };
 
 /**
@@ -131,7 +131,9 @@ exports.hasMinifiedPreamble = function (contents) {
  * @param {string} contents
  */
 exports.hasUmdPreamble = function (contents) {
-  expect(contents).to.match(/\(function\(\w\)\{if\(typeof exports==="object"/);
+  expect(contents).to.match(/if\(typeof window!=="undefined"\)/);
+  expect(contents).to.match(/if\(typeof global!=="undefined"\)/);
+  expect(contents).to.match(/if\(typeof self!=="undefined"\)/);
 };
 
 /**
@@ -141,7 +143,9 @@ exports.hasUmdPreamble = function (contents) {
  * @param {string} contents
  */
 exports.hasMinifiedUmdPreamble = function (contents) {
-  expect(contents).to.match(/\!function\(\w\)\{if\("object"==typeof exports\&\&"undefined"\!=typeof module/);
+  expect(contents).to.match(/if\(typeof window!=="undefined"\)/);
+  expect(contents).to.match(/if\(typeof global!=="undefined"\)/);
+  expect(contents).to.match(/if\(typeof self!=="undefined"\)/);
 };
 
 /**
@@ -181,7 +185,7 @@ exports.isMinified = function (contents, stripComments, beautified) {
 
   if (stripComments) {
     // All comments are removed
-    expect(contents).not.to.match(/\/\//);
+    expect(contents).not.to.match(/\/\/ /);
   }
   else {
     // Non-important comments are removed

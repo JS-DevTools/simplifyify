@@ -222,4 +222,48 @@ describe('simplifyify --debug', function () {
         done();
       });
   });
+
+  it('should create a sourcemap for a bundle with a banner', function (done) {
+    cli.run('hello/index.js --debug --outfile hello/dist/',
+      function (err, stdout) {
+        if (err) {
+          return done(err);
+        }
+
+        expect(stdout).to.contain('hello/index.js --> hello/dist/index.js');
+        expect(stdout).to.contain('hello/index.js --> hello/dist/index.js.map');
+
+        assert.directoryContents('hello', [
+          'banner.txt',
+          'hello-world.js',
+          'index.js',
+          'package.json',
+          'say/index.js',
+          'dist/index.js',
+          'dist/index.js.map',
+        ]);
+
+        assert.fileContents('hello/dist/index.js', function (contents) {
+          assert.hasBanner(contents);
+          assert.hasPreamble(contents);
+          assert.notMinified(contents);
+          assert.hasSourceMap(contents);
+          assert.noCoverage(contents);
+        });
+
+        assert.fileContents('hello/dist', 'index.js.map', function (contents) {
+          expect(contents.sources).to.contain.members([
+            '../hello-world.js',
+            '../index.js',
+            '../say/index.js'
+          ]);
+
+          // The first 9 lines of the sourcemap should be blank, since we don't
+          // have sourcemappings for the banner
+          expect(contents.mappings).to.match(/^;;;;;;;;;AAAA/);
+        });
+
+        done();
+      });
+  });
 });

@@ -46,15 +46,15 @@
     "babelify": "^7.3.0",
     "chai": "^3.5.0",
     "del": "^2.2.2",
-    "eslint": "^3.9.0",
-    "eslint-config-modular": "^1.0.1",
-    "mocha": "^3.1.2",
+    "eslint": "^3.12.2",
+    "eslint-config-modular": "^2.0.1",
+    "mocha": "^3.2.0",
     "npm-check": "^5.4.0",
-    "version-bump-prompt": "^1.7.2"
+    "version-bump-prompt": "^3.0.0"
   },
   "dependencies": {
-    "browserify": "^13.1.1",
-    "browserify-banner": "^1.0.2",
+    "browserify": "^13.3.0",
+    "browserify-banner": "^1.0.3",
     "browserify-istanbul": "^2.0.0",
     "commander": "^2.9.0",
     "exorcist": "^0.4.0",
@@ -63,9 +63,9 @@
     "mkdirp": "^0.5.1",
     "ono": "^2.2.1",
     "touch": "^1.0.0",
-    "uglify-js": "^2.7.4",
+    "uglify-js": "^2.7.5",
     "uglifyify": "^3.0.4",
-    "watchify": "^3.7.0"
+    "watchify": "^3.8.0"
   },
   "engines": {
     "node": ">=4"

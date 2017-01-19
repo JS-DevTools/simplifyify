@@ -4,6 +4,7 @@ Simplifyify
 
 [![Build Status](https://api.travis-ci.org/BigstickCarpet/simplifyify.svg?branch=master)](https://travis-ci.org/BigstickCarpet/simplifyify)
 [![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/BigstickCarpet/simplifyify?svg=true&failingText=Windows%20build%20failing&passingText=Windows%20build%20passing)](https://ci.appveyor.com/project/BigstickCarpet/simplifyify)
+
 [![Dependencies](https://david-dm.org/BigstickCarpet/simplifyify.svg)](https://david-dm.org/BigstickCarpet/simplifyify)
 [![Codacy Score](https://www.codacy.com/project/badge/e7d74b7748674054be73556c87475c49)](https://www.codacy.com/public/jamesmessinger/simplifyify)
 [![Inline docs](http://inch-ci.org/github/BigstickCarpet/simplifyify.svg?branch=master&style=shields)](http://inch-ci.org/github/BigstickCarpet/simplifyify)

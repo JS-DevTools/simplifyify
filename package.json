@@ -63,7 +63,7 @@
     "mkdirp": "^0.5.1",
     "ono": "^2.2.1",
     "touch": "^1.0.0",
-    "uglify-js": "^3.0.15",
+    "uglify-js": "^2.8.28",
     "uglifyify": "^3.0.4",
     "watchify": "^3.8.0"
   },

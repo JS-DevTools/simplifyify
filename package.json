@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "browserify": "^14.4.0",
-    "browserify-banner": "^1.0.3",
+    "browserify-banner": "^1.0.5",
     "browserify-istanbul": "^2.0.0",
     "commander": "^2.9.0",
     "exorcist": "^0.4.0",

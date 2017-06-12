@@ -137,35 +137,35 @@ describe('simplifyify --outfile', function () {
         assert.fileContents('es5/lib', [
           'index.bundle.js', 'hello-world.bundle.js', 'say/index.bundle.js'
         ],
-          function (contents) {
-            assert.noBanner(contents);
-            assert.hasPreamble(contents);
-            assert.notMinified(contents);
-            assert.hasSourceMap(contents);
-            assert.noCoverage(contents);
-          }
+        function (contents) {
+          assert.noBanner(contents);
+          assert.hasPreamble(contents);
+          assert.notMinified(contents);
+          assert.hasSourceMap(contents);
+          assert.noCoverage(contents);
+        }
         );
         assert.fileContents('es5/lib', [
           'index.bundle.min.js', 'hello-world.bundle.min.js', 'say/index.bundle.min.js'
         ],
-          function (contents) {
-            assert.noBanner(contents);
-            assert.hasMinifiedPreamble(contents);
-            assert.isMinified(contents);
-            assert.hasSourceMap(contents);
-            assert.noCoverage(contents);
-          }
+        function (contents) {
+          assert.noBanner(contents);
+          assert.hasMinifiedPreamble(contents);
+          assert.isMinified(contents);
+          assert.hasSourceMap(contents);
+          assert.noCoverage(contents);
+        }
         );
         assert.fileContents('es5/lib', [
           'index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'
         ],
-          function (contents) {
-            assert.noBanner(contents);
-            assert.hasMinifiedPreamble(contents);
-            assert.isMinified(contents, true);
-            assert.noSourceMap(contents);
-            assert.hasCoverage(contents);
-          }
+        function (contents) {
+          assert.noBanner(contents);
+          assert.hasMinifiedPreamble(contents);
+          assert.isMinified(contents, true);
+          assert.noSourceMap(contents);
+          assert.hasCoverage(contents);
+        }
         );
 
         assert.fileContents('es5/lib', ['index.bundle.js.map', 'index.bundle.min.js.map'],

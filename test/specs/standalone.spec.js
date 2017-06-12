@@ -191,8 +191,7 @@ describe('simplifyify --standalone', function () {
         });
 
         assert.fileContents('universal-lib/dist', ['universal-lib.js.map', 'universal-lib.min.js.map'], function (contents) {
-          expect(contents.sources).to.have.members([
-            '../../../../node_modules/browser-pack/_prelude.js',
+          expect(contents.sources).to.contain.members([
             '../lib/browser.js',
             '../lib/resolve.js',
           ]);

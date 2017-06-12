@@ -47,7 +47,7 @@
     "chai": "^4.0.2",
     "del": "^3.0.0",
     "eslint": "^4.0.0",
-    "eslint-config-modular": "^4.0.0",
+    "eslint-config-modular": "^4.1.0",
     "mocha": "^3.2.0",
     "npm-check": "^5.4.0",
     "version-bump-prompt": "^3.0.0"
@@ -61,7 +61,7 @@
     "glob": "^7.1.1",
     "istanbul": "^0.4.5",
     "mkdirp": "^0.5.1",
-    "ono": "^3.0.0",
+    "ono": "^3.1.0",
     "touch": "^1.0.0",
     "uglify-js": "^2.8.28",
     "uglifyify": "^3.0.4",

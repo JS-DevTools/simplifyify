@@ -1,0 +1,11 @@
+{
+  "name": "universal-lib",
+  "main": "dist/universal-lib.js",
+  "description": "A JavaScript library for Node.js and web browsers",
+  "author": {
+    "name": "John Doe",
+    "url": "http://john-doe-software.com"
+  },
+  "license": "MIT",
+  "homepage": "https://hello-world.com"
+}

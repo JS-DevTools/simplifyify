@@ -150,4 +150,59 @@ describe('simplifyify --standalone', function () {
         done();
       });
   });
+
+  it('should create a bundle and sourcemap for a universal library', function (done) {
+    cli.run('universal-lib/lib/browser.js --outfile universal-lib/dist/universal-lib.js --standalone universal --bundle --debug --minify',
+      function (err, stdout) {
+        if (err) {
+          return done(err);
+        }
+
+        expect(stdout).to.contain('universal-lib/lib/browser.js --> universal-lib/dist/universal-lib.js');
+        expect(stdout).to.contain('universal-lib/lib/browser.js --> universal-lib/dist/universal-lib.js.map');
+
+        assert.directoryContents('universal-lib', [
+          'banner.txt',
+          'bower.json',
+          'dist/universal-lib.js',
+          'dist/universal-lib.js.map',
+          'dist/universal-lib.min.js',
+          'dist/universal-lib.min.js.map',
+          'lib/browser.js',
+          'lib/node.js',
+          'lib/resolve.js',
+          'package.json',
+        ]);
+
+        assert.fileContents('universal-lib/dist/universal-lib.js', function (contents) {
+          assert.hasBanner(contents);
+          assert.hasPreamble(contents);
+          assert.notMinified(contents);
+          assert.hasSourceMap(contents);
+          assert.noCoverage(contents);
+        });
+
+        assert.fileContents('universal-lib/dist/universal-lib.min.js', function (contents) {
+          assert.hasBanner(contents);
+          assert.hasMinifiedUmdPreamble(contents);
+          assert.isMinified(contents);
+          assert.hasSourceMap(contents);
+          assert.noCoverage(contents);
+        });
+
+        assert.fileContents('universal-lib/dist', ['universal-lib.js.map', 'universal-lib.min.js.map'], function (contents) {
+          expect(contents.sources).to.have.members([
+            '../../../../node_modules/browser-pack/_prelude.js',
+            '../lib/browser.js',
+            '../lib/resolve.js',
+          ]);
+
+          // The first 9 lines of the sourcemap should be blank, since we don't
+          // have sourcemappings for the banner
+          expect(contents.mappings).to.match(/^;;;;;;;;(C|A)AAA/);
+        });
+
+        done();
+      });
+  });
 });

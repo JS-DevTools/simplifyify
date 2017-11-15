@@ -18,7 +18,7 @@ exports.directoryIsEmpty = function (dir) {
     expect(outfiles).to.have.same.members([]);
   }
   catch (e) {
-    console.error('Expected: []\n\nActual: %s', JSON.stringify(outfiles, null, 2));
+    console.error('Directory is not empty!\nExpected: []\n\nActual: %s', JSON.stringify(outfiles, null, 2));
     throw e;
   }
 };
@@ -41,7 +41,7 @@ exports.directoryContents = function (dir, files) {
     expect(outfiles).to.have.same.members(files);
   }
   catch (e) {
-    console.error('Expected: %s\n\nActual: %s',
+    console.error('Incorrect directory contents!\nExpected: %s\n\nActual: %s',
       JSON.stringify(files, null, 2), JSON.stringify(outfiles, null, 2));
     throw e;
   }

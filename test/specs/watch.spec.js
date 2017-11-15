@@ -259,13 +259,13 @@ describe('simplifyify --watch', function () {
     function secondCheck () {
       checkOutputFiles();
       watchify.kill();
+      done();
     }
 
     // Verify the final results
     function onExit (err, stdout, stderr) {
       expect(stderr).to.equal('Error bundling error\/error.js\nUnexpected token');
       expect(stdout).to.equal('');
-      done();
     }
 
     function checkOutputFiles () {
@@ -276,8 +276,6 @@ describe('simplifyify --watch', function () {
       assert.fileContents('es5/dist/error.js', function (contents) {
         expect(contents).to.equal('');
       });
-
-      watchify.kill();
     }
   });
 

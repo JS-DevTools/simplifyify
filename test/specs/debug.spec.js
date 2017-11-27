@@ -4,8 +4,8 @@ const cli = require('../fixtures/cli');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 
-describe('simplifyify --debug', function () {
-  it('should create source map for a single file', function (done) {
+describe('simplifyify --debug', () => {
+  it('should create source map for a single file', (done) => {
     cli.run('es5/lib/index.js --debug --outfile es5/dist/index.js',
       function (err, stdout) {
         if (err) {
@@ -20,7 +20,7 @@ describe('simplifyify --debug', function () {
           'index.js.map'
         ]);
 
-        assert.fileContents('es5/dist/index.js', function (contents) {
+        assert.fileContents('es5/dist/index.js', (contents) => {
           assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
@@ -28,7 +28,7 @@ describe('simplifyify --debug', function () {
           assert.noCoverage(contents);
         });
 
-        assert.fileContents('es5/dist/index.js.map', function (contents) {
+        assert.fileContents('es5/dist/index.js.map', (contents) => {
           expect(contents.sources).to.contain.members([
             '../lib/hello-world.js',
             '../lib/index.js',
@@ -39,7 +39,7 @@ describe('simplifyify --debug', function () {
       });
   });
 
-  it('should create source maps for multiple files', function (done) {
+  it('should create source maps for multiple files', (done) => {
     cli.run('es5/lib/**/*.js --debug --outfile es5/dist/',
       function (err, stdout) {
         if (err) {
@@ -62,27 +62,27 @@ describe('simplifyify --debug', function () {
           'say/index.js.map'
         ]);
 
-        assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+        assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], (contents) => {
           assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
         });
-        assert.fileContents('es5/dist/index.js.map', function (contents) {
+        assert.fileContents('es5/dist/index.js.map', (contents) => {
           expect(contents.sources).to.contain.members([
             '../lib/hello-world.js',
             '../lib/index.js',
             '../lib/say/index.js'
           ]);
         });
-        assert.fileContents('es5/dist/hello-world.js.map', function (contents) {
+        assert.fileContents('es5/dist/hello-world.js.map', (contents) => {
           expect(contents.sources).to.contain.members([
             '../lib/hello-world.js',
             '../lib/say/index.js'
           ]);
         });
-        assert.fileContents('es5/dist/say/index.js.map', function (contents) {
+        assert.fileContents('es5/dist/say/index.js.map', (contents) => {
           expect(contents.sources).to.contain.members([
             '../../lib/say/index.js'
           ]);
@@ -91,7 +91,7 @@ describe('simplifyify --debug', function () {
       });
   });
 
-  it('should create source maps for multiple minified files', function (done) {
+  it('should create source maps for multiple minified files', (done) => {
     cli.run('es5/lib/**/index.js --bundle --debug --minify --outfile es5/dist/',
       function (err, stdout) {
         if (err) {
@@ -118,14 +118,14 @@ describe('simplifyify --debug', function () {
           'say/index.min.js.map'
         ]);
 
-        assert.fileContents('es5/dist', ['index.js', 'say/index.js'], function (contents) {
+        assert.fileContents('es5/dist', ['index.js', 'say/index.js'], (contents) => {
           assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
         });
-        assert.fileContents('es5/dist', ['index.min.js', 'say/index.min.js'], function (contents) {
+        assert.fileContents('es5/dist', ['index.min.js', 'say/index.min.js'], (contents) => {
           assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
@@ -133,14 +133,14 @@ describe('simplifyify --debug', function () {
           assert.noCoverage(contents);
         });
 
-        assert.fileContents('es5/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
+        assert.fileContents('es5/dist', ['index.js.map', 'index.min.js.map'], (contents) => {
           expect(contents.sources).to.contain.members([
             '../lib/hello-world.js',
             '../lib/index.js',
             '../lib/say/index.js'
           ]);
         });
-        assert.fileContents('es5/dist', ['say/index.js.map', 'say/index.min.js.map'], function (contents) {
+        assert.fileContents('es5/dist', ['say/index.js.map', 'say/index.min.js.map'], (contents) => {
           expect(contents.sources).to.contain.members([
             '../../lib/say/index.js'
           ]);
@@ -149,7 +149,7 @@ describe('simplifyify --debug', function () {
       });
   });
 
-  it('should append ".map" when renaming output files', function (done) {
+  it('should append ".map" when renaming output files', (done) => {
     cli.run('es5/lib/**/*.js --bundle --debug --minify --outfile es5/dist/*.bundle.es',
       function (err, stdout) {
         if (err) {
@@ -201,20 +201,20 @@ describe('simplifyify --debug', function () {
             assert.noCoverage(contents);
           });
 
-        assert.fileContents('es5/dist', ['index.bundle.es.map', 'index.bundle.min.es.map'], function (contents) {
+        assert.fileContents('es5/dist', ['index.bundle.es.map', 'index.bundle.min.es.map'], (contents) => {
           expect(contents.sources).to.contain.members([
             '../lib/hello-world.js',
             '../lib/index.js',
             '../lib/say/index.js'
           ]);
         });
-        assert.fileContents('es5/dist', ['hello-world.bundle.es.map', 'hello-world.bundle.min.es.map'], function (contents) {
+        assert.fileContents('es5/dist', ['hello-world.bundle.es.map', 'hello-world.bundle.min.es.map'], (contents) => {
           expect(contents.sources).to.contain.members([
             '../lib/hello-world.js',
             '../lib/say/index.js'
           ]);
         });
-        assert.fileContents('es5/dist', ['say/index.bundle.es.map', 'say/index.bundle.min.es.map'], function (contents) {
+        assert.fileContents('es5/dist', ['say/index.bundle.es.map', 'say/index.bundle.min.es.map'], (contents) => {
           expect(contents.sources).to.contain.members([
             '../../lib/say/index.js'
           ]);
@@ -223,7 +223,7 @@ describe('simplifyify --debug', function () {
       });
   });
 
-  it('should create a sourcemap for a bundle with a banner', function (done) {
+  it('should create a sourcemap for a bundle with a banner', (done) => {
     cli.run('hello/index.js --debug --outfile hello/dist/',
       function (err, stdout) {
         if (err) {
@@ -243,7 +243,7 @@ describe('simplifyify --debug', function () {
           'dist/index.js.map',
         ]);
 
-        assert.fileContents('hello/dist/index.js', function (contents) {
+        assert.fileContents('hello/dist/index.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
@@ -251,7 +251,7 @@ describe('simplifyify --debug', function () {
           assert.noCoverage(contents);
         });
 
-        assert.fileContents('hello/dist', 'index.js.map', function (contents) {
+        assert.fileContents('hello/dist', 'index.js.map', (contents) => {
           expect(contents.sources).to.contain.members([
             '../hello-world.js',
             '../index.js',

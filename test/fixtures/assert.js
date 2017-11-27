@@ -63,7 +63,7 @@ exports.fileContents = function (dir, files, fn) {
   dir = resolve(dir);
   files = Array.isArray(files) ? files : [files];
 
-  files.forEach(function (file) {
+  files.forEach((file) => {
     let fullPath = path.join(dir, file);
     let contents = fs.readFileSync(fullPath).toString();
 
@@ -73,7 +73,7 @@ exports.fileContents = function (dir, files, fn) {
 
       if (isWindows) {
         // Replace Windows path separators with POSIX separators
-        contents.sources = contents.sources.map(function (source) {
+        contents.sources = contents.sources.map((source) => {
           return source.replace(/\\/g, '/');
         });
       }
@@ -275,10 +275,10 @@ function ls (dir) {
     let contents = [];
     dir = resolve(dir);
 
-    fs.readdirSync(dir).forEach(function (name) {
+    fs.readdirSync(dir).forEach((name) => {
       let fullName = path.join(dir, name);
       if (fs.statSync(fullName).isDirectory()) {
-        ls(fullName).forEach(function (nested) {
+        ls(fullName).forEach((nested) => {
           contents.push(name + '/' + nested);   // Don't use path.join() here, because of Windows
         });
       }

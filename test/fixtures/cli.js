@@ -7,7 +7,7 @@ const isWindows = /^win/.test(process.platform);
 const cliPath = path.resolve(__dirname, '../../bin/simplifyify');
 const testAppsDir = path.resolve(__dirname, '../test-apps');
 
-beforeEach(function (done) {
+beforeEach('Delete previous test files', (done) => {
   // Clear the output files before each test
   del(['*/dist', '**/*.bundle.*'], { cwd: testAppsDir })
     .then(function () {
@@ -31,10 +31,10 @@ exports.run = function run (args, callback) {
   let simplifyify = spawn('node', args, { cwd: testAppsDir });
 
   // Capture stdout and stderr
-  simplifyify.stdout.on('data', function (data) {
+  simplifyify.stdout.on('data', (data) => {
     stdout += data.toString();
   });
-  simplifyify.stderr.on('data', function (data) {
+  simplifyify.stderr.on('data', (data) => {
     stderr += data.toString();
   });
 

@@ -4,8 +4,8 @@ const cli = require('../fixtures/cli');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 
-describe('simplifyify --bundle', function () {
-  it('should bundle a single file by default', function (done) {
+describe('simplifyify --bundle', () => {
+  it('should bundle a single file by default', (done) => {
     cli.run('hello/index.js',
       function (err, stdout) {
         if (err) {
@@ -23,7 +23,7 @@ describe('simplifyify --bundle', function () {
           'say/index.js'
         ]);
 
-        assert.fileContents('hello/index.bundle.js', function (contents) {
+        assert.fileContents('hello/index.bundle.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
@@ -34,7 +34,7 @@ describe('simplifyify --bundle', function () {
       });
   });
 
-  it('should bundle a single file', function (done) {
+  it('should bundle a single file', (done) => {
     cli.run('hello/index.js --bundle',
       function (err, stdout) {
         if (err) {
@@ -52,7 +52,7 @@ describe('simplifyify --bundle', function () {
           'say/index.js'
         ]);
 
-        assert.fileContents('hello/index.bundle.js', function (contents) {
+        assert.fileContents('hello/index.bundle.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);

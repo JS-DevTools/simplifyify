@@ -4,8 +4,8 @@ const cli = require('../fixtures/cli');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 
-describe('simplifyify --standalone', function () {
-  it('should create a UMD module with the given name', function (done) {
+describe('simplifyify --standalone', () => {
+  it('should create a UMD module with the given name', (done) => {
     cli.run('es5/lib/index.js --standalone FizzBuzz --outfile es5/dist/',
       function (err, stdout) {
         if (err) {
@@ -16,7 +16,7 @@ describe('simplifyify --standalone', function () {
 
         assert.directoryContents('es5/dist', 'index.js');
 
-        assert.fileContents('es5/dist/index.js', function (contents) {
+        assert.fileContents('es5/dist/index.js', (contents) => {
           assert.noBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
@@ -28,7 +28,7 @@ describe('simplifyify --standalone', function () {
       });
   });
 
-  it('should create a UMD module with a namespaced name', function (done) {
+  it('should create a UMD module with a namespaced name', (done) => {
     cli.run('es5/lib/index.js --standalone Fizz.Buzz --outfile es5/dist/',
       function (err, stdout) {
         if (err) {
@@ -39,7 +39,7 @@ describe('simplifyify --standalone', function () {
 
         assert.directoryContents('es5/dist', 'index.js');
 
-        assert.fileContents('es5/dist/index.js', function (contents) {
+        assert.fileContents('es5/dist/index.js', (contents) => {
           assert.noBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
@@ -52,7 +52,7 @@ describe('simplifyify --standalone', function () {
       });
   });
 
-  it('should create a UMD bundle with a banner', function (done) {
+  it('should create a UMD bundle with a banner', (done) => {
     cli.run('hello/index.js --standalone Fizz.Buzz --outfile hello/dist/',
       function (err, stdout) {
         if (err) {
@@ -70,7 +70,7 @@ describe('simplifyify --standalone', function () {
           'dist/index.js',
         ]);
 
-        assert.fileContents('hello/dist/index.js', function (contents) {
+        assert.fileContents('hello/dist/index.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
@@ -83,7 +83,7 @@ describe('simplifyify --standalone', function () {
       });
   });
 
-  it('should create a UMD bundle with all options', function (done) {
+  it('should create a UMD bundle with all options', (done) => {
     cli.run('hello/index.js --bundle --minify --debug --test --standalone Fizz.Buzz --outfile hello/dist/',
       function (err, stdout) {
         if (err) {
@@ -109,7 +109,7 @@ describe('simplifyify --standalone', function () {
           'dist/index.test.js',
         ]);
 
-        assert.fileContents('hello/dist/index.js', function (contents) {
+        assert.fileContents('hello/dist/index.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
@@ -119,7 +119,7 @@ describe('simplifyify --standalone', function () {
           expect(contents).to.match(/\.Buzz = /);
         });
 
-        assert.fileContents('hello/dist/index.min.js', function (contents) {
+        assert.fileContents('hello/dist/index.min.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents);
@@ -129,7 +129,7 @@ describe('simplifyify --standalone', function () {
           expect(contents).to.match(/\.Buzz=/);
         });
 
-        assert.fileContents('hello/dist/index.test.js', function (contents) {
+        assert.fileContents('hello/dist/index.test.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents, true);
@@ -139,7 +139,7 @@ describe('simplifyify --standalone', function () {
           expect(contents).to.match(/\.Buzz=/);
         });
 
-        assert.fileContents('hello/dist', ['index.js.map', 'index.min.js.map'], function (contents) {
+        assert.fileContents('hello/dist', ['index.js.map', 'index.min.js.map'], (contents) => {
           expect(contents.sources).to.contain.members([
             '../hello-world.js',
             '../index.js',
@@ -151,7 +151,7 @@ describe('simplifyify --standalone', function () {
       });
   });
 
-  it('should create a bundle and sourcemap for a universal library', function (done) {
+  it('should create a bundle and sourcemap for a universal library', (done) => {
     cli.run('universal-lib/lib/browser.js --outfile universal-lib/dist/universal-lib.js --standalone universal --bundle --debug --minify',
       function (err, stdout) {
         if (err) {
@@ -174,7 +174,7 @@ describe('simplifyify --standalone', function () {
           'package.json',
         ]);
 
-        assert.fileContents('universal-lib/dist/universal-lib.js', function (contents) {
+        assert.fileContents('universal-lib/dist/universal-lib.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
@@ -182,7 +182,7 @@ describe('simplifyify --standalone', function () {
           assert.noCoverage(contents);
         });
 
-        assert.fileContents('universal-lib/dist/universal-lib.min.js', function (contents) {
+        assert.fileContents('universal-lib/dist/universal-lib.min.js', (contents) => {
           assert.hasBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents);
@@ -190,7 +190,7 @@ describe('simplifyify --standalone', function () {
           assert.noCoverage(contents);
         });
 
-        assert.fileContents('universal-lib/dist', ['universal-lib.js.map', 'universal-lib.min.js.map'], function (contents) {
+        assert.fileContents('universal-lib/dist', ['universal-lib.js.map', 'universal-lib.min.js.map'], (contents) => {
           expect(contents.sources).to.contain.members([
             '../lib/browser.js',
             '../lib/resolve.js',

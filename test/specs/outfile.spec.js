@@ -4,9 +4,9 @@ const cli = require('../fixtures/cli');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 
-describe('simplifyify --outfile', function () {
-  it('should create a single output file, with the an explicit name', function (done) {
-    cli.run('es5/lib/index.js --outfile es5/dist/my-file.js', function (err, stdout) {
+describe('simplifyify --outfile', () => {
+  it('should create a single output file, with the an explicit name', (done) => {
+    cli.run('es5/lib/index.js --outfile es5/dist/my-file.js', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -15,7 +15,7 @@ describe('simplifyify --outfile', function () {
 
       assert.directoryContents('es5/dist', 'my-file.js');
 
-      assert.fileContents('es5/dist/my-file.js', function (contents) {
+      assert.fileContents('es5/dist/my-file.js', (contents) => {
         assert.noBanner(contents);
         assert.hasPreamble(contents);
         assert.notMinified(contents);
@@ -26,8 +26,8 @@ describe('simplifyify --outfile', function () {
     });
   });
 
-  it('should create a single output file, with the entry file name', function (done) {
-    cli.run('es5/lib/index.js --outfile es5/dist', function (err, stdout) {
+  it('should create a single output file, with the entry file name', (done) => {
+    cli.run('es5/lib/index.js --outfile es5/dist', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -36,7 +36,7 @@ describe('simplifyify --outfile', function () {
 
       assert.directoryContents('es5/dist', 'index.js');
 
-      assert.fileContents('es5/dist/index.js', function (contents) {
+      assert.fileContents('es5/dist/index.js', (contents) => {
         assert.noBanner(contents);
         assert.hasPreamble(contents);
         assert.notMinified(contents);
@@ -47,8 +47,8 @@ describe('simplifyify --outfile', function () {
     });
   });
 
-  it('should create a single output file, with the patterned file name', function (done) {
-    cli.run('es5/lib/index.js --outfile es5/dist/*.foo-bar.es6', function (err, stdout) {
+  it('should create a single output file, with the patterned file name', (done) => {
+    cli.run('es5/lib/index.js --outfile es5/dist/*.foo-bar.es6', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -57,7 +57,7 @@ describe('simplifyify --outfile', function () {
 
       assert.directoryContents('es5/dist', 'index.foo-bar.es6');
 
-      assert.fileContents('es5/dist/index.foo-bar.es6', function (contents) {
+      assert.fileContents('es5/dist/index.foo-bar.es6', (contents) => {
         assert.noBanner(contents);
         assert.hasPreamble(contents);
         assert.notMinified(contents);
@@ -68,9 +68,9 @@ describe('simplifyify --outfile', function () {
     });
   });
 
-  describe('no --outfile specified', function () {
-    it('should create a single output file, in the entry file directory', function (done) {
-      cli.run('es5/lib/index.js', function (err, stdout) {
+  describe('no --outfile specified', () => {
+    it('should create a single output file, in the entry file directory', (done) => {
+      cli.run('es5/lib/index.js', (err, stdout) => {
         if (err) {
           return done(err);
         }
@@ -81,7 +81,7 @@ describe('simplifyify --outfile', function () {
         assert.directoryContents('es5/lib',
           ['index.bundle.js'].concat(filesThatAlreadyExisted));
 
-        assert.fileContents('es5/lib/index.bundle.js', function (contents) {
+        assert.fileContents('es5/lib/index.bundle.js', (contents) => {
           assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
@@ -92,8 +92,8 @@ describe('simplifyify --outfile', function () {
       });
     });
 
-    it('should create multiple output files, in the entry file directories', function (done) {
-      cli.run('es5/lib/**/*.js --bundle --debug --minify --test', function (err, stdout) {
+    it('should create multiple output files, in the entry file directories', (done) => {
+      cli.run('es5/lib/**/*.js --bundle --debug --minify --test', (err, stdout) => {
         if (err) {
           return done(err);
         }

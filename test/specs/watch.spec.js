@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 const del = require('del');
 const touch = require('touch');
 
-describe('simplifyify --watch', function () {
+describe('simplifyify --watch', () => {
   let waitForBrowserify;
 
   beforeEach(function () {
@@ -16,7 +16,7 @@ describe('simplifyify --watch', function () {
     waitForBrowserify = isSlowEnvironment ? 15000 : 5000;
   });
 
-  it('should rebuild a single output file', function (done) {
+  it('should rebuild a single output file', (done) => {
     // Run Watchify
     let watchify = cli.run('es5/lib/index.js --watch --outfile es5/dist/my-file.js', onExit);
 
@@ -28,7 +28,7 @@ describe('simplifyify --watch', function () {
 
       // Delete the output
       del('test/test-apps/es5/dist')
-        .then(function () {
+        .then(() => {
           // Touch a file, to trigger Watchify again
           touch('test/test-apps/es5/lib/say/index.js');
 
@@ -55,7 +55,7 @@ describe('simplifyify --watch', function () {
     function checkOutputFiles () {
       assert.directoryContents('es5/dist', 'my-file.js');
 
-      assert.fileContents('es5/dist/my-file.js', function (contents) {
+      assert.fileContents('es5/dist/my-file.js', (contents) => {
         assert.noBanner(contents);
         assert.hasPreamble(contents);
         assert.notMinified(contents);
@@ -65,7 +65,7 @@ describe('simplifyify --watch', function () {
     }
   });
 
-  it('should rebuild multiple output files', function (done) {
+  it('should rebuild multiple output files', (done) => {
     // Run Watchify
     // jscs:disable maximumLineLength
     let watchify = cli.run(
@@ -121,20 +121,20 @@ describe('simplifyify --watch', function () {
           assert.hasCoverage(contents);
         });
 
-      assert.fileContents('es5/dist', ['index.bundle.js.map', 'index.bundle.min.js.map'], function (contents) {
+      assert.fileContents('es5/dist', ['index.bundle.js.map', 'index.bundle.min.js.map'], (contents) => {
         expect(contents.sources).to.contain.members([
           '../lib/hello-world.js',
           '../lib/index.js',
           '../lib/say/index.js'
         ]);
       });
-      assert.fileContents('es5/dist', ['hello-world.bundle.js.map', 'hello-world.bundle.min.js.map'], function (contents) {
+      assert.fileContents('es5/dist', ['hello-world.bundle.js.map', 'hello-world.bundle.min.js.map'], (contents) => {
         expect(contents.sources).to.contain.members([
           '../lib/hello-world.js',
           '../lib/say/index.js'
         ]);
       });
-      assert.fileContents('es5/dist', ['say/index.bundle.js.map', 'say/index.bundle.min.js.map'], function (contents) {
+      assert.fileContents('es5/dist', ['say/index.bundle.js.map', 'say/index.bundle.min.js.map'], (contents) => {
         expect(contents.sources).to.contain.members([
           '../../lib/say/index.js'
         ]);
@@ -142,7 +142,7 @@ describe('simplifyify --watch', function () {
 
       // Delete the output
       del('test/test-apps/es5/dist')
-        .then(function () {
+        .then(() => {
           // Touch a file, to trigger Watchify again
           // NOTE: Only two of the three entry files will be re-build, since the third doesn't reference this file
           touch('test/test-apps/es5/lib/hello-world.js');
@@ -192,14 +192,14 @@ describe('simplifyify --watch', function () {
           assert.hasCoverage(contents);
         });
 
-      assert.fileContents('es5/dist', ['index.bundle.js.map', 'index.bundle.min.js.map'], function (contents) {
+      assert.fileContents('es5/dist', ['index.bundle.js.map', 'index.bundle.min.js.map'], (contents) => {
         expect(contents.sources).to.contain.members([
           '../lib/hello-world.js',
           '../lib/index.js',
           '../lib/say/index.js'
         ]);
       });
-      assert.fileContents('es5/dist', ['hello-world.bundle.js.map', 'hello-world.bundle.min.js.map'], function (contents) {
+      assert.fileContents('es5/dist', ['hello-world.bundle.js.map', 'hello-world.bundle.min.js.map'], (contents) => {
         expect(contents.sources).to.contain.members([
           '../lib/hello-world.js',
           '../lib/say/index.js'
@@ -234,7 +234,12 @@ describe('simplifyify --watch', function () {
     }
   });
 
-  it('should report errors', function (done) {
+  it('should report errors', (done) => {
+    // This test fails on Windows, because Watchify crashes
+    if (process.platform === 'win32') {
+      return done();
+    }
+
     // Run Watchify
     let watchify = cli.run('error/error.js --watch --outfile es5/dist/error.js', onExit);
 
@@ -246,7 +251,7 @@ describe('simplifyify --watch', function () {
 
       // Delete the output
       del('test/test-apps/es5/dist')
-        .then(function () {
+        .then(() => {
           // Touch a file, to trigger Watchify again
           touch('test/test-apps/error/error.js');
 
@@ -273,7 +278,7 @@ describe('simplifyify --watch', function () {
       assert.directoryContents('es5/dist', 'error.js');
 
       // The output file should be empty
-      assert.fileContents('es5/dist/error.js', function (contents) {
+      assert.fileContents('es5/dist/error.js', (contents) => {
         expect(contents).to.equal('');
       });
     }

@@ -4,8 +4,8 @@ const cli = require('../fixtures/cli');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 
-describe('simplifyify --exclude', function () {
-  it('should not exclude anything if nothing matches', function (done) {
+describe('simplifyify --exclude', () => {
+  it('should not exclude anything if nothing matches', (done) => {
     cli.run('es5/lib/**/*.js --exclude es5/lib/**/*-foo.js --outfile es5/dist/',
       function (err, stdout) {
         if (err) {
@@ -22,7 +22,7 @@ describe('simplifyify --exclude', function () {
           'say/index.js'
         ]);
 
-        assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], function (contents) {
+        assert.fileContents('es5/dist', ['index.js', 'hello-world.js', 'say/index.js'], (contents) => {
           assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
@@ -33,7 +33,7 @@ describe('simplifyify --exclude', function () {
       });
   });
 
-  it('should exclude a single file', function (done) {
+  it('should exclude a single file', (done) => {
     cli.run('es5/lib/**/*.js --exclude es5/lib/say/index.js --outfile es5/dist/',
       function (err, stdout) {
         if (err) {
@@ -49,7 +49,7 @@ describe('simplifyify --exclude', function () {
           'hello-world.js'
         ]);
 
-        assert.fileContents('es5/dist', ['index.js', 'hello-world.js'], function (contents) {
+        assert.fileContents('es5/dist', ['index.js', 'hello-world.js'], (contents) => {
           assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
@@ -60,7 +60,7 @@ describe('simplifyify --exclude', function () {
       });
   });
 
-  it('should exclude multiple files', function (done) {
+  it('should exclude multiple files', (done) => {
     cli.run('es5/lib/**/*.js --exclude es5/lib/**/index.js --outfile es5/dist/',
       function (err, stdout) {
         if (err) {
@@ -75,7 +75,7 @@ describe('simplifyify --exclude', function () {
           'hello-world.js'
         ]);
 
-        assert.fileContents('es5/dist', ['hello-world.js'], function (contents) {
+        assert.fileContents('es5/dist', ['hello-world.js'], (contents) => {
           assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);

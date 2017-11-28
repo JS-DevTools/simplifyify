@@ -151,6 +151,44 @@ describe('simplifyify --standalone', () => {
       });
   });
 
+  it('should create UMD modules with names derived from pattern', function (done) {
+    cli.run('es5/lib/*.js --standalone Fizz.* --outfile es5/dist/',
+      function (err, stdout) {
+        if (err) {
+          return done(err);
+        }
+
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.js');
+
+        assert.directoryContents('es5/dist', [
+          'index.js',
+          'hello-world.js',
+        ]);
+
+
+        assert.fileContents('es5/dist/index.js', function (contents) {
+          assert.noBanner(contents);
+          assert.hasUmdPreamble(contents);
+          assert.notMinified(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
+          expect(contents).to.match(/\.Fizz = /);
+          expect(contents).to.match(/\.index = /);
+        });
+        assert.fileContents('es5/dist/hello-world.js', function (contents) {
+          assert.noBanner(contents);
+          assert.hasUmdPreamble(contents);
+          assert.notMinified(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
+          expect(contents).to.match(/\.Fizz = /);
+          expect(contents).to.match(/\.helloWorld = /);
+        });
+        done();
+      });
+  });
+
   it('should create a bundle and sourcemap for a universal library', (done) => {
     cli.run('universal-lib/lib/browser.js --outfile universal-lib/dist/universal-lib.js --standalone universal --bundle --debug --minify',
       function (err, stdout) {

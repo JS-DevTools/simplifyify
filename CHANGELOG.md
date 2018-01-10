@@ -3,6 +3,24 @@ All notable changes will be documented in this file.
 `simplifyify` adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [v3.3.0](https://github.com/BigstickCarpet/simplifyify/tree/v3.3.0) (2018-01-10)
+
+- Refactored to use ES6 syntax (Node 4.x compatible)
+
+- The `--standalone` option now supports a wildcard (e.g. "MyLib.*").  Thanks to [@taye](https://github.com/taye) for [the PR](https://github.com/BigstickCarpet/simplifyify/pull/24)
+
+
+[Full Changelog](https://github.com/BigstickCarpet/simplifyify/compare/v3.2.0...v3.3.0)
+
+
+## [v3.2.0](https://github.com/BigstickCarpet/simplifyify/tree/v3.2.0) (2016-11-11)
+
+- Fixed several subtle bugs that were introduced in 3.1.0
+
+
+[Full Changelog](https://github.com/BigstickCarpet/simplifyify/compare/v3.1.0...v3.2.0)
+
+
 ## [v3.1.0](https://github.com/BigstickCarpet/simplifyify/tree/v3.1.0) (2016-11-06)
 
 #### New Feature: [bannerify](https://www.npmjs.com/package/bannerify) support

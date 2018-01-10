@@ -148,17 +148,19 @@ describe('simplifyify --standalone', () => {
   });
 
   it('should create multiple UMD bundles with names derived from pattern', (done) => {
-    cli.run('es5/lib/*.js --standalone Fizz.* --outfile es5/dist/', (err, stdout) => {
+    cli.run('es5/lib/**/*.js --standalone Fizz.* --outfile es5/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
 
       expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.js');
+      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.js');
 
       assert.directoryContents('es5/dist', [
         'index.js',
         'hello-world.js',
+        'say/index.js'
       ]);
 
 
@@ -180,6 +182,17 @@ describe('simplifyify --standalone', () => {
         expect(contents).to.match(/\.Fizz = /);
         expect(contents).to.match(/\.helloWorld = /);
       });
+      assert.fileContents('es5/dist/say/index.js', function (contents) {
+        assert.noBanner(contents);
+        assert.hasUmdPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+        expect(contents).to.match(/\.Fizz = /);
+        expect(contents).to.match(/\.say = /);
+        expect(contents).to.match(/\.index = /);
+      });
+
       done();
     });
   });

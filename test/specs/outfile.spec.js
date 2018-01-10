@@ -47,6 +47,39 @@ describe('simplifyify --outfile', () => {
     });
   });
 
+  it('should create multiple output files, with the entry file names', (done) => {
+    cli.run('es5/lib/**/index.js --outfile es5/dist', (err, stdout) => {
+      if (err) {
+        return done(err);
+      }
+
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
+      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.js');
+
+      assert.directoryContents('es5/dist', [
+        'index.js',
+        'say/index.js'
+      ]);
+
+      assert.fileContents('es5/dist/index.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+      });
+      assert.fileContents('es5/dist/say/index.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+      });
+
+      done();
+    });
+  });
+
   it('should create a single output file, with the patterned file name', (done) => {
     cli.run('es5/lib/index.js --outfile es5/dist/*.foo-bar.es6', (err, stdout) => {
       if (err) {

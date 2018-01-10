@@ -22,7 +22,7 @@ function parseArguments () {
     .option('-w, --watch', 'Watch source file(s) and rebuild the bundle(s) automatically')
     .option('-o, --outfile <filespec>', 'The output file or directory. May include a filename pattern (e.g. "*.bundle.js")')
     .option('-u, --exclude <filespec>', 'File path or glob pattern to exclude')
-    .option('-s, --standalone <name>', 'Export as a named UMD bundle')
+    .option('-s, --standalone <name>', 'Export as a named UMD bundle (e.g. "my.cool.bundle"). May include a wildcard (e.g. "MyLib.*")')
     .on('--help', () => {
       console.log(
         '  Arguments:\n' +

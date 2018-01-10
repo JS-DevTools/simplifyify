@@ -70,8 +70,8 @@ Options:
   -u, --exclude <filespec>  File path or glob pattern to exclude.
                             Don't forget to put quotes around glob patterns
 
-  -s, --standalone <name>   Export as a named UMD bundle
-                            For example: my.cool.module
+  -s, --standalone <name>   Export as a named UMD bundle (e.g. "my.cool.module")
+                            May include a wildcard (e.g. "MyLib.*")
 
 Arguments:
 

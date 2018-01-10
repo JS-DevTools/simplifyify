@@ -80,7 +80,7 @@ describe('simplifyify --outfile', () => {
     });
   });
 
-  it('should create a single output file, with the patterned file name', (done) => {
+  it('should create a single output file, with a patterned file name', (done) => {
     cli.run('es5/lib/index.js --outfile es5/dist/*.foo-bar.es6', (err, stdout) => {
       if (err) {
         return done(err);

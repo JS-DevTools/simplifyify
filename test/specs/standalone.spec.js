@@ -164,7 +164,7 @@ describe('simplifyify --standalone', () => {
       ]);
 
 
-      assert.fileContents('es5/dist/index.js', function (contents) {
+      assert.fileContents('es5/dist/index.js', (contents) => {
         assert.noBanner(contents);
         assert.hasUmdPreamble(contents);
         assert.notMinified(contents);
@@ -173,7 +173,7 @@ describe('simplifyify --standalone', () => {
         expect(contents).to.match(/\.Fizz = /);
         expect(contents).to.match(/\.index = /);
       });
-      assert.fileContents('es5/dist/hello-world.js', function (contents) {
+      assert.fileContents('es5/dist/hello-world.js', (contents) => {
         assert.noBanner(contents);
         assert.hasUmdPreamble(contents);
         assert.notMinified(contents);
@@ -182,7 +182,7 @@ describe('simplifyify --standalone', () => {
         expect(contents).to.match(/\.Fizz = /);
         expect(contents).to.match(/\.helloWorld = /);
       });
-      assert.fileContents('es5/dist/say/index.js', function (contents) {
+      assert.fileContents('es5/dist/say/index.js', (contents) => {
         assert.noBanner(contents);
         assert.hasUmdPreamble(contents);
         assert.notMinified(contents);

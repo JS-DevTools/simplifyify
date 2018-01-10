@@ -282,7 +282,7 @@ function ls (dir) {
           contents.push(name + '/' + nested);   // Don't use path.join() here, because of Windows
         });
       }
-      else if (!['.DS_Store', 'Thumbs.db'].includes(name)) {
+      else if (['.DS_Store', 'Thumbs.db'].indexOf(name) === -1) {
         contents.push(name);
       }
     });

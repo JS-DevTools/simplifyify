@@ -241,7 +241,7 @@ exports.isBabelified = function (contents) {
  */
 exports.hasCoverage = function (contents) {
   // Check for __cov_ wrappers
-  expect(contents).to.match(/__cov(_[a-zA-Z0-9$]+)+\.__coverage__/, 'The file is missing code-coverage instrumentation');
+  expect(contents).to.match(/__coverage__/, 'The file is missing code-coverage instrumentation');
 };
 
 /**
@@ -250,7 +250,7 @@ exports.hasCoverage = function (contents) {
  * @param {string} contents
  */
 exports.noCoverage = function (contents) {
-  expect(contents).not.to.match(/__cov_/, 'The file contains code-coverage instrumentation, but shouldn\'t');
+  expect(contents).not.to.match(/__coverage__/, 'The file contains code-coverage instrumentation, but shouldn\'t');
 };
 
 /**

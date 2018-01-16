@@ -256,7 +256,7 @@ describe('browserify transforms', () => {
       assert.fileContents('transform-options/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], (contents) => {
         assert.hasBanner(contents);
         assert.hasPreamble(contents);
-        assert.isMinified(contents, true, true);
+        assert.notMinified(contents);
         assert.noSourceMap(contents);
         assert.hasCoverage(contents);
         assert.isBabelified(contents);

@@ -47,11 +47,10 @@
   "dependencies": {
     "browserify": "^15.0.0",
     "browserify-banner": "^1.0.6",
-    "browserify-istanbul": "^2.0.0",
+    "browserify-istanbul": "^3.0.1",
     "commander": "^2.12.2",
     "exorcist": "^1.0.0",
     "glob": "^7.1.1",
-    "istanbul": "^0.4.5",
     "mkdirp": "^0.5.1",
     "ono": "^4.0.2",
     "touch": "^3.1.0",

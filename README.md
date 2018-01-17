@@ -24,7 +24,7 @@ Features
 - One command creates all the files you need:
     - `--bundle` bundles your code and nothing else. Useful during development
     - `--debug` creates _external_ source-maps (`.map`) using [exorcist](https://www.npmjs.com/package/exorcist)
-    - `--minify` shrinks your code using [uglifyify](https://www.npmjs.com/package/uglifyify) _and_ [UglifyJS](https://github.com/mishoo/UglifyJS2#uglifyjs-2)
+    - `--minify` shrinks your code using [uglifyify](https://www.npmjs.com/package/uglifyify) _and_ [Uglify-ES](https://github.com/mishoo/UglifyJS2/tree/harmony)
     - `--test` adds code-coverage instrumentation using [istanbul](https://www.npmjs.com/package/istanbul)
     - `--watch` uses [watchify](https://www.npmjs.com/package/watchify) for _fast_ differential re-builds as files change
 

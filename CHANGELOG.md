@@ -3,6 +3,16 @@ All notable changes will be documented in this file.
 `simplifyify` adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [v4.0.0](https://github.com/BigstickCarpet/simplifyify/tree/v4.0.0) (2018-01-17)
+
+- Updated all dependencies, including major version updates of `browserify`, `babelify`, `browserify-istanbul`, and `exorcist`
+
+- Switched from UglifyJS to [Uglify-ES](https://www.npmjs.com/package/uglify-es), which supports ES2015+ syntax.  This _shouldn't_ break anything, but I'm bumping the major version number just to be safe
+
+
+[Full Changelog](https://github.com/BigstickCarpet/simplifyify/compare/v3.3.0...v4.0.0)
+
+
 ## [v3.3.0](https://github.com/BigstickCarpet/simplifyify/tree/v3.3.0) (2018-01-10)
 
 - Refactored to use ES6 syntax (Node 4.x compatible)

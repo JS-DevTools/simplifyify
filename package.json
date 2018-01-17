@@ -1,6 +1,6 @@
 {
   "name": "simplifyify",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "description": "A simplified Browserify and Watchify CLI",
   "keywords": [
     "browserify",

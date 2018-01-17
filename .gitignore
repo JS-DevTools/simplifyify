@@ -37,6 +37,7 @@ node_modules
 
 # Test output
 lib-cov
+.nyc_output
 /coverage
 /test/test-apps/*/dist
 /test/test-apps/*/*.bundle.js

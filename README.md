@@ -6,7 +6,7 @@ Simplifyify
 [![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/BigstickCarpet/simplifyify?svg=true&branch=master&failingText=Windows%20build%20failing&passingText=Windows%20build%20passing)](https://ci.appveyor.com/project/BigstickCarpet/simplifyify)
 
 [![Coverage Status](https://coveralls.io/repos/github/BigstickCarpet/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/BigstickCarpet/simplifyify?branch=master)
-[![Codacy Score](https://www.codacy.com/project/badge/e7d74b7748674054be73556c87475c49)](https://www.codacy.com/public/jamesmessinger/simplifyify)
+[![Codacy Score](https://www.codacy.com/project/badge/Grade/e7d74b7748674054be73556c87475c49)](https://www.codacy.com/public/jamesmessinger/simplifyify)
 [![Inline docs](http://inch-ci.org/github/BigstickCarpet/simplifyify.svg?branch=master&style=shields)](http://inch-ci.org/github/BigstickCarpet/simplifyify)
 [![Dependencies](https://david-dm.org/BigstickCarpet/simplifyify.svg)](https://david-dm.org/BigstickCarpet/simplifyify)
 

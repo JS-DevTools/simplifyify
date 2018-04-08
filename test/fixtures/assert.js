@@ -113,7 +113,7 @@ exports.noBanner = function (contents) {
  */
 exports.hasPreamble = function (contents) {
   expect(contents).to.match(
-    /var \w\s*=\s*typeof require\s*==\s*["']function["']\s*\&\&\s*require;/,
+    /var \w\s*=\s*["']function["']\s*==\s*typeof require\s*\&\&\s*require;/,
     'The file is missing the Browserify preamble (non-UMD)'
   );
 };
@@ -126,7 +126,7 @@ exports.hasPreamble = function (contents) {
  */
 exports.hasMinifiedPreamble = function (contents) {
   expect(contents).to.match(
-    /var \w=typeof require=="function"\&\&*require;/,
+    /var \w="function"==typeof require\&\&*require;/,
     'The file is missing the Browserify preamble (minified, non-UMD)'
   );
 };

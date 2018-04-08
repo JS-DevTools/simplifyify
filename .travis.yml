@@ -12,7 +12,7 @@ matrix:
     - node_js: 6
     - node_js: 7
     - node_js: 8
-    - node_js: node   # latest version
+    - node_js: 9
 
 script:
   - npm run cover

@@ -191,7 +191,7 @@ Simplifyify honors the [`browserify.transform`](https://github.com/substack/node
     "transform": ["babelify"]
   },
   "devDependencies": {
-    "babelify": "^7.2.0",
+    "babelify": "^10.0.0"
   }
 }
 ```
@@ -205,7 +205,7 @@ You can also specify options for your transforms.  The exact options depend on t
   "browserify": {
     "transform": [
         ["babelify", {
-          "presets": ["es2015"]
+          "presets": ["@babel/preset-env"]
         }],
         ["uglifyify", {
           "mangle": true,
@@ -225,7 +225,8 @@ You can also specify options for your transforms.  The exact options depend on t
     ]
   },
   "devDependencies": {
-    "babelify": "^7.2.0",
+    "@babel/preset-env": "^7.0.0",
+    "babelify": "^10.0.0"
   }
 }
 ```
@@ -281,4 +282,3 @@ To build the project locally on your computer:
 License
 --------------------------
 Simplifyify is 100% free and open-source, under the [MIT license](LICENSE). Use it however you want.
-

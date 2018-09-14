@@ -5,11 +5,13 @@
   "browser": "src/index.js",
   "browserify": {
     "transform": [
-      "babelify"
+      ["babelify", {
+        "presets": ["@babel/preset-env"]
+      }]
     ]
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.3.13",
-    "babelify": "^7.2.0"
+    "@babel/preset-env": "^7.0.0",
+    "babelify": "^10.0.0"
   }
 }

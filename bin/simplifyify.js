@@ -91,8 +91,22 @@ function main () {
         console.error(`Error bundling ${fileSet.entryFile}`);
       }
 
-      let message = process.env.DEBUG ? err.stack : err.message;
-      console.error(message);
+      if (process.env.DEBUG) {
+        if (err.annotated) {
+          // Show the annotated source code where the error occurred
+          console.error(err.annotated);
+
+          // Also show the stack trace, if there is one
+          err.stack && console.error(err.stack);
+        }
+        else {
+          // Show the stack trace, or fallback to the error message
+          console.error(err.stack || err.message);
+        }
+      }
+      else {
+        console.error(err.message);
+      }
 
       // Exit the app with an error code,
       // unless we're in "Watchify" mode, in which case, we just keep watching

@@ -18,7 +18,9 @@
           "quote_style": 1,
           "comments": true
         }
-      }],
+      }]
+    ],
+    "plugins": [
       ["browserify-banner", { "template": "<%= pkg.name %> v<%= pkg.version %>" }]
     ]
   },

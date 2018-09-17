@@ -18,7 +18,7 @@ I constantly find myself using the same Browserify plug-ins and transforms on ev
 Features
 --------------------------
 - Supports [globs](https://github.com/isaacs/node-glob#glob-primer), even on Windows
-- Supports Browserify [transforms](#browserify-transforms), such as Babel, CoffeeScript, TypeScript, etc.
+- Supports Browserify [transforms](#browserify-transforms) and [plugins](#browserify-plugins), such as Babel, CoffeeScript, TypeScript, etc.
 - Has a programmatic [API](#api), for use with build tools like Grunt, Gulp, Broccoli, etc.
 - Bundle everything into one big file, or create different bundles for each part of your app (see [examples below](#examples))
 - Add a banner with version, date, license, etc. via [browserify-banner](https://www.npmjs.com/package/browserify-banner)
@@ -181,7 +181,7 @@ src/checkout/index.js --> dist/checkout/index.bundle.min.js.map # <-- source map
 
 Browserify Transforms
 --------------------------
-Simplifyify honors the [`browserify.transform`](https://github.com/substack/node-browserify#browserifytransform) field in your `package.json` file.  For example, the following configuration would use [Babelify](https://github.com/babel/babelify) to transform your ES6 code to ES5:
+Simplifyify honors the [`browserify.transform`](https://github.com/substack/node-browserify#browserifytransform) field in your `package.json` file.  For example, the following configuration uses [Babelify](https://github.com/babel/babelify) to transform your ES6 code to ES5:
 
 ```json
 {
@@ -204,29 +204,58 @@ You can also specify options for your transforms.  The exact options depend on t
   "version": "1.2.3",
   "browserify": {
     "transform": [
-        ["babelify", {
-          "presets": ["@babel/preset-env"]
-        }],
-        ["uglifyify", {
-          "mangle": true,
-          "compress": {
-            "sequences": true,
-            "dead_code": true,
-            "booleans": true,
-            "conditionals": true,
-            "if_return": false,
-            "drop_console": false,
-            "keep_fnames": true
-          },
-          "output": {
-            "comments": false
-          }
-        }]
+      ["babelify", {
+        "presets": ["@babel/preset-env"]
+      }],
+      ["uglifyify", {
+        "mangle": true,
+        "compress": {
+          "sequences": true,
+          "dead_code": true,
+          "booleans": true,
+          "conditionals": true,
+          "if_return": false,
+          "drop_console": false,
+          "keep_fnames": true
+        },
+        "output": {
+          "comments": false
+        }
+      }]
     ]
   },
   "devDependencies": {
     "@babel/preset-env": "^7.0.0",
     "babelify": "^10.0.0"
+  }
+}
+```
+
+
+
+Browserify Plugins
+--------------------------
+The same technique described above for Browserify transforms also works for Browserify plugins.  Just add a `browserify.plugins` field to your `package.json` file.  For example, the following configuration configures [TSify](https://github.com/TypeStrong/tsify/) to transpile your TypeScript code, and [browserify-banner](https://github.com/bigstickcarpet/browserify-banner) to add a banner comment to the top of your output file(s).
+
+```json
+{
+  "name": "my-package",
+  "version": "1.2.3",
+  "browserify": {
+    "plugins": [
+      ["browserify-banner", {
+        "template": "<%= pkg.name %> v<%= pkg.version %>"
+      }],
+      ["tsify", {
+        "target": "esnext",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "jsx": "react"
+      }]
+    ]
+  },
+  "devDependencies": {
+    "typescript": "^3.0.3"
   }
 }
 ```

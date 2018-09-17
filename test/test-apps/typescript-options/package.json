@@ -1,0 +1,21 @@
+{
+  "name": "sample-package",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "browser": "src/index.js",
+  "browserify": {
+    "plugins": [
+      ["browserify-banner", { "template": "<%= pkg.name %> v<%= pkg.version %>" }],
+      ["tsify", {
+        "target": "esnext",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "jsx": "react"
+      }]
+    ]
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.0.0",
+    "babelify": "^10.0.0"
+  }
+}

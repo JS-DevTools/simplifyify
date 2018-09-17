@@ -215,7 +215,7 @@ exports.isMinified = function (contents, stripComments, beautified) {
  */
 exports.notMinified = function (contents) {
   // Newlines are preserved
-  expect(contents).to.match(/['"]use strict['"];\r?\n\s+/, 'The file has been minified (newlines were removed)');
+  expect(contents).to.match(/['"]use strict['"];\r?\n(\s+|\w+)/, 'The file has been minified (newlines were removed)');
 
   // Non-important comments are preserved
   expect(contents).to.match(/\* @param \{string\}/, 'Comments have been removed from the file (@param)');

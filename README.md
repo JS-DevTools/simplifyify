@@ -19,6 +19,7 @@ Features
 --------------------------
 - Supports [globs](https://github.com/isaacs/node-glob#glob-primer), even on Windows
 - Supports Browserify [transforms](#browserify-transforms) and [plugins](#browserify-plugins), such as Babel, CoffeeScript, TypeScript, etc.
+- Built-in support for TypeScript. Enabled automatically if the entry file has a `.ts` or `.tsx` extension
 - Has a programmatic [API](#api), for use with build tools like Grunt, Gulp, Broccoli, etc.
 - Bundle everything into one big file, or create different bundles for each part of your app (see [examples below](#examples))
 - Add a banner with version, date, license, etc. via [browserify-banner](https://www.npmjs.com/package/browserify-banner)

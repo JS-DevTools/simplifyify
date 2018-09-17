@@ -3,6 +3,22 @@ All notable changes will be documented in this file.
 `simplifyify` adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [v5.0.0](https://github.com/BigstickCarpet/simplifyify/tree/v5.0.0) (2018-09-17)
+
+#### TypeScript Support
+- Simplifyify now has built-in support for TypeScript!  If your entry file has a `.ts` or `.tsx` extension, then Simplifyify will automatically use [TSify](https://github.com/TypeStrong/tsify/) to transpile your code.  You can configure TSify via the `browserify.plugins` field in your package.json, or via a tsconfig.json file.  If both exist, then the `browserify.plugins` field overrides any values in tsconfig.json.
+
+#### Breaking Changes
+- Dropped support for Node v4.0 and older (see https://github.com/nodejs/Release)
+
+- Previously, [browserify-banner](https://github.com/bigstickcarpet/browserify-banner) could be configured using the `browserify.transform` field in package.json.  But browserify-banner is a Browserify plugin, not a transform.  This caused it to be loaded twice - once as a plugin and once as a transform.  You should now use the `browserify.plugins` field instead.
+
+- The `browserify.transform` field in package.json can be used to configure Browserify transforms.  Previously, Simplifyify allowed you to _also_ use it to configure Browserify plugins, but that caused plugins to be loaded twice - once as a plugin and once as a transform.  This can cause undefined behavior with some plugins.  To fix that, Simplifyify now expects you to to configure Browserify plugins using the `browserify.plugins` field instead.
+
+
+[Full Changelog](https://github.com/BigstickCarpet/simplifyify/compare/v4.0.3...v5.0.0)
+
+
 ## [v4.0.0](https://github.com/BigstickCarpet/simplifyify/tree/v4.0.0) (2018-01-17)
 
 - Updated all dependencies, including major version updates of `browserify`, `babelify`, `browserify-istanbul`, and `exorcist`

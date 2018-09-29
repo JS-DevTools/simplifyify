@@ -252,4 +252,36 @@ describe('simplifyify --coverage', () => {
       done();
     });
   });
+
+  it('should work with shorthand arguments', (done) => {
+    cli.run('es5/lib/index.js -bco es5/dist/', (err, stdout) => {
+      if (err) {
+        return done(err);
+      }
+
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.coverage.js');
+
+      assert.directoryContents('es5/dist', [
+        'index.js',
+        'index.coverage.js'
+      ]);
+
+      assert.fileContents('es5/dist/index.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+      });
+      assert.fileContents('es5/dist/index.coverage.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasMinifiedPreamble(contents);
+        assert.isMinified(contents, true);
+        assert.noSourceMap(contents);
+        assert.hasCoverage(contents);
+      });
+      done();
+    });
+  });
 });

@@ -178,4 +178,36 @@ describe('simplifyify --minify', () => {
       done();
     });
   });
+
+  it('should work with shorthand arguments', (done) => {
+    cli.run('es5/lib/index.js -bmo es5/dist/', (err, stdout) => {
+      if (err) {
+        return done(err);
+      }
+
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.min.js');
+
+      assert.directoryContents('es5/dist', [
+        'index.js',
+        'index.min.js'
+      ]);
+
+      assert.fileContents('es5/dist/index.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+      });
+      assert.fileContents('es5/dist/index.min.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasMinifiedPreamble(contents);
+        assert.isMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+      });
+      done();
+    });
+  });
 });

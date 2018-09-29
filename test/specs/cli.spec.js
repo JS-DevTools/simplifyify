@@ -82,7 +82,7 @@ describe('simplifyify --version', () => {
 
 describe('failure tests', () => {
   it('should error if called with an unknown option', (done) => {
-    cli.run('-x', (err, stdout, stderr) => {
+    cli.run('-z', (err, stdout, stderr) => {
       expect(err).to.be.an.instanceOf(Error);
       expect(stderr).to.contain('unknown option');
       assert.directoryIsEmpty('es5/dist');

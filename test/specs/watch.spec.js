@@ -69,7 +69,7 @@ describe('simplifyify --watch', () => {
     // Run Watchify
     // jscs:disable maximumLineLength
     let watchify = cli.run(
-      'es5/lib/**/*.js --watch --bundle --debug --minify --test --standalone Fizz.Buzz --outfile es5/dist/*.bundle.js',
+      'es5/lib/**/*.js -wbdm --standalone Fizz.Buzz --outfile es5/dist/*.bundle.js',
       onExit
     );
     // jscs:enable maximumLineLength

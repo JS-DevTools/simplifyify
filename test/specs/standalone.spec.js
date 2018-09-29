@@ -249,4 +249,27 @@ describe('simplifyify --standalone', () => {
       done();
     });
   });
+
+  it('should work with shorthand arguments', (done) => {
+    cli.run('es5/lib/index.js -s FizzBuzz -o es5/dist/', (err, stdout) => {
+      if (err) {
+        return done(err);
+      }
+
+      expect(stdout).to.equal('es5/lib/index.js --> es5/dist/index.js');
+
+      assert.directoryContents('es5/dist', 'index.js');
+
+      assert.fileContents('es5/dist/index.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasUmdPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+        expect(contents).to.match(/\.FizzBuzz = /);
+      });
+      done();
+    });
+  });
+
 });

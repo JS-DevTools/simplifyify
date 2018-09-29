@@ -60,4 +60,32 @@ describe('simplifyify --bundle', () => {
       done();
     });
   });
+
+  it('should work with shorthand arguments', (done) => {
+    cli.run('hello/index.js -b', (err, stdout) => {
+      if (err) {
+        return done(err);
+      }
+
+      expect(stdout).to.contain('hello/index.js --> hello/index.bundle.js');
+
+      assert.directoryContents('hello', [
+        'banner.txt',
+        'hello-world.js',
+        'index.js',
+        'index.bundle.js',
+        'package.json',
+        'say/index.js'
+      ]);
+
+      assert.fileContents('hello/index.bundle.js', (contents) => {
+        assert.hasBanner(contents);
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+      });
+      done();
+    });
+  });
 });

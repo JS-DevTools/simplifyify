@@ -261,4 +261,37 @@ describe('simplifyify --debug', () => {
       done();
     });
   });
+
+  it('should work with shorthand arguments', (done) => {
+    cli.run('es5/lib/index.js -do es5/dist/index.js', (err, stdout) => {
+      if (err) {
+        return done(err);
+      }
+
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js.map');
+
+      assert.directoryContents('es5/dist', [
+        'index.js',
+        'index.js.map'
+      ]);
+
+      assert.fileContents('es5/dist/index.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.hasSourceMap(contents);
+        assert.noCoverage(contents);
+      });
+
+      assert.fileContents('es5/dist/index.js.map', (contents) => {
+        expect(contents.sources).to.contain.members([
+          '../lib/hello-world.js',
+          '../lib/index.js',
+          '../lib/say/index.js'
+        ]);
+      });
+      done();
+    });
+  });
 });

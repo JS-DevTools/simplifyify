@@ -230,4 +230,25 @@ describe('simplifyify --outfile', () => {
       });
     });
   });
+
+  it('should work with shorthand arguments', (done) => {
+    cli.run('es5/lib/index.js -o es5/dist/my-file.js', (err, stdout) => {
+      if (err) {
+        return done(err);
+      }
+
+      expect(stdout).to.equal('es5/lib/index.js --> es5/dist/my-file.js');
+
+      assert.directoryContents('es5/dist', 'my-file.js');
+
+      assert.fileContents('es5/dist/my-file.js', (contents) => {
+        assert.noBanner(contents);
+        assert.hasPreamble(contents);
+        assert.notMinified(contents);
+        assert.noSourceMap(contents);
+        assert.noCoverage(contents);
+      });
+      done();
+    });
+  });
 });

@@ -3,6 +3,19 @@ All notable changes will be documented in this file.
 `simplifyify` adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [v6.0.0](https://github.com/James-Messinger/simplifyify/tree/v6.0.0) (2018-09-29)
+
+#### Breaking Changes
+- The shorthand argument for the `--exclude` option is now `-x` instead of `-u`
+
+- The `--test` argument has been replaced with `--coverage` for clarity.  The corresponding shorthand argument is `-c`.
+
+- The `--coverage` argument produces a `.coverage.js` file instead of a `.test.js` file
+
+
+[Full Changelog](https://github.com/James-Messinger/simplifyify/compare/v5.0.0...v6.0.0)
+
+
 ## [v5.0.0](https://github.com/James-Messinger/simplifyify/tree/v5.0.0) (2018-09-17)
 
 #### TypeScript Support

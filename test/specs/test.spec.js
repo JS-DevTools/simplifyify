@@ -4,9 +4,9 @@ const cli = require('../fixtures/cli');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 
-describe('simplifyify --test', () => {
+describe('simplifyify --coverage', () => {
   it('should add code-coverage to a single file', (done) => {
-    cli.run('es5/lib/index.js --test --outfile es5/dist/', (err, stdout) => {
+    cli.run('es5/lib/index.js --coverage --outfile es5/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -27,17 +27,17 @@ describe('simplifyify --test', () => {
   });
 
   it('should create a code-coverage and normal file', (done) => {
-    cli.run('es5/lib/index.js --bundle --test --outfile es5/dist/', (err, stdout) => {
+    cli.run('es5/lib/index.js --bundle --coverage --outfile es5/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
 
       expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.js');
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.test.js');
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.coverage.js');
 
       assert.directoryContents('es5/dist', [
         'index.js',
-        'index.test.js'
+        'index.coverage.js'
       ]);
 
       assert.fileContents('es5/dist/index.js', (contents) => {
@@ -47,7 +47,7 @@ describe('simplifyify --test', () => {
         assert.noSourceMap(contents);
         assert.noCoverage(contents);
       });
-      assert.fileContents('es5/dist/index.test.js', (contents) => {
+      assert.fileContents('es5/dist/index.coverage.js', (contents) => {
         assert.noBanner(contents);
         assert.hasMinifiedPreamble(contents);
         assert.isMinified(contents, true);
@@ -59,7 +59,7 @@ describe('simplifyify --test', () => {
   });
 
   it('should add code-coverage to multiple files', (done) => {
-    cli.run('es5/lib/**/index.js --test --outfile es5/dist/', (err, stdout) => {
+    cli.run('es5/lib/**/index.js --coverage --outfile es5/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -84,7 +84,7 @@ describe('simplifyify --test', () => {
   });
 
   it('should NOT create a ".map" file for test bundles, even if --debug is set', (done) => {
-    cli.run('es5/lib/**/*.js --test --debug --outfile es5/dist/*.foo.es5', (err, stdout) => {
+    cli.run('es5/lib/**/*.js --coverage --debug --outfile es5/dist/*.foo.es5', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -112,7 +112,7 @@ describe('simplifyify --test', () => {
   });
 
   it('should NOT append ".test" when renaming output files', (done) => {
-    cli.run('es5/lib/**/*.js --test --outfile es5/dist/*.foo.es5', (err, stdout) => {
+    cli.run('es5/lib/**/*.js --coverage --outfile es5/dist/*.foo.es5', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -140,7 +140,7 @@ describe('simplifyify --test', () => {
   });
 
   it('should append ".test" when renaming output files and producing multiple bundles', (done) => {
-    cli.run('es5/lib/**/*.js --test --bundle --minify --debug --outfile es5/dist/*.foo.es5', (err, stdout) => {
+    cli.run('es5/lib/**/*.js --coverage --bundle --minify --debug --outfile es5/dist/*.foo.es5', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -149,34 +149,34 @@ describe('simplifyify --test', () => {
       expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.foo.es5.map');
       expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.foo.min.es5');
       expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.foo.min.es5.map');
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.foo.test.es5');
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.foo.coverage.es5');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.foo.es5');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.foo.es5.map');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.foo.min.es5');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.foo.min.es5.map');
-      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.foo.test.es5');
+      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.foo.coverage.es5');
       expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.foo.es5');
       expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.foo.es5.map');
       expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.foo.min.es5');
       expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.foo.min.es5.map');
-      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.foo.test.es5');
+      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.foo.coverage.es5');
 
       assert.directoryContents('es5/dist', [
         'index.foo.es5',
         'index.foo.es5.map',
         'index.foo.min.es5',
         'index.foo.min.es5.map',
-        'index.foo.test.es5',
+        'index.foo.coverage.es5',
         'hello-world.foo.es5',
         'hello-world.foo.es5.map',
         'hello-world.foo.min.es5',
         'hello-world.foo.min.es5.map',
-        'hello-world.foo.test.es5',
+        'hello-world.foo.coverage.es5',
         'say/index.foo.es5',
         'say/index.foo.es5.map',
         'say/index.foo.min.es5',
         'say/index.foo.min.es5.map',
-        'say/index.foo.test.es5'
+        'say/index.foo.coverage.es5'
       ]);
 
       assert.fileContents('es5/dist', ['index.foo.es5', 'hello-world.foo.es5', 'say/index.foo.es5'], (contents) => {
@@ -194,7 +194,7 @@ describe('simplifyify --test', () => {
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
         });
-      assert.fileContents('es5/dist', ['index.foo.test.es5', 'hello-world.foo.test.es5', 'say/index.foo.test.es5'],
+      assert.fileContents('es5/dist', ['index.foo.coverage.es5', 'hello-world.foo.coverage.es5', 'say/index.foo.coverage.es5'],
         function (contents) {
           assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
@@ -226,7 +226,7 @@ describe('simplifyify --test', () => {
   });
 
   it('should create a test bundle with a banner', (done) => {
-    cli.run('hello/index.js --test --outfile hello/dist/', (err, stdout) => {
+    cli.run('hello/index.js --coverage --outfile hello/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }

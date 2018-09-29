@@ -83,17 +83,17 @@ describe('simplifyify --watch', () => {
         'index.bundle.js.map',
         'index.bundle.min.js',
         'index.bundle.min.js.map',
-        'index.bundle.test.js',
+        'index.bundle.coverage.js',
         'hello-world.bundle.js',
         'hello-world.bundle.js.map',
         'hello-world.bundle.min.js',
         'hello-world.bundle.min.js.map',
-        'hello-world.bundle.test.js',
+        'hello-world.bundle.coverage.js',
         'say/index.bundle.js',
         'say/index.bundle.js.map',
         'say/index.bundle.min.js',
         'say/index.bundle.min.js.map',
-        'say/index.bundle.test.js'
+        'say/index.bundle.coverage.js'
       ]);
 
       assert.fileContents('es5/dist', ['index.bundle.js', 'hello-world.bundle.js', 'say/index.bundle.js'],
@@ -112,7 +112,7 @@ describe('simplifyify --watch', () => {
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
         });
-      assert.fileContents('es5/dist', ['index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'],
+      assert.fileContents('es5/dist', ['index.bundle.coverage.js', 'hello-world.bundle.coverage.js', 'say/index.bundle.coverage.js'],
         function (contents) {
           assert.noBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
@@ -159,12 +159,12 @@ describe('simplifyify --watch', () => {
         'index.bundle.js.map',
         'index.bundle.min.js',
         'index.bundle.min.js.map',
-        'index.bundle.test.js',
+        'index.bundle.coverage.js',
         'hello-world.bundle.js',
         'hello-world.bundle.js.map',
         'hello-world.bundle.min.js',
         'hello-world.bundle.min.js.map',
-        'hello-world.bundle.test.js'
+        'hello-world.bundle.coverage.js'
       ]);
 
       assert.fileContents('es5/dist', ['index.bundle.js', 'hello-world.bundle.js'],
@@ -183,7 +183,7 @@ describe('simplifyify --watch', () => {
           assert.hasSourceMap(contents);
           assert.noCoverage(contents);
         });
-      assert.fileContents('es5/dist', ['index.bundle.test.js', 'hello-world.bundle.test.js'],
+      assert.fileContents('es5/dist', ['index.bundle.coverage.js', 'hello-world.bundle.coverage.js'],
         function (contents) {
           assert.noBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
@@ -217,17 +217,17 @@ describe('simplifyify --watch', () => {
       expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.js.map');
       expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.min.js');
       expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.min.js.map');
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.test.js');
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.coverage.js');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.js');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.js.map');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.min.js');
       expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.min.js.map');
-      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.test.js');
+      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.coverage.js');
       expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.js');
       expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.js.map');
       expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.min.js');
       expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.min.js.map');
-      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.test.js');
+      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.coverage.js');
 
       expect(stdout).to.contain('\nes5/lib/hello-world.js has changed');
       done();

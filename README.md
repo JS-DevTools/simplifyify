@@ -27,7 +27,7 @@ Features
     - `--bundle` bundles your code and nothing else. Useful during development
     - `--debug` creates _external_ source-maps (`.map`) using [exorcist](https://www.npmjs.com/package/exorcist)
     - `--minify` shrinks your code using [uglifyify](https://www.npmjs.com/package/uglifyify) _and_ [Uglify-ES](https://github.com/mishoo/UglifyJS2/tree/harmony)
-    - `--test` adds code-coverage instrumentation using [istanbul](https://www.npmjs.com/package/istanbul)
+    - `--coverage` adds code-coverage instrumentation using [istanbul](https://istanbul.js.org/)
     - `--watch` uses [watchify](https://www.npmjs.com/package/watchify) for _fast_ differential re-builds as files change
 
 
@@ -59,8 +59,8 @@ Options:
 
   -m, --minify              Create a minified bundle (*.min.js) for each source file.
 
-  -v, --test                Create a bundle with code-coverage instrumentation
-                            (*.test.js) for each source file.
+  -c, --coverage            Create a bundle with code-coverage instrumentation
+                            (*.coverage.js) for each source file.
 
   -d, --debug               Create a source map (*.js.map) for each bundle
 
@@ -69,7 +69,7 @@ Options:
   -o, --outfile <filespec>  The output file or directory.
                             May include a filename pattern (e.g. "*.bundle.js")
 
-  -u, --exclude <filespec>  File path or glob pattern to exclude.
+  -x, --exclude <filespec>  File path or glob pattern to exclude.
                             Don't forget to put quotes around glob patterns
 
   -s, --standalone <name>   Export as a named UMD bundle (e.g. "my.cool.module")
@@ -126,13 +126,13 @@ src/index.js --> dist/my-package.js.map             # <-- source map
 Simplifyify can output multiple bundles of your code in a single command.  Let's say you want to create an unminified bundle for development (with a source map), a minified bundle for production (with a source map), and a test bundle (with code-coverage instrumentation) for testing:
 
 ```bash
-simplifyify src/index.js --outfile dist/my-package.js --bundle --debug --minify --test
+simplifyify src/index.js --outfile dist/my-package.js --bundle --debug --minify --coverage
 
 src/index.js --> dist/my-package.js                 # <-- unminified code
 src/index.js --> dist/my-package.js.map             # <-- source map
 src/index.js --> dist/my-package.min.js             # <-- minified code
 src/index.js --> dist/my-package.min.js.map         # <-- source map
-src/index.js --> dist/my-package.test.js            # <-- code-coverage
+src/index.js --> dist/my-package.coverage.js        # <-- code-coverage
 ```
 
 

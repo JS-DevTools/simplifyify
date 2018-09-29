@@ -12,7 +12,7 @@ describe('TypeScript support', () => {
   });
 
   it('should automatically enable TypeScript if the entry file has a .ts extenstion', (done) => {
-    cli.run('typescript/src/index.ts --bundle --minify --debug --test --outfile typescript/dist/', (err, stdout) => {
+    cli.run('typescript/src/index.ts --bundle --minify --debug --coverage --outfile typescript/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -21,14 +21,14 @@ describe('TypeScript support', () => {
       expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.js.map');
       expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.min.js');
       expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.min.js.map');
-      expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.test.js');
+      expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.coverage.js');
 
       assert.directoryContents('typescript/dist', [
         'index.js',
         'index.js.map',
         'index.min.js',
         'index.min.js.map',
-        'index.test.js',
+        'index.coverage.js',
       ]);
 
       assert.fileContents('typescript/dist', 'index.js', (contents) => {
@@ -49,7 +49,7 @@ describe('TypeScript support', () => {
         assert.isBabelified(contents);
       });
 
-      assert.fileContents('typescript/dist', 'index.test.js', (contents) => {
+      assert.fileContents('typescript/dist', 'index.coverage.js', (contents) => {
         assert.noBanner(contents);
         assert.hasMinifiedPreamble(contents);
         assert.isMinified(contents, true);
@@ -71,7 +71,7 @@ describe('TypeScript support', () => {
   });
 
   it('should automatically enable TypeScript if the entry files has a .tsx extenstion', (done) => {
-    cli.run('typescript/src/hello-world.tsx --bundle --minify --debug --test --outfile typescript/dist/', (err, stdout) => {
+    cli.run('typescript/src/hello-world.tsx --bundle --minify --debug --coverage --outfile typescript/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -80,14 +80,14 @@ describe('TypeScript support', () => {
       expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.js.map');
       expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.min.js');
       expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.min.js.map');
-      expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.test.js');
+      expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.coverage.js');
 
       assert.directoryContents('typescript/dist', [
         'hello-world.js',
         'hello-world.js.map',
         'hello-world.min.js',
         'hello-world.min.js.map',
-        'hello-world.test.js',
+        'hello-world.coverage.js',
       ]);
 
       assert.fileContents('typescript/dist', 'hello-world.js', (contents) => {
@@ -108,7 +108,7 @@ describe('TypeScript support', () => {
         assert.isBabelified(contents);
       });
 
-      assert.fileContents('typescript/dist', 'hello-world.test.js', (contents) => {
+      assert.fileContents('typescript/dist', 'hello-world.coverage.js', (contents) => {
         assert.noBanner(contents);
         assert.hasMinifiedPreamble(contents);
         assert.isMinified(contents, true);
@@ -129,7 +129,7 @@ describe('TypeScript support', () => {
   });
 
   it('should automatically enable TypeScript for all entry files that have a .ts or .tsx extenstion', (done) => {
-    cli.run('typescript/src/**/*.ts* --bundle --minify --debug --test --outfile typescript/dist/', (err, stdout) => {
+    cli.run('typescript/src/**/*.ts* --bundle --minify --debug --coverage --outfile typescript/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -138,34 +138,34 @@ describe('TypeScript support', () => {
       expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.js.map');
       expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.min.js');
       expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.min.js.map');
-      expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.test.js');
+      expect(stdout).to.contain('typescript/src/index.ts --> typescript/dist/index.coverage.js');
       expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.js');
       expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.js.map');
       expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.min.js');
       expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.min.js.map');
-      expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.test.js');
+      expect(stdout).to.contain('typescript/src/hello-world.tsx --> typescript/dist/hello-world.coverage.js');
       expect(stdout).to.contain('typescript/src/say/index.ts --> typescript/dist/say/index.js');
       expect(stdout).to.contain('typescript/src/say/index.ts --> typescript/dist/say/index.js.map');
       expect(stdout).to.contain('typescript/src/say/index.ts --> typescript/dist/say/index.min.js');
       expect(stdout).to.contain('typescript/src/say/index.ts --> typescript/dist/say/index.min.js.map');
-      expect(stdout).to.contain('typescript/src/say/index.ts --> typescript/dist/say/index.test.js');
+      expect(stdout).to.contain('typescript/src/say/index.ts --> typescript/dist/say/index.coverage.js');
 
       assert.directoryContents('typescript/dist', [
         'hello-world.js',
         'hello-world.js.map',
         'hello-world.min.js',
         'hello-world.min.js.map',
-        'hello-world.test.js',
+        'hello-world.coverage.js',
         'index.js',
         'index.js.map',
         'index.min.js',
         'index.min.js.map',
-        'index.test.js',
+        'index.coverage.js',
         'say/index.js',
         'say/index.js.map',
         'say/index.min.js',
         'say/index.min.js.map',
-        'say/index.test.js',
+        'say/index.coverage.js',
       ]);
 
       assert.fileContents('typescript/dist', ['index.js', 'hello-world.js', 'say/index.js'], (contents) => {
@@ -186,7 +186,7 @@ describe('TypeScript support', () => {
         assert.isBabelified(contents);
       });
 
-      assert.fileContents('typescript/dist', ['index.test.js', 'hello-world.test.js', 'say/index.test.js'], (contents) => {
+      assert.fileContents('typescript/dist', ['index.coverage.js', 'hello-world.coverage.js', 'say/index.coverage.js'], (contents) => {
         assert.noBanner(contents);
         assert.hasMinifiedPreamble(contents);
         assert.isMinified(contents, true);
@@ -221,7 +221,7 @@ describe('TypeScript support', () => {
   });
 
   it('should get TSify options from tsconfig.json', (done) => {
-    cli.run('typescript-tsconfig/src/index.ts --bundle --minify --debug --test --outfile typescript-tsconfig/dist/', (err, stdout) => {
+    cli.run('typescript-tsconfig/src/index.ts --bundle --minify --debug --coverage --outfile typescript-tsconfig/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -230,14 +230,14 @@ describe('TypeScript support', () => {
       expect(stdout).to.contain('typescript-tsconfig/src/index.ts --> typescript-tsconfig/dist/index.js.map');
       expect(stdout).to.contain('typescript-tsconfig/src/index.ts --> typescript-tsconfig/dist/index.min.js');
       expect(stdout).to.contain('typescript-tsconfig/src/index.ts --> typescript-tsconfig/dist/index.min.js.map');
-      expect(stdout).to.contain('typescript-tsconfig/src/index.ts --> typescript-tsconfig/dist/index.test.js');
+      expect(stdout).to.contain('typescript-tsconfig/src/index.ts --> typescript-tsconfig/dist/index.coverage.js');
 
       assert.directoryContents('typescript-tsconfig/dist', [
         'index.js',
         'index.js.map',
         'index.min.js',
         'index.min.js.map',
-        'index.test.js',
+        'index.coverage.js',
       ]);
 
       assert.fileContents('typescript-tsconfig/dist', 'index.js', (contents) => {
@@ -258,7 +258,7 @@ describe('TypeScript support', () => {
         assert.isBabelified(contents);
       });
 
-      assert.fileContents('typescript-tsconfig/dist', 'index.test.js', (contents) => {
+      assert.fileContents('typescript-tsconfig/dist', 'index.coverage.js', (contents) => {
         assert.noBanner(contents);
         assert.hasMinifiedPreamble(contents);
         assert.isMinified(contents, true);
@@ -280,7 +280,7 @@ describe('TypeScript support', () => {
   });
 
   it('should get TSify options from package.json', (done) => {
-    cli.run('typescript-options/src/index.ts --bundle --minify --debug --test --outfile typescript-options/dist/', (err, stdout) => {
+    cli.run('typescript-options/src/index.ts --bundle --minify --debug --coverage --outfile typescript-options/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -289,14 +289,14 @@ describe('TypeScript support', () => {
       expect(stdout).to.contain('typescript-options/src/index.ts --> typescript-options/dist/index.js.map');
       expect(stdout).to.contain('typescript-options/src/index.ts --> typescript-options/dist/index.min.js');
       expect(stdout).to.contain('typescript-options/src/index.ts --> typescript-options/dist/index.min.js.map');
-      expect(stdout).to.contain('typescript-options/src/index.ts --> typescript-options/dist/index.test.js');
+      expect(stdout).to.contain('typescript-options/src/index.ts --> typescript-options/dist/index.coverage.js');
 
       assert.directoryContents('typescript-options/dist', [
         'index.js',
         'index.js.map',
         'index.min.js',
         'index.min.js.map',
-        'index.test.js',
+        'index.coverage.js',
       ]);
 
       assert.fileContents('typescript-options/dist', 'index.js', (contents) => {
@@ -317,7 +317,7 @@ describe('TypeScript support', () => {
         assert.isBabelified(contents);
       });
 
-      assert.fileContents('typescript-options/dist', 'index.test.js', (contents) => {
+      assert.fileContents('typescript-options/dist', 'index.coverage.js', (contents) => {
         assert.hasBanner(contents);
         assert.hasMinifiedPreamble(contents);
         assert.isMinified(contents, true);

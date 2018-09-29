@@ -81,7 +81,7 @@ describe('simplifyify --standalone', () => {
   });
 
   it('should create a UMD bundle with all options', (done) => {
-    cli.run('hello/index.js --bundle --minify --debug --test --standalone Fizz.Buzz --outfile hello/dist/', (err, stdout) => {
+    cli.run('hello/index.js --bundle --minify --debug --coverage --standalone Fizz.Buzz --outfile hello/dist/', (err, stdout) => {
       if (err) {
         return done(err);
       }
@@ -90,7 +90,7 @@ describe('simplifyify --standalone', () => {
       expect(stdout).to.contain('hello/index.js --> hello/dist/index.js.map');
       expect(stdout).to.contain('hello/index.js --> hello/dist/index.min.js');
       expect(stdout).to.contain('hello/index.js --> hello/dist/index.min.js.map');
-      expect(stdout).to.contain('hello/index.js --> hello/dist/index.test.js');
+      expect(stdout).to.contain('hello/index.js --> hello/dist/index.coverage.js');
 
       assert.directoryContents('hello', [
         'banner.txt',
@@ -102,7 +102,7 @@ describe('simplifyify --standalone', () => {
         'dist/index.js.map',
         'dist/index.min.js',
         'dist/index.min.js.map',
-        'dist/index.test.js',
+        'dist/index.coverage.js',
       ]);
 
       assert.fileContents('hello/dist/index.js', (contents) => {
@@ -125,7 +125,7 @@ describe('simplifyify --standalone', () => {
         expect(contents).to.match(/\.Buzz=/);
       });
 
-      assert.fileContents('hello/dist/index.test.js', (contents) => {
+      assert.fileContents('hello/dist/index.coverage.js', (contents) => {
         assert.hasBanner(contents);
         assert.hasMinifiedUmdPreamble(contents);
         assert.isMinified(contents, true);

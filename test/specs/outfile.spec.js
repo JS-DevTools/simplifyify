@@ -126,7 +126,7 @@ describe('simplifyify --outfile', () => {
     });
 
     it('should create multiple output files, in the entry file directories', (done) => {
-      cli.run('es5/lib/**/*.js --bundle --debug --minify --test', (err, stdout) => {
+      cli.run('es5/lib/**/*.js --bundle --debug --minify --coverage', (err, stdout) => {
         if (err) {
           return done(err);
         }
@@ -135,17 +135,17 @@ describe('simplifyify --outfile', () => {
         expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.js.map');
         expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.min.js');
         expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.min.js.map');
-        expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.test.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/lib/index.bundle.coverage.js');
         expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.js');
         expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.js.map');
         expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.min.js');
         expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.min.js.map');
-        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.test.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/lib/hello-world.bundle.coverage.js');
         expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.js');
         expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.js.map');
         expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.min.js');
         expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.min.js.map');
-        expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.test.js');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/lib/say/index.bundle.coverage.js');
 
         let filesThatAlreadyExisted = ['hello-world.js', 'index.js', 'say/index.js'];
         assert.directoryContents('es5/lib', [
@@ -153,17 +153,17 @@ describe('simplifyify --outfile', () => {
           'index.bundle.js.map',
           'index.bundle.min.js',
           'index.bundle.min.js.map',
-          'index.bundle.test.js',
+          'index.bundle.coverage.js',
           'hello-world.bundle.js',
           'hello-world.bundle.js.map',
           'hello-world.bundle.min.js',
           'hello-world.bundle.min.js.map',
-          'hello-world.bundle.test.js',
+          'hello-world.bundle.coverage.js',
           'say/index.bundle.js',
           'say/index.bundle.js.map',
           'say/index.bundle.min.js',
           'say/index.bundle.min.js.map',
-          'say/index.bundle.test.js'
+          'say/index.bundle.coverage.js'
         ].concat(filesThatAlreadyExisted)
         );
 
@@ -190,7 +190,7 @@ describe('simplifyify --outfile', () => {
         }
         );
         assert.fileContents('es5/lib', [
-          'index.bundle.test.js', 'hello-world.bundle.test.js', 'say/index.bundle.test.js'
+          'index.bundle.coverage.js', 'hello-world.bundle.coverage.js', 'say/index.bundle.coverage.js'
         ],
         function (contents) {
           assert.noBanner(contents);

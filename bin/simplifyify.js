@@ -17,11 +17,11 @@ function parseArguments () {
     .arguments('<source-files...>')
     .option('-b, --bundle', 'Create a non-minified bundle (*.js) for each source file')
     .option('-m, --minify', 'Create a minified bundle (*.min.js) for each source file')
-    .option('-v, --test', 'Create a bundle with code-coverage instrumentation (*.test.js)')
+    .option('-c, --coverage', 'Create a bundle with code-coverage instrumentation (*.coverage.js)')
     .option('-d, --debug', 'Create a source map (*.js.map) for each bundle')
     .option('-w, --watch', 'Watch source file(s) and rebuild the bundle(s) automatically')
     .option('-o, --outfile <filespec>', 'The output file or directory. May include a filename pattern (e.g. "*.bundle.js")')
-    .option('-u, --exclude <filespec>', 'File path or glob pattern to exclude')
+    .option('-x, --exclude <filespec>', 'File path or glob pattern to exclude')
     .option('-s, --standalone <name>', 'Export as a named UMD bundle (e.g. "my.cool.bundle"). May include a wildcard (e.g. "MyLib.*")')
     .on('--help', () => {
       console.log(
@@ -34,14 +34,14 @@ function parseArguments () {
         '\n' +
         '  Examples:\n' +
         '\n' +
-        '    simplifyify src/index.js --outfile dist/bundle.js --bundle --debug --minify --test\n' +
+        '    simplifyify src/index.js --outfile dist/bundle.js --bundle --debug --minify --coverage\n' +
         '\n' +
         '    Output Files: \n' +
         '      dist/bundle.js\n' +
         '      dist/bundle.js.map\n' +
         '      dist/bundle.min.js\n' +
         '      dist/bundle.min.js.map\n' +
-        '      dist/bundle.test.js\n' +
+        '      dist/bundle.coverage.js\n' +
         '\n' +
         '\n' +
         '    simplifyify "src/module-*.js" --outfile "dist/*.bundle.js" --bundle --minify\n' +

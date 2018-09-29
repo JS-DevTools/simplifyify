@@ -69,7 +69,7 @@ describe('simplifyify --watch', () => {
     // Run Watchify
     // jscs:disable maximumLineLength
     let watchify = cli.run(
-      'es5/lib/**/*.js -wbdm --standalone Fizz.Buzz --outfile es5/dist/*.bundle.js',
+      'es5/lib/**/*.js -wbcdm --standalone Fizz.Buzz --outfile es5/dist/*.bundle.js',
       onExit
     );
     // jscs:enable maximumLineLength
@@ -79,16 +79,16 @@ describe('simplifyify --watch', () => {
 
     function firstCheck () {
       assert.directoryContents('es5/dist', [
-        'index.bundle.js',
-        'index.bundle.js.map',
-        'index.bundle.min.js',
-        'index.bundle.min.js.map',
-        'index.bundle.coverage.js',
         'hello-world.bundle.js',
         'hello-world.bundle.js.map',
         'hello-world.bundle.min.js',
         'hello-world.bundle.min.js.map',
         'hello-world.bundle.coverage.js',
+        'index.bundle.js',
+        'index.bundle.js.map',
+        'index.bundle.min.js',
+        'index.bundle.min.js.map',
+        'index.bundle.coverage.js',
         'say/index.bundle.js',
         'say/index.bundle.js.map',
         'say/index.bundle.min.js',
@@ -155,16 +155,16 @@ describe('simplifyify --watch', () => {
 
     function secondCheck () {
       assert.directoryContents('es5/dist', [
+        'hello-world.bundle.js',
+        'hello-world.bundle.js.map',
+        'hello-world.bundle.min.js',
+        'hello-world.bundle.min.js.map',
+        'hello-world.bundle.coverage.js',
         'index.bundle.js',
         'index.bundle.js.map',
         'index.bundle.min.js',
         'index.bundle.min.js.map',
         'index.bundle.coverage.js',
-        'hello-world.bundle.js',
-        'hello-world.bundle.js.map',
-        'hello-world.bundle.min.js',
-        'hello-world.bundle.min.js.map',
-        'hello-world.bundle.coverage.js'
       ]);
 
       assert.fileContents('es5/dist', ['index.bundle.js', 'hello-world.bundle.js'],

@@ -2,13 +2,13 @@ Simplifyify
 ============================
 #### A simplified Browserify and Watchify CLI
 
-[![Build Status](https://api.travis-ci.org/BigstickCarpet/simplifyify.svg?branch=master)](https://travis-ci.org/BigstickCarpet/simplifyify)
-[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/BigstickCarpet/simplifyify?svg=true&branch=master&failingText=Windows%20build%20failing&passingText=Windows%20build%20passing)](https://ci.appveyor.com/project/BigstickCarpet/simplifyify)
+[![Build Status](https://api.travis-ci.org/James-Messinger/simplifyify.svg?branch=master)](https://travis-ci.org/James-Messinger/simplifyify)
+[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/james-messinger/simplifyify?svg=true&branch=master&failingText=Windows%20build%20failing&passingText=Windows%20build%20passing)](https://ci.appveyor.com/project/BigstickCarpet/simplifyify)
 
-[![Coverage Status](https://coveralls.io/repos/github/BigstickCarpet/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/BigstickCarpet/simplifyify?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/James-Messinger/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/James-Messinger/simplifyify?branch=master)
 [![Codacy Score](https://api.codacy.com/project/badge/Grade/e7d74b7748674054be73556c87475c49)](https://www.codacy.com/public/jamesmessinger/simplifyify)
-[![Inline docs](http://inch-ci.org/github/BigstickCarpet/simplifyify.svg?branch=master&style=shields)](http://inch-ci.org/github/BigstickCarpet/simplifyify)
-[![Dependencies](https://david-dm.org/BigstickCarpet/simplifyify.svg)](https://david-dm.org/BigstickCarpet/simplifyify)
+[![Inline docs](http://inch-ci.org/github/James-Messinger/simplifyify.svg?branch=master&style=shields)](http://inch-ci.org/github/James-Messinger/simplifyify)
+[![Dependencies](https://david-dm.org/James-Messinger/simplifyify.svg)](https://david-dm.org/James-Messinger/simplifyify)
 
 [![npm](http://img.shields.io/npm/v/simplifyify.svg)](https://www.npmjs.com/package/simplifyify)
 [![License](https://img.shields.io/npm/l/simplifyify.svg)](LICENSE)
@@ -236,7 +236,7 @@ You can also specify options for your transforms.  The exact options depend on t
 
 Browserify Plugins
 --------------------------
-The same technique described above for Browserify transforms also works for Browserify plugins.  Just add a `browserify.plugins` field to your `package.json` file.  For example, the following configuration configures [TSify](https://github.com/TypeStrong/tsify/) to transpile your TypeScript code, and [browserify-banner](https://github.com/bigstickcarpet/browserify-banner) to add a banner comment to the top of your output file(s).
+The same technique described above for Browserify transforms also works for Browserify plugins.  Just add a `browserify.plugins` field to your `package.json` file.  For example, the following configuration configures [TSify](https://github.com/TypeStrong/tsify/) to transpile your TypeScript code, and [browserify-banner](https://github.com/James-Messinger/browserify-banner) to add a banner comment to the top of your output file(s).
 
 ```json
 {
@@ -267,7 +267,7 @@ API
 --------------------------
 Simplifyify also has a programmatic API, so you can use it directly in your build scripts (Gulp, Grunt, Broccoli, etc.)
 
-[Here's the API definition](https://github.com/BigstickCarpet/simplifyify/blob/6709bb5bbf59b327b4ced3e833078de8db006b5a/lib/index.js#L9-L28), and [here's a full example](https://github.com/BigstickCarpet/simplifyify/blob/6709bb5bbf59b327b4ced3e833078de8db006b5a/bin/simplifyify.js#L71-L102). Just pass an array of strings (file paths and/or glob patterns) and an options param.  You get back an [`EventEmitter`](https://nodejs.org/api/events.html#events_class_events_eventemitter), which fires all the Browserify &amp; Watchify events.
+[Here's the API definition](https://github.com/James-Messinger/simplifyify/blob/6709bb5bbf59b327b4ced3e833078de8db006b5a/lib/index.js#L9-L28), and [here's a full example](https://github.com/James-Messinger/simplifyify/blob/6709bb5bbf59b327b4ced3e833078de8db006b5a/bin/simplifyify.js#L71-L102). Just pass an array of strings (file paths and/or glob patterns) and an options param.  You get back an [`EventEmitter`](https://nodejs.org/api/events.html#events_class_events_eventemitter), which fires all the Browserify &amp; Watchify events.
 
 ```javascript
 var simplifyify = require("simplifyify");
@@ -293,13 +293,13 @@ gulp.task("browserify", function(done) {
 
 Contributing
 --------------------------
-I welcome any contributions, enhancements, and bug-fixes.  [File an issue](https://github.com/BigstickCarpet/simplifyify/issues) on GitHub and [submit a pull request](https://github.com/BigstickCarpet/simplifyify/pulls).
+I welcome any contributions, enhancements, and bug-fixes.  [File an issue](https://github.com/James-Messinger/simplifyify/issues) on GitHub and [submit a pull request](https://github.com/James-Messinger/simplifyify/pulls).
 
 #### Building
 To build the project locally on your computer:
 
 1. __Clone this repo__<br>
-`git clone https://github.com/bigstickcarpet/simplifyify.git`
+`git clone https://github.com/James-Messinger/simplifyify.git`
 
 2. __Install dependencies__<br>
 `npm install`

@@ -7,10 +7,10 @@ Simplifyify
 
 [![Coverage Status](https://coveralls.io/repos/github/James-Messinger/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/James-Messinger/simplifyify?branch=master)
 [![Codacy Score](https://api.codacy.com/project/badge/Grade/e7d74b7748674054be73556c87475c49)](https://www.codacy.com/public/jamesmessinger/simplifyify)
-[![Inline docs](http://inch-ci.org/github/James-Messinger/simplifyify.svg?branch=master&style=shields)](http://inch-ci.org/github/James-Messinger/simplifyify)
+[![Inline docs](https://inch-ci.org/github/James-Messinger/simplifyify.svg?branch=master&style=shields)](https://inch-ci.org/github/James-Messinger/simplifyify)
 [![Dependencies](https://david-dm.org/James-Messinger/simplifyify.svg)](https://david-dm.org/James-Messinger/simplifyify)
 
-[![npm](http://img.shields.io/npm/v/simplifyify.svg)](https://www.npmjs.com/package/simplifyify)
+[![npm](https://img.shields.io/npm/v/simplifyify.svg)](https://www.npmjs.com/package/simplifyify)
 [![License](https://img.shields.io/npm/l/simplifyify.svg)](LICENSE)
 
 I constantly find myself using the same Browserify plug-ins and transforms on every project, and I always end up writing pretty much the same Gulp script over and over again.  Simplifyify is the solution to that problem.

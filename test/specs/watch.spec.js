@@ -8,21 +8,25 @@ const del = require('del');
 const util = require('../../lib/util');
 
 describe('simplifyify --watch', () => {
-  let waitForBrowserify;
+  let watchifyReactionTime;
 
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for multiple Browserify builds
     let isSlowEnvironment = Boolean(process.env.CI);
     mocha.increaseTimeout(this.currentTest, isSlowEnvironment ? 60000 : 15000);
-    waitForBrowserify = isSlowEnvironment ? 15000 : 5000;
+    watchifyReactionTime = isSlowEnvironment ? 15000 : 5000;
   });
+
+  function waitForWatchify() {
+    return new Promise((resolve) => setTimeout(resolve, watchifyReactionTime));
+  }
 
   it('should rebuild a single output file', (done) => {
     // Run Watchify
     let watchify = cli.run('es5/lib/index.js --watch --outfile es5/dist/my-file.js', onExit);
 
     // Check the initial outputs after a few seconds
-    setTimeout(firstCheck, waitForBrowserify);
+    waitForWatchify().then(firstCheck);
 
     function firstCheck () {
       checkOutputFiles();
@@ -35,8 +39,9 @@ describe('simplifyify --watch', () => {
         })
         .then(() => {
           // Check the outputs again after a few seconds
-          setTimeout(secondCheck, waitForBrowserify);
+          return waitForWatchify();
         })
+        .then(secondCheck)
         .catch(done);
     }
 
@@ -77,7 +82,7 @@ describe('simplifyify --watch', () => {
     // jscs:enable maximumLineLength
 
     // Check the initial outputs after a few seconds
-    setTimeout(firstCheck, waitForBrowserify);
+    waitForWatchify().then(firstCheck)
 
     function firstCheck () {
       assert.directoryContents('es5/dist', [
@@ -151,8 +156,9 @@ describe('simplifyify --watch', () => {
         })
         .then(() => {
           // Check the outputs again after a few seconds
-          setTimeout(secondCheck, waitForBrowserify);
+          return waitForWatchify();
         })
+        .then(secondCheck)
         .catch(done);
     }
 
@@ -244,10 +250,10 @@ describe('simplifyify --watch', () => {
     }
 
     // Run Watchify
-    let watchify = cli.run('error/error.js --watch --outfile es5/dist/error.js', onExit);
+    let watchify = cli.run('error/error.js --watch --outfile error/dist/error.js', onExit);
 
     // Check the outputs after a few seconds
-    setTimeout(firstCheck, waitForBrowserify);
+    waitForWatchify().then(firstCheck);
 
     function firstCheck () {
       checkOutputFiles();
@@ -256,12 +262,13 @@ describe('simplifyify --watch', () => {
       del('test/test-apps/error/dist/error.js')
         .then(() => {
           // Touch a file, to trigger Watchify again
-          return touch('test/test-apps/error/error.js');
+          return util.touchFile('test/test-apps/error/error.js');
         })
         .then(() => {
           // Check the outputs again after a few seconds
-          setTimeout(secondCheck, waitForBrowserify);
+          return waitForWatchify();
         })
+        .then(secondCheck)
         .catch(done);
     }
 
@@ -279,10 +286,10 @@ describe('simplifyify --watch', () => {
 
     function checkOutputFiles () {
       // The output file should be created, even though an error occurred
-      assert.directoryContents('es5/dist', 'error.js');
+      assert.directoryContents('error/dist', 'error.js');
 
       // The output file should be empty
-      assert.fileContents('es5/dist/error.js', (contents) => {
+      assert.fileContents('error/dist/error.js', (contents) => {
         expect(contents).to.equal('');
       });
     }

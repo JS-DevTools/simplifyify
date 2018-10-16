@@ -5,7 +5,7 @@ const mocha = require('../fixtures/mocha');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 const del = require('del');
-const touch = require('touch');
+const util = require('../../lib/util');
 
 describe('simplifyify --watch', () => {
   let waitForBrowserify;
@@ -31,7 +31,7 @@ describe('simplifyify --watch', () => {
       del('test/test-apps/es5/dist')
         .then(() => {
           // Touch a file, to trigger Watchify again
-          return touch('test/test-apps/es5/lib/say/index.js');
+          return util.touchFile('test/test-apps/es5/lib/say/index.js');
         })
         .then(() => {
           // Check the outputs again after a few seconds
@@ -147,7 +147,7 @@ describe('simplifyify --watch', () => {
         .then(() => {
           // Touch a file, to trigger Watchify again
           // NOTE: Only two of the three entry files will be re-build, since the third doesn't reference this file
-          return touch('test/test-apps/es5/lib/hello-world.js');
+          return util.touchFile('test/test-apps/es5/lib/hello-world.js');
         })
         .then(() => {
           // Check the outputs again after a few seconds

@@ -1,6 +1,7 @@
 'use strict';
 
 const cli = require('../fixtures/cli');
+const mocha = require('../fixtures/mocha');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 const del = require('del');
@@ -11,8 +12,8 @@ describe('simplifyify --watch', () => {
 
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for multiple Browserify builds
-    let isSlowEnvironment = !!process.env.CI;
-    this.currentTest.timeout(isSlowEnvironment ? 45000 : 15000);
+    let isSlowEnvironment = Boolean(process.env.CI);
+    mocha.increaseTimeout(this.currentTest, isSlowEnvironment ? 60000 : 15000);
     waitForBrowserify = isSlowEnvironment ? 15000 : 5000;
   });
 

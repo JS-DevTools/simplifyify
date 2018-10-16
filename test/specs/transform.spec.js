@@ -1,14 +1,15 @@
 'use strict';
 
 const cli = require('../fixtures/cli');
+const mocha = require('../fixtures/mocha');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 
 describe('browserify transforms', () => {
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for Browserify transforms
-    let isSlowEnvironment = !!process.env.CI;
-    this.currentTest.timeout(isSlowEnvironment ? 35000 : 15000);
+    let isSlowEnvironment = Boolean(process.env.CI);
+    mocha.increaseTimeout(this.currentTest, isSlowEnvironment ? 35000 : 15000);
   });
 
   it('should use the browserify.transform field in package.json', (done) => {

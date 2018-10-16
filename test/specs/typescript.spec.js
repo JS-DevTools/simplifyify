@@ -1,14 +1,15 @@
 'use strict';
 
 const cli = require('../fixtures/cli');
+const mocha = require('../fixtures/mocha');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 
 describe('TypeScript support', () => {
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for Browserify transforms
-    let isSlowEnvironment = !!process.env.CI;
-    this.currentTest.timeout(isSlowEnvironment ? 60000 : 30000);
+    let isSlowEnvironment = Boolean(process.env.CI);
+    mocha.increaseTimeout(this.currentTest, isSlowEnvironment ? 45000 : 30000);
   });
 
   it('should automatically enable TypeScript if the entry file has a .ts extenstion', (done) => {

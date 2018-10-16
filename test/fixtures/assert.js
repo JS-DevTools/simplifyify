@@ -63,7 +63,7 @@ exports.fileContents = function (dir, files, fn) {
   dir = resolve(dir);
   files = Array.isArray(files) ? files : [files];
 
-  files.forEach((file) => {
+  for (let file of files) {
     let fullPath = path.join(dir, file);
     let contents = fs.readFileSync(fullPath).toString();
 
@@ -85,7 +85,7 @@ exports.fileContents = function (dir, files, fn) {
     catch (e) {
       throw ono(e, file, 'failed an assertion:');
     }
-  });
+  }
 };
 
 /**
@@ -275,17 +275,21 @@ function ls (dir) {
     let contents = [];
     dir = resolve(dir);
 
-    fs.readdirSync(dir).forEach((name) => {
+    let names = fs.readdirSync(dir);
+
+    for (let name of names) {
       let fullName = path.join(dir, name);
       if (fs.statSync(fullName).isDirectory()) {
-        ls(fullName).forEach((nested) => {
-          contents.push(name + '/' + nested);   // Don't use path.join() here, because of Windows
-        });
+        let childNames = ls(fullName);
+
+        for (let childName of childNames) {
+          contents.push(name + '/' + childName);   // Don't use path.join() here, because of Windows
+        }
       }
       else if (!['.DS_Store', 'Thumbs.db'].includes(name)) {
         contents.push(name);
       }
-    });
+    }
 
     return contents;
   }

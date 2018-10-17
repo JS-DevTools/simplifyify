@@ -1,19 +1,30 @@
 'use strict';
 
 const spawn = require('child_process').spawn;
-const del = require('del');
+const globby = require('globby');
+const rimraf = require('rimraf-promise');
 const path = require('path');
 const isWindows = /^win/.test(process.platform);
 const cliPath = path.resolve(__dirname, '../../bin/simplifyify');
 const testAppsDir = path.resolve(__dirname, '../test-apps');
+const util = require('../../lib/util');
 
-beforeEach('Delete previous test files', (done) => {
+beforeEach('Delete previous test files', () => {
   // Clear the output files before each test
-  del(['*/dist', '**/*.bundle.*'], { cwd: testAppsDir })
-    .then(function () {
-      done();
+  return Promise.resolve()
+    .then(() => {
+      return globby('test/test-apps/*/dist', { onlyDirectories: true });
     })
-    .catch(done);
+    .then(distDirs => {
+      return Promise.all(distDirs.map(dir => rimraf(dir)));
+    })
+    .then(() => {
+      return globby('test/test-apps/**/*.bundle.*', { onlyFiles: true });
+    })
+    .then(bundleFiles => {
+      return Promise.all(bundleFiles.map(file => util.deleteFile(file)));
+    })
+    .then(() => undefined);
 });
 
 /**

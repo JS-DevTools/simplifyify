@@ -4,62 +4,98 @@ const cli = require('../fixtures/cli');
 const mocha = require('../fixtures/mocha');
 const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
-const del = require('del');
 const util = require('../../lib/util');
 
 describe('simplifyify --watch', () => {
-  let watchifyReactionTime;
+  let watchifyReactionTime, modifiedFilePath, originalFileContents;
+  const modifiedMarker = 'This file has been modified by one of the Watchify tests';
 
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for multiple Browserify builds
     let isSlowEnvironment = Boolean(process.env.CI);
     mocha.increaseTimeout(this.currentTest, isSlowEnvironment ? 60000 : 15000);
     watchifyReactionTime = isSlowEnvironment ? 15000 : 5000;
+
+    // Reset variables that track modified files
+    modifiedFilePath = undefined;
+    originalFileContents = undefined;
   });
 
-  function waitForWatchify() {
+  afterEach(function () {
+    // Restore the original contents of the file that was modified to trigger Watchify
+    return util.writeFile(modifiedFilePath, originalFileContents);
+  });
+
+  /**
+   * Waits a few seconds to allow Watchify to re-build the bundle
+   */
+  function waitForWatchify () {
     return new Promise((resolve) => setTimeout(resolve, watchifyReactionTime));
+  }
+
+  /**
+   * Modifies the specified file to trigger Watchify.
+   *
+   * @param {string} file - The file to modify
+   * @param {string} [newContent] - The new file content.  Defaults to the original content
+   *                                with a marker appended
+   */
+  function modifyFile (file, newContent) {
+    file = `test/test-apps/${file}`;
+
+    return util.readFile(file)
+      .then((contents) => {
+        // Save the file's original contents, so we can restore it after the test finishes
+        modifiedFilePath = file;
+        originalFileContents = originalFileContents || contents;
+
+        // Modify the file to trigger Watchify
+        return util.writeFile(file, newContent || `
+          ${originalFileContents}
+
+          // ${modifiedMarker}
+          var x = "${modifiedMarker}";
+        `);
+      });
   }
 
   it('should rebuild a single output file', (done) => {
     // Run Watchify
     let watchify = cli.run('es5/lib/index.js --watch --outfile es5/dist/my-file.js', onExit);
 
-    // Check the initial outputs after a few seconds
-    waitForWatchify().then(firstCheck);
+    // Wait for Watchify to finish building the code
+    waitForWatchify()
+      .then(() => {
+        // Confirm that the code built correctly
+        checkOutputFiles();
 
-    function firstCheck () {
-      checkOutputFiles();
+        // Confirm that the code does NOT contain our modified code yet
+        assert.fileContents('es5/dist/my-file.js', (contents) => {
+          expect(contents).not.to.contain(modifiedMarker);
+        });
 
-      // Delete the output
-      del('test/test-apps/es5/dist')
-        .then(() => {
-          // Touch a file, to trigger Watchify again
-          return util.touchFile('test/test-apps/es5/lib/say/index.js');
-        })
-        .then(() => {
-          // Check the outputs again after a few seconds
-          return waitForWatchify();
-        })
-        .then(secondCheck)
-        .catch(done);
-    }
+        // Modify a file, to trigger Watchify again
+        return modifyFile('es5/lib/say/index.js');
+      })
+      .then(() => {
+        // Wait for Watchify to finish re-building the code
+        return waitForWatchify();
+      })
+      .then(() => {
+        // Confirm that the same output files exist
+        checkOutputFiles();
 
-    function secondCheck () {
-      checkOutputFiles();
-      watchify.kill();
-    }
+        // Confirm that the code DOES contain our modified code
+        assert.fileContents('es5/dist/my-file.js', (contents) => {
+          expect(contents).to.contain(modifiedMarker);
+        });
+      })
+      .catch(done)
+      .then(() => {
+        watchify.kill();
+      });
 
-    // Verify the final results
-    function onExit (err, stdout, stderr) {
-      expect(stderr).to.be.empty;
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/my-file.js');
-      expect(stdout).to.contain('\nes5/lib/say/index.js has changed');
-      checkOutputFiles();
-      done();
-    }
-
-    function checkOutputFiles () {
+    function checkOutputFiles() {
       assert.directoryContents('es5/dist', 'my-file.js');
 
       assert.fileContents('es5/dist/my-file.js', (contents) => {
@@ -70,37 +106,101 @@ describe('simplifyify --watch', () => {
         assert.noCoverage(contents);
       });
     }
+
+    function onExit (err, stdout, stderr) {
+      // Verify the final results
+      expect(stderr).to.be.empty;
+      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/my-file.js');
+      expect(stdout).to.contain('\nes5/lib/say/index.js has changed');
+      done();
+    }
   });
 
   it('should rebuild multiple output files', (done) => {
     // Run Watchify
-    // jscs:disable maximumLineLength
-    let watchify = cli.run(
-      'es5/lib/**/*.js -wbcdm --standalone Fizz.Buzz --outfile es5/dist/*.bundle.js',
-      onExit
-    );
-    // jscs:enable maximumLineLength
+    let watchify = cli.run('es5/lib/**/*.js -wbcdm --standalone Fizz.Buzz --outfile es5/dist/*.bundle.js', onExit);
 
-    // Check the initial outputs after a few seconds
-    waitForWatchify().then(firstCheck)
+    // Wait for Watchify to finish building the code
+    waitForWatchify()
+      .then(() => {
+        // Confirm that the code built correctly
+        checkOutputFiles();
 
-    function firstCheck () {
+        // Confirm that the code does NOT contain our modified code yet
+        assert.fileContents('es5/dist/hello-world.bundle.coverage.js', (contents) => {
+          expect(contents).not.to.contain(modifiedMarker);
+        });
+
+        assert.fileContents('es5/dist/hello-world.bundle.js', (contents) => {
+          expect(contents).not.to.contain(modifiedMarker);
+        });
+
+        assert.fileContents('es5/dist/hello-world.bundle.js.map', (map) => {
+          expect(map.sourcesContent[1]).not.to.contain(modifiedMarker);
+        });
+
+        assert.fileContents('es5/dist/hello-world.bundle.min.js', (contents) => {
+          expect(contents).not.to.contain(modifiedMarker);
+        });
+
+        assert.fileContents('es5/dist/hello-world.bundle.min.js.map', (map) => {
+          expect(map.sourcesContent[1]).not.to.contain(modifiedMarker);
+        });
+
+        // Modify a file, to trigger Watchify again
+        return modifyFile('es5/lib/hello-world.js');
+      })
+      .then(() => {
+          // Wait for Watchify to finish re-building the code
+          return waitForWatchify();
+      })
+      .then(() => {
+        // Confirm that the same output files exist
+        checkOutputFiles();
+
+        // Confirm that the code DOES contain our modified code
+        assert.fileContents('es5/dist/hello-world.bundle.coverage.js', (contents) => {
+          expect(contents).to.contain(modifiedMarker);
+        });
+
+        assert.fileContents('es5/dist/hello-world.bundle.js', (contents) => {
+          expect(contents).to.contain(modifiedMarker);
+        });
+
+        assert.fileContents('es5/dist/hello-world.bundle.js.map', (map) => {
+          expect(map.sourcesContent[1]).to.contain(modifiedMarker);
+        });
+
+        assert.fileContents('es5/dist/hello-world.bundle.min.js', (contents) => {
+          expect(contents).to.contain(modifiedMarker);
+        });
+
+        assert.fileContents('es5/dist/hello-world.bundle.min.js.map', (map) => {
+          expect(map.sourcesContent[1]).to.contain(modifiedMarker);
+        });
+      })
+      .catch(done)
+      .then(() => {
+        watchify.kill();
+      });
+
+    function checkOutputFiles() {
       assert.directoryContents('es5/dist', [
+        'hello-world.bundle.coverage.js',
         'hello-world.bundle.js',
         'hello-world.bundle.js.map',
         'hello-world.bundle.min.js',
         'hello-world.bundle.min.js.map',
-        'hello-world.bundle.coverage.js',
+        'index.bundle.coverage.js',
         'index.bundle.js',
         'index.bundle.js.map',
         'index.bundle.min.js',
         'index.bundle.min.js.map',
-        'index.bundle.coverage.js',
+        'say/index.bundle.coverage.js',
         'say/index.bundle.js',
         'say/index.bundle.js.map',
         'say/index.bundle.min.js',
         'say/index.bundle.min.js.map',
-        'say/index.bundle.coverage.js'
       ]);
 
       assert.fileContents('es5/dist', ['index.bundle.js', 'hello-world.bundle.js', 'say/index.bundle.js'],
@@ -146,76 +246,6 @@ describe('simplifyify --watch', () => {
           '../../lib/say/index.js'
         ]);
       });
-
-      // Delete the output
-      del('test/test-apps/es5/dist')
-        .then(() => {
-          // Touch a file, to trigger Watchify again
-          // NOTE: Only two of the three entry files will be re-build, since the third doesn't reference this file
-          return util.touchFile('test/test-apps/es5/lib/hello-world.js');
-        })
-        .then(() => {
-          // Check the outputs again after a few seconds
-          return waitForWatchify();
-        })
-        .then(secondCheck)
-        .catch(done);
-    }
-
-    function secondCheck () {
-      assert.directoryContents('es5/dist', [
-        'hello-world.bundle.js',
-        'hello-world.bundle.js.map',
-        'hello-world.bundle.min.js',
-        'hello-world.bundle.min.js.map',
-        'hello-world.bundle.coverage.js',
-        'index.bundle.js',
-        'index.bundle.js.map',
-        'index.bundle.min.js',
-        'index.bundle.min.js.map',
-        'index.bundle.coverage.js',
-      ]);
-
-      assert.fileContents('es5/dist', ['index.bundle.js', 'hello-world.bundle.js'],
-        function (contents) {
-          assert.noBanner(contents);
-          assert.hasUmdPreamble(contents);
-          assert.notMinified(contents);
-          assert.hasSourceMap(contents);
-          assert.noCoverage(contents);
-        });
-      assert.fileContents('es5/dist', ['index.bundle.min.js', 'hello-world.bundle.min.js'],
-        function (contents) {
-          assert.noBanner(contents);
-          assert.hasMinifiedUmdPreamble(contents);
-          assert.isMinified(contents);
-          assert.hasSourceMap(contents);
-          assert.noCoverage(contents);
-        });
-      assert.fileContents('es5/dist', ['index.bundle.coverage.js', 'hello-world.bundle.coverage.js'],
-        function (contents) {
-          assert.noBanner(contents);
-          assert.hasMinifiedUmdPreamble(contents);
-          assert.isMinified(contents, true);
-          assert.noSourceMap(contents);
-          assert.hasCoverage(contents);
-        });
-
-      assert.fileContents('es5/dist', ['index.bundle.js.map', 'index.bundle.min.js.map'], (contents) => {
-        expect(contents.sources).to.contain.members([
-          '../lib/hello-world.js',
-          '../lib/index.js',
-          '../lib/say/index.js'
-        ]);
-      });
-      assert.fileContents('es5/dist', ['hello-world.bundle.js.map', 'hello-world.bundle.min.js.map'], (contents) => {
-        expect(contents.sources).to.contain.members([
-          '../lib/hello-world.js',
-          '../lib/say/index.js'
-        ]);
-      });
-
-      watchify.kill();
     }
 
     // Verify the final results
@@ -244,54 +274,60 @@ describe('simplifyify --watch', () => {
   });
 
   it('should report errors', (done) => {
-    // This test fails on Windows, because Watchify crashes
-    if (process.platform === 'win32') {
-      return done();
-    }
-
     // Run Watchify
     let watchify = cli.run('error/error.js --watch --outfile error/dist/error.js', onExit);
 
-    // Check the outputs after a few seconds
-    waitForWatchify().then(firstCheck);
+    // Wait for Watchify to finish building the code
+    waitForWatchify()
+      .then(() => {
+        // Confirm that the code built correctly
+        checkOutputFiles();
 
-    function firstCheck () {
-      checkOutputFiles();
+        // The output file should be empty, because of a syntax error
+        assert.fileContents('error/dist/error.js', (contents) => {
+          expect(contents).to.equal('');
+        });
 
-      // Delete the output
-      del('test/test-apps/error/dist/error.js')
-        .then(() => {
-          // Touch a file, to trigger Watchify again
-          return util.touchFile('test/test-apps/error/error.js');
-        })
-        .then(() => {
-          // Check the outputs again after a few seconds
+        // Modify a file, to trigger Watchify again
+        return modifyFile('error/error.js', `
+          console.log('no longer a syntax error');
+        `);
+      })
+      .then(() => {
+          // Wait for Watchify to finish re-building the code
           return waitForWatchify();
-        })
-        .then(secondCheck)
-        .catch(done);
-    }
+      })
+      .then(() => {
+        // Confirm that the same output files exist
+        checkOutputFiles();
 
-    function secondCheck () {
-      checkOutputFiles();
-      watchify.kill();
-      done();
+        // Confirm that the code built succesfully this time, since the syntax error is fixed
+        assert.fileContents('error/dist/error.js', (contents) => {
+          assert.noBanner(contents);
+          assert.hasPreamble(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
+
+          // Confirm that the code DOES contain our modified code
+          expect(contents).to.contain('no longer a syntax error');
+        });
+      })
+      .catch(done)
+      .then(() => {
+        watchify.kill();
+      });
+
+    function checkOutputFiles () {
+      // The output file should be created, even though an error occurred
+      assert.directoryContents('error/dist', 'error.js');
     }
 
     // Verify the final results
     function onExit (err, stdout, stderr) {
       expect(stderr).to.equal('Error bundling error\/error.js\nUnexpected token');
-      expect(stdout).to.equal('');
-    }
-
-    function checkOutputFiles () {
-      // The output file should be created, even though an error occurred
-      assert.directoryContents('error/dist', 'error.js');
-
-      // The output file should be empty
-      assert.fileContents('error/dist/error.js', (contents) => {
-        expect(contents).to.equal('');
-      });
+      expect(stdout).to.contain('error/error.js has changed');
+      expect(stdout).to.contain('error/error.js --> error/dist/error.js');
+      done();
     }
   });
 

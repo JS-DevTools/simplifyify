@@ -10,7 +10,6 @@ let simplifyify = require('../');
  * Parse command-line arguments
  */
 function parseArguments () {
-  // jscs:disable maximumLineLength
   program
     .version(manifest.version)
     .description(manifest.description)

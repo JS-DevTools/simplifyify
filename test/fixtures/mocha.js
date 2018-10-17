@@ -6,7 +6,7 @@ exports.increaseTimeout = increaseTimeout;
 /**
  * Increases the timeout of a test, if necessary.
  */
-function increaseTimeout(test, timeout) {
+function increaseTimeout (test, timeout) {
   if (test.timeout() < timeout) {
     test.timeout(timeout);
     test.slow(timeout * 0.8);

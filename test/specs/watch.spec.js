@@ -14,7 +14,7 @@ describe('simplifyify --watch', () => {
     // Increase the test timeouts to allow sufficient time for multiple Browserify builds
     let isSlowEnvironment = Boolean(process.env.CI);
     mocha.increaseTimeout(this.currentTest, isSlowEnvironment ? 60000 : 15000);
-    watchifyReactionTime = isSlowEnvironment ? 15000 : 5000;
+    watchifyReactionTime = isSlowEnvironment ? 15000 : 3000;
 
     // Reset variables that track modified files
     modifiedFilePath = undefined;
@@ -29,8 +29,8 @@ describe('simplifyify --watch', () => {
   /**
    * Waits a few seconds to allow Watchify to re-build the bundle
    */
-  function waitForWatchify () {
-    return new Promise((resolve) => setTimeout(resolve, watchifyReactionTime));
+  function waitForWatchify (timeout = watchifyReactionTime) {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
   }
 
   /**
@@ -69,7 +69,7 @@ describe('simplifyify --watch', () => {
         // Confirm that the code built correctly
         checkOutputFiles();
 
-        // Confirm that the code does NOT contain our modified code yet
+        // Confirm that the code DOES NOT contain our modified code yet
         assert.fileContents('es5/dist/my-file.js', (contents) => {
           expect(contents).not.to.contain(modifiedMarker);
         });
@@ -126,7 +126,7 @@ describe('simplifyify --watch', () => {
         // Confirm that the code built correctly
         checkOutputFiles();
 
-        // Confirm that the code does NOT contain our modified code yet
+        // Confirm that the code DOES NOT contain our modified code yet
         assert.fileContents('es5/dist/hello-world.bundle.coverage.js', (contents) => {
           expect(contents).not.to.contain(modifiedMarker);
         });
@@ -273,7 +273,7 @@ describe('simplifyify --watch', () => {
     }
   });
 
-  it('should report errors', (done) => {
+  it('should report JavaScript syntax errors', (done) => {
     // Run Watchify
     let watchify = cli.run('error/error.js --watch --outfile error/dist/error.js', onExit);
 
@@ -327,6 +327,108 @@ describe('simplifyify --watch', () => {
       expect(stderr).to.equal('Error bundling error\/error.js\nUnexpected token');
       expect(stdout).to.contain('error/error.js has changed');
       expect(stdout).to.contain('error/error.js --> error/dist/error.js');
+      done();
+    }
+  });
+
+  it('should report TypeScript syntax errors', (done) => {
+    // Increase the Watchify wait time to allow time for TypeScript transpiling
+    let waitTime = watchifyReactionTime * 2;
+
+    // Run Watchify
+    let watchify = cli.run('typescript-error/error.ts --watch --outfile typescript-error/dist/error.js', onExit);
+
+    // Wait for Watchify to finish building the code
+    waitForWatchify(waitTime)
+      .then(() => {
+        // Confirm that the code built correctly
+        checkOutputFiles();
+
+        // Despite the TypeScript syntax error, the code is still transpiled to JavaScript
+        assert.fileContents('typescript-error/dist/error.js', (contents) => {
+          assert.noBanner(contents);
+          assert.hasPreamble(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
+
+          // Confirm that the TypeScript code has been transpiled to JavaScript
+          expect(contents).to.contain('function say(what, to) {');
+
+          // Confirm that the code DOES NOT contain our modified code yet
+          expect(contents).not.to.contain('no longer a syntax error');
+        });
+
+        // Modify a file, to trigger Watchify again.
+        // This time, we'll introduce a JavaScript syntax error
+        return modifyFile('typescript-error/error.ts', `
+          function say(what: string, to: string): string {
+            return what to;   // <--- missing quotes
+          }
+        `);
+      })
+      .then(() => {
+          // Wait for Watchify to finish re-building the code
+          return waitForWatchify(waitTime);
+      })
+      .then(() => {
+        // Confirm that the code built correctly
+        checkOutputFiles();
+
+        // The output file should be empty, because of a syntax error
+        assert.fileContents('typescript-error/dist/error.js', (contents) => {
+          expect(contents).to.equal('');
+        });
+
+        // Modify a file, to trigger Watchify again
+        return modifyFile('typescript-error/error.ts', `
+          function say(what: string, to: string): string {
+            return "no longer a syntax error";
+          }
+        `);
+      })
+      .then(() => {
+          // Wait for Watchify to finish re-building the code
+          return waitForWatchify(waitTime);
+      })
+      .then(() => {
+        // Confirm that the same output files exist
+        checkOutputFiles();
+
+        // Confirm that the code built succesfully this time, since the syntax error is fixed
+        assert.fileContents('typescript-error/dist/error.js', (contents) => {
+          assert.noBanner(contents);
+          assert.hasPreamble(contents);
+          assert.noSourceMap(contents);
+          assert.noCoverage(contents);
+
+          // Confirm that the TypeScript code has been transpiled to JavaScript
+          expect(contents).to.contain('function say(what, to) {');
+
+          // Confirm that the code DOES contain our modified code
+          expect(contents).to.contain('no longer a syntax error');
+        });
+      })
+      .catch(done)
+      .then(() => {
+        watchify.kill();
+      });
+
+    function checkOutputFiles () {
+      // The output file should be created, even though an error occurred
+      assert.directoryContents('typescript-error/dist', 'error.js');
+    }
+
+    // Verify the final results
+    function onExit (err, stdout, stderr) {
+      expect(stderr).to.equal(
+        'Error bundling typescript-error/error.ts\n' +
+        'typescript-error/error.ts(3,28): ' +
+        "Error TS7006: Parameter 'to' implicitly has an 'any' type.\n" +
+        'Error bundling typescript-error/error.ts\ntypescript-error/error.ts(3,25): ' +
+        "Error TS1005: ';' expected."
+      );
+      expect(stdout).to.contain('typescript-error/error.ts has changed');
+      expect(stdout).to.contain('typescript-error/error.ts --> typescript-error/dist/error.js');
       done();
     }
   });

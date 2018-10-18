@@ -2,7 +2,7 @@
 
 const spawn = require('child_process').spawn;
 const globby = require('globby');
-const rimraf = require('rimraf-promise');
+const rmfr = require('rmfr');
 const path = require('path');
 const isWindows = /^win/.test(process.platform);
 const cliPath = path.resolve(__dirname, '../../bin/simplifyify');
@@ -12,7 +12,7 @@ const util = require('../../lib/util');
 
 beforeEach('Delete previous test files', function () {
   // Allow plenty of time for files to be deleted. This is especially important on Windows,
-  // where "rimraf" often has to retry several times due to file locks
+  // where "rmfr" often has to retry several times due to file locks
   mocha.increaseTimeout(this, 10000);
 
   // Clear the output files before each test
@@ -21,7 +21,7 @@ beforeEach('Delete previous test files', function () {
       return globby('test/test-apps/*/dist', { onlyDirectories: true });
     })
     .then(distDirs => {
-      return Promise.all(distDirs.map(dir => rimraf(dir, { maxBusyTries: 10, glob: false })));
+      return Promise.all(distDirs.map(dir => rmfr(dir, { maxBusyTries: 10 })));
     })
     .then(() => {
       return globby('test/test-apps/**/*.bundle.*', { onlyFiles: true });

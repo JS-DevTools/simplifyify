@@ -3,6 +3,20 @@ All notable changes will be documented in this file.
 `simplifyify` adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [v7.0.0](https://github.com/JS-DevTools/simplifyify/tree/v7.0.0) (2018-10-18)
+
+#### Breaking Change
+- Simplifyify is no longer tested on Node 6 and Node 8.  It's now only tested on the latest LTS version of Node (which is currently Node 10).  It **currently** still works fine in older versions, but they are no longer officially supported.
+
+#### Other Changes
+- Improved performance by making many operations async and parallelizing them
+
+- Fixed a bug that caused Simplifyify to crash in watch mode when files contained syntax errors
+
+
+[Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v6.0.0...v7.0.0)
+
+
 ## [v6.0.0](https://github.com/JS-DevTools/simplifyify/tree/v6.0.0) (2018-09-29)
 
 #### Breaking Changes

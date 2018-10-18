@@ -1,6 +1,6 @@
 {
   "name": "simplifyify",
-  "version": "6.0.1",
+  "version": "7.0.0",
   "description": "A simplified Browserify and Watchify CLI",
   "keywords": [
     "browserify",
@@ -39,7 +39,7 @@
   },
   "scripts": {
     "lint": "eslint bin lib test/fixtures test/specs",
-    "test": "mocha && npm run lint",
+    "test": "npm run lint && mocha",
     "coverage": "nyc --reporter=text --reporter=lcov mocha",
     "upgrade": "npm-check -u",
     "bump": "bump --prompt --tag --push --all",

@@ -6,7 +6,7 @@ const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 const util = require('../../lib/util');
 
-describe.only('simplifyify --watch', () => {
+describe('simplifyify --watch', () => {
   let testTimeout, modifiedFilePath, originalFileContents;
   const modifiedMarker = 'This file has been modified by one of the Watchify tests';
 
@@ -31,6 +31,16 @@ describe.only('simplifyify --watch', () => {
    */
   function waitForWatchify () {
     return new Promise((resolve) => setTimeout(resolve, testTimeout / 4));
+  }
+
+  /**
+   * Ensures that the "done()" function is only called once
+   */
+  function doneOnce(done) {
+    return function(error) {
+      done && done(error);
+      done = undefined;
+    }
   }
 
   /**
@@ -60,6 +70,8 @@ describe.only('simplifyify --watch', () => {
   }
 
   it('should rebuild a single output file', (done) => {
+    done = doneOnce(done);
+
     // Run Watchify
     let watchify = cli.run('es5/lib/index.js --watch --outfile es5/dist/my-file.js', onExit);
 
@@ -122,6 +134,8 @@ describe.only('simplifyify --watch', () => {
   });
 
   it('should rebuild multiple output files', (done) => {
+    done = doneOnce(done);
+
     // Run Watchify
     let watchify = cli.run('es5/lib/**/*.js -wbcdm --standalone Fizz.Buzz --outfile es5/dist/*.bundle.js', onExit);
 
@@ -284,6 +298,8 @@ describe.only('simplifyify --watch', () => {
   });
 
   it('should report JavaScript syntax errors', (done) => {
+    done = doneOnce(done);
+
     // Run Watchify
     let watchify = cli.run('error/error.js --watch --outfile error/dist/error.js', onExit);
 
@@ -347,6 +363,8 @@ describe.only('simplifyify --watch', () => {
   });
 
   it('should report TypeScript syntax errors', function (done) {
+    done = doneOnce(done);
+
     // Increase timeouts to allow time for TypeScript transpiling
     mocha.increaseTimeout(this, this.timeout() * 4);
 

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 exports.increaseTimeout = increaseTimeout;
 
@@ -9,7 +9,7 @@ exports.increaseTimeout = increaseTimeout;
 function increaseTimeout (test, timeout) {
   if (process.env.CI) {
     // Increase timeouts when running in CI because slooooow
-    timeout = timeout * 4;
+    timeout *= 4;
   }
 
   let currentTimeout = test.timeout();
@@ -25,7 +25,7 @@ function increaseTimeout (test, timeout) {
 
 
 // Mocha configuration
-beforeEach('Increase test timeouts', function () {
+beforeEach("Increase test timeouts", function () {
   // Increase the test timeout to allow sufficient time for Browserify builds to complete
   increaseTimeout(this.currentTest, 6000);
 });

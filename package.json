@@ -38,7 +38,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "lint": "eslint bin lib test/fixtures test/specs --fix",
+    "lint": "eslint bin lib test/fixtures test/specs",
     "test": "mocha && npm run lint",
     "coverage": "nyc --reporter=text --reporter=lcov mocha",
     "upgrade": "npm-check -u",
@@ -69,7 +69,7 @@
     "codacy-coverage": "^3.1.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.7.0",
-    "eslint-config-modular": "^4.2.2",
+    "eslint-config-modular": "^5.0.0",
     "mocha": "^5.2.0",
     "npm-check": "^5.9.0",
     "nyc": "^13.1.0",

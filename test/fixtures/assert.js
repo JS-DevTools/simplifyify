@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const ono = require('ono');
-const expect = require('chai').expect;
+const fs = require("fs");
+const path = require("path");
+const ono = require("ono");
+const expect = require("chai").expect;
 const isWindows = /^win/.test(process.platform);
-const testAppsDir = path.resolve(__dirname, '../test-apps');
+const testAppsDir = path.resolve(__dirname, "../test-apps");
 
 /**
  * Asserts that the given folder is empty.
@@ -18,7 +18,7 @@ exports.directoryIsEmpty = function (dir) {
     expect(outfiles).to.have.same.members([]);
   }
   catch (e) {
-    console.error('Directory is not empty!\nExpected: []\n\nActual: %s', JSON.stringify(outfiles, null, 2));
+    console.error("Directory is not empty!\nExpected: []\n\nActual: %s", JSON.stringify(outfiles, null, 2));
     throw e;
   }
 };
@@ -31,7 +31,7 @@ exports.directoryIsEmpty = function (dir) {
  */
 exports.directoryContents = function (dir, files) {
   if (arguments.length === 1) {
-    dir = '.';
+    dir = ".";
     files = dir;
   }
   files = Array.isArray(files) ? files : [files];
@@ -41,7 +41,7 @@ exports.directoryContents = function (dir, files) {
     expect(outfiles).to.have.same.members(files);
   }
   catch (e) {
-    console.error('Incorrect directory contents!\nExpected: %s\n\nActual: %s',
+    console.error("Incorrect directory contents!\nExpected: %s\n\nActual: %s",
       JSON.stringify(files, null, 2), JSON.stringify(outfiles, null, 2));
     throw e;
   }
@@ -55,10 +55,10 @@ exports.directoryContents = function (dir, files) {
  * @param {function} fn
  */
 exports.fileContents = function (dir, files, fn) {
-  if (typeof files === 'function') {
+  if (typeof files === "function") {
     fn = files;
     files = dir;
-    dir = '.';
+    dir = ".";
   }
   dir = resolve(dir);
   files = Array.isArray(files) ? files : [files];
@@ -67,14 +67,14 @@ exports.fileContents = function (dir, files, fn) {
     let fullPath = path.join(dir, file);
     let contents = fs.readFileSync(fullPath).toString();
 
-    if (file.substr(-4) === '.map') {
+    if (file.substr(-4) === ".map") {
       // Parse source-map files, and return a POJO instead of a string
       contents = JSON.parse(contents);
 
       if (isWindows) {
         // Replace Windows path separators with POSIX separators
         contents.sources = contents.sources.map((source) => {
-          return source.replace(/\\/g, '/');
+          return source.replace(/\\/g, "/");
         });
       }
     }
@@ -83,7 +83,7 @@ exports.fileContents = function (dir, files, fn) {
       fn(contents);
     }
     catch (e) {
-      throw ono(e, file, 'failed an assertion:');
+      throw ono(e, file, "failed an assertion:");
     }
   }
 };
@@ -94,7 +94,7 @@ exports.fileContents = function (dir, files, fn) {
  * @param {string} contents
  */
 exports.hasBanner = function (contents) {
-  expect(contents).to.match(/^\/\*\!\n \* /, 'The file does not start with a banner');
+  expect(contents).to.match(/^\/\*\!\n \* /, "The file does not start with a banner");
 };
 
 /**
@@ -103,7 +103,7 @@ exports.hasBanner = function (contents) {
  * @param {string} contents
  */
 exports.noBanner = function (contents) {
-  expect(contents).not.to.match(/^\/\*\!/, 'The file contains a banner, but it shouldn\'t');
+  expect(contents).not.to.match(/^\/\*\!/, "The file contains a banner, but it shouldn't");
 };
 
 /**
@@ -114,7 +114,7 @@ exports.noBanner = function (contents) {
 exports.hasPreamble = function (contents) {
   expect(contents).to.match(
     /var \w\s*=\s*["']function["']\s*==\s*typeof require\s*\&\&\s*require;/,
-    'The file is missing the Browserify preamble (non-UMD)'
+    "The file is missing the Browserify preamble (non-UMD)"
   );
 };
 
@@ -127,7 +127,7 @@ exports.hasPreamble = function (contents) {
 exports.hasMinifiedPreamble = function (contents) {
   expect(contents).to.match(
     /var \w="function"==typeof require\&\&*require;/,
-    'The file is missing the Browserify preamble (minified, non-UMD)'
+    "The file is missing the Browserify preamble (minified, non-UMD)"
   );
 };
 
@@ -137,7 +137,7 @@ exports.hasMinifiedPreamble = function (contents) {
  * @param {string} contents
  */
 exports.hasUmdPreamble = function (contents) {
-  let msg = 'The file is missing the Browserify preamble (UMD)';
+  let msg = "The file is missing the Browserify preamble (UMD)";
   expect(contents).to.match(/if\(typeof window!=="undefined"\)/, msg);
   expect(contents).to.match(/if\(typeof global!=="undefined"\)/, msg);
   expect(contents).to.match(/if\(typeof self!=="undefined"\)/, msg);
@@ -150,7 +150,7 @@ exports.hasUmdPreamble = function (contents) {
  * @param {string} contents
  */
 exports.hasMinifiedUmdPreamble = function (contents) {
-  let msg = 'The file is missing the Browserify preamble (minified, UMD)';
+  let msg = "The file is missing the Browserify preamble (minified, UMD)";
   expect(contents).to.match(/if\(typeof window!=="undefined"\)/, msg);
   expect(contents).to.match(/if\(typeof global!=="undefined"\)/, msg);
   expect(contents).to.match(/if\(typeof self!=="undefined"\)/, msg);
@@ -164,7 +164,7 @@ exports.hasMinifiedUmdPreamble = function (contents) {
 exports.hasSourceMap = function (contents) {
   expect(contents).to.match(
     /\/\/\# sourceMappingURL=.*\.map\n?$/,
-    'The file does not end with a sourcemap comment'
+    "The file does not end with a sourcemap comment"
   );
 };
 
@@ -174,7 +174,7 @@ exports.hasSourceMap = function (contents) {
  * @param {string} contents
  */
 exports.noSourceMap = function (contents) {
-  expect(contents).not.to.match(/\/\/\# sourceMap/, 'The file has a sourcemap, but it shouldn\'t');
+  expect(contents).not.to.match(/\/\/\# sourceMap/, "The file has a sourcemap, but it shouldn't");
 };
 
 /**
@@ -187,24 +187,24 @@ exports.noSourceMap = function (contents) {
 exports.isMinified = function (contents, stripComments, beautified) {
   if (beautified) {
     // Single-quotes and newlines
-    expect(contents).to.match(/'use strict';\n/, 'The file is not minified + beautified');
+    expect(contents).to.match(/'use strict';\n/, "The file is not minified + beautified");
   }
   else {
     // Single-quotes become double-quotes, and newline is removed
-    expect(contents).to.match(/"use strict";\S+/, 'The file is not minified');
+    expect(contents).to.match(/"use strict";\S+/, "The file is not minified");
   }
 
   if (stripComments) {
     // All comments are removed
-    expect(contents).not.to.match(/\/\/ /, 'The file has comments, but shouldn\'t');
+    expect(contents).not.to.match(/\/\/ /, "The file has comments, but shouldn't");
   }
   else {
     // Non-important comments are removed
-    expect(contents).not.to.match(/\* @param \{string\}/, 'The file contains non-important comments (@param)');
-    expect(contents).not.to.match(/\/\/ This is NOT an important comment/, 'The file contains non-important inline comments');
+    expect(contents).not.to.match(/\* @param \{string\}/, "The file contains non-important comments (@param)");
+    expect(contents).not.to.match(/\/\/ This is NOT an important comment/, "The file contains non-important inline comments");
 
     // Important comments are preserved
-    expect(contents).to.match(/This is an important comment/, 'The file does not contain important comments');
+    expect(contents).to.match(/This is an important comment/, "The file does not contain important comments");
   }
 };
 
@@ -215,14 +215,14 @@ exports.isMinified = function (contents, stripComments, beautified) {
  */
 exports.notMinified = function (contents) {
   // Newlines are preserved
-  expect(contents).to.match(/['"]use strict['"];\r?\n(\s+|\w+)/, 'The file has been minified (newlines were removed)');
+  expect(contents).to.match(/['"]use strict['"];\r?\n(\s+|\w+)/, "The file has been minified (newlines were removed)");
 
   // Non-important comments are preserved
-  expect(contents).to.match(/\* @param \{string\}/, 'Comments have been removed from the file (@param)');
-  expect(contents).to.match(/\/\/ This is NOT an important comment/, 'Inline comments have been removed from the file');
+  expect(contents).to.match(/\* @param \{string\}/, "Comments have been removed from the file (@param)");
+  expect(contents).to.match(/\/\/ This is NOT an important comment/, "Inline comments have been removed from the file");
 
   // Important comments are also preserved
-  expect(contents).to.match(/This is an important comment/, 'Important comments have been removed from the file');
+  expect(contents).to.match(/This is an important comment/, "Important comments have been removed from the file");
 };
 
 /**
@@ -231,7 +231,7 @@ exports.notMinified = function (contents) {
  * @param {string} contents
  */
 exports.isBabelified = function (contents) {
-  expect(contents).to.match(/Object\.defineProperty\(exports,\s*['"]__esModule['"]/, 'The file has not been Babelifieid, but it should have been');
+  expect(contents).to.match(/Object\.defineProperty\(exports,\s*['"]__esModule['"]/, "The file has not been Babelifieid, but it should have been");
 };
 
 /**
@@ -241,7 +241,7 @@ exports.isBabelified = function (contents) {
  */
 exports.hasCoverage = function (contents) {
   // Check for __cov_ wrappers
-  expect(contents).to.match(/__coverage__/, 'The file is missing code-coverage instrumentation');
+  expect(contents).to.match(/__coverage__/, "The file is missing code-coverage instrumentation");
 };
 
 /**
@@ -250,7 +250,7 @@ exports.hasCoverage = function (contents) {
  * @param {string} contents
  */
 exports.noCoverage = function (contents) {
-  expect(contents).not.to.match(/__coverage__/, 'The file contains code-coverage instrumentation, but shouldn\'t');
+  expect(contents).not.to.match(/__coverage__/, "The file contains code-coverage instrumentation, but shouldn't");
 };
 
 /**
@@ -283,10 +283,10 @@ function ls (dir) {
         let childNames = ls(fullName);
 
         for (let childName of childNames) {
-          contents.push(name + '/' + childName);   // Don't use path.join() here, because of Windows
+          contents.push(name + "/" + childName);   // Don't use path.join() here, because of Windows
         }
       }
-      else if (!['.DS_Store', 'Thumbs.db'].includes(name)) {
+      else if (![".DS_Store", "Thumbs.db"].includes(name)) {
         contents.push(name);
       }
     }
@@ -294,7 +294,7 @@ function ls (dir) {
     return contents;
   }
   catch (e) {
-    if (e.code === 'ENOENT') {
+    if (e.code === "ENOENT") {
       // The directory doesn't exist, so return an empty list
       return [];
     }

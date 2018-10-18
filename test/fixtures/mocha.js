@@ -18,7 +18,7 @@ function increaseTimeout (test, timeout) {
   }
   else {
     test.timeout(timeout);
-    test.slow(timeout * 0.5);
+    test.slow(timeout * 0.75);
     return timeout;
   }
 }

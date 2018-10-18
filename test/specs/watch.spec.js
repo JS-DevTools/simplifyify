@@ -22,8 +22,12 @@ describe('simplifyify --watch', () => {
   });
 
   afterEach(function () {
-    // Restore the original contents of the file that was modified to trigger Watchify
-    return util.writeFile(modifiedFilePath, originalFileContents);
+      // Restore the original contents of the file that was modified to trigger Watchify
+      return util.writeFile(modifiedFilePath, originalFileContents)
+        .catch((error) => {
+          console.error(`Unable to restore original contents of ${modifiedFilePath}\n`, error);
+          throw error;
+        });
   });
 
   /**
@@ -108,11 +112,16 @@ describe('simplifyify --watch', () => {
     }
 
     function onExit (err, stdout, stderr) {
-      // Verify the final results
-      expect(stderr).to.be.empty;
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/my-file.js');
-      expect(stdout).to.contain('\nes5/lib/say/index.js has changed');
-      done();
+      try {
+        // Verify the final results
+        expect(stderr).to.be.empty;
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/my-file.js');
+        expect(stdout).to.contain('\nes5/lib/say/index.js has changed');
+        done();
+      }
+      catch (error) {
+        done(error);
+      }
     }
   });
 
@@ -250,26 +259,31 @@ describe('simplifyify --watch', () => {
 
     // Verify the final results
     function onExit (err, stdout, stderr) {
-      expect(stderr).to.be.empty;
+      try {
+        expect(stderr).to.be.empty;
 
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.js');
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.js.map');
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.min.js');
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.min.js.map');
-      expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.coverage.js');
-      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.js');
-      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.js.map');
-      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.min.js');
-      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.min.js.map');
-      expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.coverage.js');
-      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.js');
-      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.js.map');
-      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.min.js');
-      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.min.js.map');
-      expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.coverage.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.js.map');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.min.js');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.min.js.map');
+        expect(stdout).to.contain('es5/lib/index.js --> es5/dist/index.bundle.coverage.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.js.map');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.min.js');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.min.js.map');
+        expect(stdout).to.contain('es5/lib/hello-world.js --> es5/dist/hello-world.bundle.coverage.js');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.js');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.js.map');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.min.js');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.min.js.map');
+        expect(stdout).to.contain('es5/lib/say/index.js --> es5/dist/say/index.bundle.coverage.js');
 
-      expect(stdout).to.contain('\nes5/lib/hello-world.js has changed');
-      done();
+        expect(stdout).to.contain('\nes5/lib/hello-world.js has changed');
+        done();
+      }
+      catch (error) {
+        done(error);
+      }
     }
   });
 
@@ -324,10 +338,15 @@ describe('simplifyify --watch', () => {
 
     // Verify the final results
     function onExit (err, stdout, stderr) {
-      expect(stderr).to.equal('Error bundling error\/error.js\nUnexpected token');
-      expect(stdout).to.contain('error/error.js has changed');
-      expect(stdout).to.contain('error/error.js --> error/dist/error.js');
-      done();
+      try {
+        expect(stderr).to.equal('Error bundling error\/error.js\nUnexpected token');
+        expect(stdout).to.contain('error/error.js has changed');
+        expect(stdout).to.contain('error/error.js --> error/dist/error.js');
+        done();
+      }
+      catch (error) {
+        done(error);
+      }
     }
   });
 
@@ -421,16 +440,22 @@ describe('simplifyify --watch', () => {
 
     // Verify the final results
     function onExit (err, stdout, stderr) {
-      expect(stderr).to.equal(
-        'Error bundling typescript-error/error.ts\n' +
-        'typescript-error/error.ts(3,28): ' +
-        "Error TS7006: Parameter 'to' implicitly has an 'any' type.\n" +
-        'Error bundling typescript-error/error.ts\ntypescript-error/error.ts(3,25): ' +
-        "Error TS1005: ';' expected."
-      );
-      expect(stdout).to.contain('typescript-error/error.ts has changed');
-      expect(stdout).to.contain('typescript-error/error.ts --> typescript-error/dist/error.js');
-      done();
+      try {
+        expect(stderr).to.contain(
+          'Error bundling typescript-error/error.ts\n' +
+          'typescript-error/error.ts(3,28): ' +
+          "Error TS7006: Parameter 'to' implicitly has an 'any' type.\n" +
+          'Error bundling typescript-error/error.ts\n' +
+          'typescript-error/error.ts(3,25): ' +
+          "Error TS1005: ';' expected."
+        );
+        expect(stdout).to.contain('typescript-error/error.ts has changed');
+        expect(stdout).to.contain('typescript-error/error.ts --> typescript-error/dist/error.js');
+        done();
+      }
+      catch (error) {
+        done(error);
+      }
     }
   });
 

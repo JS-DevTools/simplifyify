@@ -331,9 +331,10 @@ describe('simplifyify --watch', () => {
     }
   });
 
-  it('should report TypeScript syntax errors', (done) => {
-    // Increase the Watchify wait time to allow time for TypeScript transpiling
-    let waitTime = watchifyReactionTime * 2;
+  it('should report TypeScript syntax errors', function (done) {
+    // Increase timeouts to allow time for TypeScript transpiling
+    mocha.increaseTimeout(this, 120000);
+    let waitTime = watchifyReactionTime * 5;
 
     // Run Watchify
     let watchify = cli.run('typescript-error/error.ts --watch --outfile typescript-error/dist/error.js', onExit);

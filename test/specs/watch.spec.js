@@ -22,12 +22,10 @@ describe('simplifyify --watch', () => {
   });
 
   afterEach(function () {
+    if (modifiedFilePath) {
       // Restore the original contents of the file that was modified to trigger Watchify
-      return util.writeFile(modifiedFilePath, originalFileContents)
-        .catch((error) => {
-          console.error(`Unable to restore original contents of ${modifiedFilePath}\n`, error);
-          throw error;
-        });
+      return util.writeFile(modifiedFilePath, originalFileContents);
+    }
   });
 
   /**

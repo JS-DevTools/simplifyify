@@ -8,8 +8,7 @@ const expect = require('chai').expect;
 describe('browserify transforms', () => {
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for Browserify transforms
-    let isSlowEnvironment = Boolean(process.env.CI);
-    mocha.increaseTimeout(this.currentTest, isSlowEnvironment ? 35000 : 15000);
+    mocha.increaseTimeout(this.currentTest, 15000);
   });
 
   it('should use the browserify.transform field in package.json', (done) => {

@@ -6,15 +6,13 @@ const assert = require('../fixtures/assert');
 const expect = require('chai').expect;
 const util = require('../../lib/util');
 
-describe('simplifyify --watch', () => {
-  let watchifyReactionTime, modifiedFilePath, originalFileContents;
+describe.only('simplifyify --watch', () => {
+  let testTimeout, modifiedFilePath, originalFileContents;
   const modifiedMarker = 'This file has been modified by one of the Watchify tests';
 
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for multiple Browserify builds
-    let isSlowEnvironment = Boolean(process.env.CI);
-    mocha.increaseTimeout(this.currentTest, isSlowEnvironment ? 60000 : 15000);
-    watchifyReactionTime = isSlowEnvironment ? 15000 : 3000;
+    testTimeout = mocha.increaseTimeout(this.currentTest, 15000);
 
     // Reset variables that track modified files
     modifiedFilePath = undefined;
@@ -31,8 +29,8 @@ describe('simplifyify --watch', () => {
   /**
    * Waits a few seconds to allow Watchify to re-build the bundle
    */
-  function waitForWatchify (timeout = watchifyReactionTime) {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
+  function waitForWatchify () {
+    return new Promise((resolve) => setTimeout(resolve, testTimeout / 4));
   }
 
   /**
@@ -350,14 +348,13 @@ describe('simplifyify --watch', () => {
 
   it('should report TypeScript syntax errors', function (done) {
     // Increase timeouts to allow time for TypeScript transpiling
-    mocha.increaseTimeout(this, 120000);
-    let waitTime = watchifyReactionTime * 5;
+    mocha.increaseTimeout(this, this.timeout() * 4);
 
     // Run Watchify
     let watchify = cli.run('typescript-error/error.ts --watch --outfile typescript-error/dist/error.js', onExit);
 
     // Wait for Watchify to finish building the code
-    waitForWatchify(waitTime)
+    waitForWatchify()
       .then(() => {
         // Confirm that the code built correctly
         checkOutputFiles();
@@ -386,7 +383,7 @@ describe('simplifyify --watch', () => {
       })
       .then(() => {
           // Wait for Watchify to finish re-building the code
-          return waitForWatchify(waitTime);
+          return waitForWatchify();
       })
       .then(() => {
         // Confirm that the code built correctly
@@ -406,7 +403,7 @@ describe('simplifyify --watch', () => {
       })
       .then(() => {
           // Wait for Watchify to finish re-building the code
-          return waitForWatchify(waitTime);
+          return waitForWatchify();
       })
       .then(() => {
         // Confirm that the same output files exist

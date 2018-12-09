@@ -8,7 +8,7 @@ const expect = require("chai").expect;
 describe("TypeScript support", () => {
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for Browserify transforms
-    mocha.increaseTimeout(this.currentTest, 30000);
+    mocha.increaseTimeout(this.currentTest, 45000);
   });
 
   it("should automatically enable TypeScript if the entry file has a .ts extenstion", (done) => {
@@ -151,21 +151,21 @@ describe("TypeScript support", () => {
       expect(stdout).to.contain("typescript/src/say/index.ts --> typescript/dist/say/index.coverage.js");
 
       assert.directoryContents("typescript/dist", [
+        "hello-world.coverage.js",
         "hello-world.js",
         "hello-world.js.map",
         "hello-world.min.js",
         "hello-world.min.js.map",
-        "hello-world.coverage.js",
+        "index.coverage.js",
         "index.js",
         "index.js.map",
         "index.min.js",
         "index.min.js.map",
-        "index.coverage.js",
+        "say/index.coverage.js",
         "say/index.js",
         "say/index.js.map",
         "say/index.min.js",
         "say/index.min.js.map",
-        "say/index.coverage.js",
       ]);
 
       assert.fileContents("typescript/dist", ["index.js", "hello-world.js", "say/index.js"], (contents) => {

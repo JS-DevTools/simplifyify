@@ -12,7 +12,7 @@ describe("simplifyify --watch", () => {
 
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for multiple Browserify builds
-    testTimeout = mocha.increaseTimeout(this.currentTest, 15000);
+    testTimeout = mocha.increaseTimeout(this.currentTest, 30000);
 
     // Reset variables that track modified files
     modifiedFilePath = undefined;

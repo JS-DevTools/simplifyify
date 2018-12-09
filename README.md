@@ -6,8 +6,6 @@ Simplifyify
 [![Build Status](https://api.travis-ci.org/JS-DevTools/simplifyify.svg?branch=master)](https://travis-ci.org/JS-DevTools/simplifyify)
 
 [![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/simplifyify?branch=master)
-[![Codacy Score](https://api.codacy.com/project/badge/Grade/e7d74b7748674054be73556c87475c49)](https://www.codacy.com/public/JamesMessinger/simplifyify)
-[![Inline docs](https://inch-ci.org/github/JS-DevTools/simplifyify.svg?branch=master&style=shields)](https://inch-ci.org/github/JS-DevTools/simplifyify)
 [![Dependencies](https://david-dm.org/JS-DevTools/simplifyify.svg)](https://david-dm.org/JS-DevTools/simplifyify)
 
 [![npm](https://img.shields.io/npm/v/simplifyify.svg)](https://www.npmjs.com/package/simplifyify)

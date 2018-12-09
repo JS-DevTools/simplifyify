@@ -362,7 +362,7 @@ describe("simplifyify --watch", () => {
     }
   });
 
-  it("should report TypeScript syntax errors", function (done) {
+  it.skip("should report TypeScript syntax errors", function (done) {
     done = doneOnce(done);
 
     // Increase timeouts to allow time for TypeScript transpiling

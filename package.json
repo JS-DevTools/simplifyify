@@ -43,7 +43,7 @@
     "coverage": "nyc --reporter=text --reporter=lcov mocha",
     "upgrade": "npm-check -u",
     "bump": "bump --prompt --tag --push --all",
-    "release": "npm run upgrade && npm test && npm run bump && npm publish"
+    "release": "npm run upgrade && npm test && npm run bump"
   },
   "dependencies": {
     "browserify": "^16.2.3",

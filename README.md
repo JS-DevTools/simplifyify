@@ -31,14 +31,20 @@ Features
 
 Related Projects
 --------------------------
-* [globify](https://www.npmjs.com/package/globify) - Run browserify and watchify with globs - even on Windows
-* [sourcemapify](https://www.npmjs.com/package/sourcemapify) - Sourcemap plugin for Browserify
-* [browserify-banner](https://www.npmjs.com/package/browserify-banner) - Add a comment (and/or code) to the top of your Browserify bundle
+- [globify](https://jsdevtools.org/globify)<br>
+  Run browserify and watchify with globs - even on Windows
+
+- [sourcemapify](https://jsdevtools.org/sourcemapify)<br>
+  Sourcemap plugin for Browserify
+
+- [browserify-banner](https://jsdevtools.org/browserify-banner)<br>
+  Add a comment (and/or code) to the top of your Browserify bundle
+
 
 
 Installation
 --------------------------
-Install using [npm](https://docs.npmjs.com/getting-started/what-is-npm):
+Install using [npm](https://docs.npmjs.com/about-npm/):
 
 ```bash
 npm install simplifyify

@@ -8,7 +8,7 @@ const expect = require("chai").expect;
 describe("TypeScript support", () => {
   beforeEach(function () {
     // Increase the test timeouts to allow sufficient time for Browserify transforms
-    mocha.increaseTimeout(this.currentTest, 45000);
+    mocha.increaseTimeout(this.currentTest, 90000);
   });
 
   it("should automatically enable TypeScript if the entry file has a .ts extenstion", (done) => {

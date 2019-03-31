@@ -22,10 +22,3 @@ function increaseTimeout (test, timeout) {
     return timeout;
   }
 }
-
-
-// Mocha configuration
-beforeEach("Increase test timeouts", function () {
-  // Increase the test timeout to allow sufficient time for Browserify builds to complete
-  increaseTimeout(this.currentTest, 6000);
-});

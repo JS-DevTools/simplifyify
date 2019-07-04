@@ -47,11 +47,11 @@
   },
   "dependencies": {
     "browserify": "^16.2.3",
-    "browserify-banner": "^1.0.13",
+    "browserify-banner": "^1.0.14",
     "browserify-istanbul": "^3.0.1",
-    "commander": "^2.19.0",
+    "commander": "^2.20.0",
     "exorcist": "^1.0.0",
-    "globby": "^9.1.0",
+    "globby": "^10.0.0",
     "mkdirp-promise": "^5.0.1",
     "ono": "^5.0.1",
     "tsify": "^4.0.1",
@@ -60,23 +60,23 @@
     "watchify": "^3.11.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "@types/react": "^16.8.10",
-    "@types/react-dom": "^16.8.3",
+    "@babel/core": "^7.5.0",
+    "@babel/preset-env": "^7.5.0",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
     "babelify": "^10.0.0",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.3",
-    "eslint": "^5.16.0",
+    "coveralls": "^3.0.4",
+    "eslint": "^6.0.1",
     "eslint-config-modular": "^7.0.0",
-    "mocha": "^6.0.2",
+    "mocha": "^6.1.4",
     "npm-check": "^5.9.0",
-    "nyc": "^13.3.0",
+    "nyc": "^14.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "rmfr": "^2.0.0",
-    "typescript": "^3.4.1",
-    "version-bump-prompt": "^5.0.0"
+    "typescript": "^3.5.2",
+    "version-bump-prompt": "^5.0.3"
   },
   "peerDependencies": {
     "typescript": "*"

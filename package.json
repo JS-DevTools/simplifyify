@@ -53,22 +53,22 @@
     "exorcist": "^1.0.0",
     "globby": "^10.0.1",
     "mkdirp-promise": "^5.0.1",
-    "ono": "^5.0.1",
+    "ono": "^5.0.2",
     "tsify": "^4.0.1",
     "uglify-es": "^3.3.7",
-    "uglifyify": "^5.0.1",
+    "uglifyify": "^5.0.2",
     "watchify": "^3.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.8.5",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
     "babelify": "^10.0.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.6",
-    "eslint": "^6.1.0",
-    "eslint-config-modular": "^7.0.0",
+    "eslint": "^6.2.2",
+    "eslint-config-modular": "^7.0.1",
     "mocha": "^6.2.0",
     "npm-check": "^5.9.0",
     "nyc": "^14.1.1",
@@ -76,7 +76,7 @@
     "react-dom": "^16.9.0",
     "rmfr": "^2.0.0",
     "typescript": "^3.5.3",
-    "version-bump-prompt": "^5.0.4"
+    "version-bump-prompt": "^5.0.5"
   },
   "peerDependencies": {
     "typescript": "*"

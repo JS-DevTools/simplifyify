@@ -2,7 +2,7 @@ Simplifyify
 ============================
 #### A simplified Browserify and Watchify CLI
 
-[![Cross-Platform Compatibility](https://jsdevtools.org/img/badges/os-badges.svg)](https://travis-ci.com/JS-DevTools/simplifyify)
+[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://travis-ci.com/JS-DevTools/simplifyify)
 [![Build Status](https://api.travis-ci.com/JS-DevTools/simplifyify.svg?branch=master)](https://travis-ci.com/JS-DevTools/simplifyify)
 
 [![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/simplifyify?branch=master)
@@ -31,13 +31,13 @@ Features
 
 Related Projects
 --------------------------
-- [globify](https://jsdevtools.org/globify)<br>
+- [globify](https://jstools.dev/globify)<br>
   Run browserify and watchify with globs - even on Windows
 
-- [sourcemapify](https://jsdevtools.org/sourcemapify)<br>
+- [sourcemapify](https://jstools.dev/sourcemapify)<br>
   Sourcemap plugin for Browserify
 
-- [browserify-banner](https://jsdevtools.org/browserify-banner)<br>
+- [browserify-banner](https://jstools.dev/browserify-banner)<br>
   Add a comment (and/or code) to the top of your Browserify bundle
 
 
@@ -322,6 +322,6 @@ Big Thanks To
 --------------------------
 Thanks to these awesome companies for their support of Open Source developers ❤
 
-[![Travis CI](https://jsdevtools.org/img/badges/travis-ci.svg)](https://travis-ci.com)
-[![SauceLabs](https://jsdevtools.org/img/badges/sauce-labs.svg)](https://saucelabs.com)
-[![Coveralls](https://jsdevtools.org/img/badges/coveralls.svg)](https://coveralls.io)
+[![Travis CI](https://jstools.dev/img/badges/travis-ci.svg)](https://travis-ci.com)
+[![SauceLabs](https://jstools.dev/img/badges/sauce-labs.svg)](https://saucelabs.com)
+[![Coveralls](https://jstools.dev/img/badges/coveralls.svg)](https://coveralls.io)

@@ -2,7 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const ono = require("ono");
+const ono = require("@jsdevtools/ono");
 const expect = require("chai").expect;
 const isWindows = /^win/.test(process.platform);
 const testAppsDir = path.resolve(__dirname, "../test-apps");

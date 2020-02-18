@@ -1,0 +1,52 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Simlifyify",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/bin/simplifyify.js",
+      "stopOnEntry": false,
+      "args": [
+        "error/error.js",
+        "--watch",
+        "--outfile",
+        "error/dist/error.js",
+      ],
+      "cwd": "${workspaceRoot}/test/test-apps",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "true"
+      },
+      "console": "internalConsole",
+      "sourceMaps": false
+    },
+    {
+      "name": "Run tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "stopOnEntry": false,
+      "args": [
+        "--timeout=600000",
+        "--retries=0"
+      ],
+      "cwd": "${workspaceRoot}",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": false
+    }
+  ]
+}

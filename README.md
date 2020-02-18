@@ -2,8 +2,8 @@ Simplifyify
 ============================
 #### A simplified Browserify and Watchify CLI
 
-[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://travis-ci.com/JS-DevTools/simplifyify)
-[![Build Status](https://api.travis-ci.com/JS-DevTools/simplifyify.svg?branch=master)](https://travis-ci.com/JS-DevTools/simplifyify)
+[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/simplifyify/blob/master/.github/workflows/CI-CD.yaml)
+[![Build Status](https://github.com/JS-DevTools/simplifyify/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/simplifyify/blob/master/.github/workflows/CI-CD.yaml)
 
 [![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/simplifyify?branch=master)
 [![Dependencies](https://david-dm.org/JS-DevTools/simplifyify.svg)](https://david-dm.org/JS-DevTools/simplifyify)

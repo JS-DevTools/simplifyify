@@ -1,5 +1,5 @@
 {
-  "name": "simplifyify",
+  "name": "@jsdevtools/simplifyify",
   "version": "7.0.7",
   "description": "A simplified Browserify and Watchify CLI",
   "keywords": [

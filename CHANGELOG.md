@@ -1,9 +1,24 @@
-# Change Log
+Change Log
+====================================================================================================
 All notable changes will be documented in this file.
-`simplifyify` adheres to [Semantic Versioning](http://semver.org/).
+Simplifyify adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [v7.0.0](https://github.com/JS-DevTools/simplifyify/tree/v7.0.0) (2018-10-18)
+
+[v8.0.0](https://github.com/JS-DevTools/simplifyify/tree/v8.0.0) (2020-02-18)
+----------------------------------------------------------------------------------------------------
+
+- Moved Simplifyify to the [@JSDevTools scope](https://www.npmjs.com/org/jsdevtools) on NPM
+
+- The "simplifyify" NPM package is now just a wrapper around the scoped "@jsdevtools/simplifyify" package
+
+
+[Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v7.0.7...v8.0.0)
+
+
+
+[v7.0.0](https://github.com/JS-DevTools/simplifyify/tree/v7.0.0) (2018-10-18)
+----------------------------------------------------------------------------------------------------
 
 #### Breaking Change
 - Simplifyify is no longer tested on Node 6 and Node 8.  It's now only tested on the latest LTS version of Node (which is currently Node 10).  It **currently** still works fine in older versions, but they are no longer officially supported.
@@ -17,7 +32,9 @@ All notable changes will be documented in this file.
 [Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v6.0.0...v7.0.0)
 
 
-## [v6.0.0](https://github.com/JS-DevTools/simplifyify/tree/v6.0.0) (2018-09-29)
+
+[v6.0.0](https://github.com/JS-DevTools/simplifyify/tree/v6.0.0) (2018-09-29)
+----------------------------------------------------------------------------------------------------
 
 #### Breaking Changes
 - The shorthand argument for the `--exclude` option is now `-x` instead of `-u`
@@ -30,7 +47,9 @@ All notable changes will be documented in this file.
 [Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v5.0.0...v6.0.0)
 
 
-## [v5.0.0](https://github.com/JS-DevTools/simplifyify/tree/v5.0.0) (2018-09-17)
+
+[v5.0.0](https://github.com/JS-DevTools/simplifyify/tree/v5.0.0) (2018-09-17)
+----------------------------------------------------------------------------------------------------
 
 #### TypeScript Support
 - Simplifyify now has built-in support for TypeScript!  If your entry file has a `.ts` or `.tsx` extension, then Simplifyify will automatically use [TSify](https://github.com/TypeStrong/tsify/) to transpile your code.  You can configure TSify via the `browserify.plugins` field in your package.json, or via a tsconfig.json file.  If both exist, then the `browserify.plugins` field overrides any values in tsconfig.json.
@@ -46,7 +65,9 @@ All notable changes will be documented in this file.
 [Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v4.0.3...v5.0.0)
 
 
-## [v4.0.0](https://github.com/JS-DevTools/simplifyify/tree/v4.0.0) (2018-01-17)
+
+[v4.0.0](https://github.com/JS-DevTools/simplifyify/tree/v4.0.0) (2018-01-17)
+----------------------------------------------------------------------------------------------------
 
 - Updated all dependencies, including major version updates of `browserify`, `babelify`, `browserify-istanbul`, and `exorcist`
 
@@ -56,7 +77,9 @@ All notable changes will be documented in this file.
 [Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v3.3.0...v4.0.0)
 
 
-## [v3.3.0](https://github.com/JS-DevTools/simplifyify/tree/v3.3.0) (2018-01-10)
+
+[v3.3.0](https://github.com/JS-DevTools/simplifyify/tree/v3.3.0) (2018-01-10)
+----------------------------------------------------------------------------------------------------
 
 - Refactored to use ES6 syntax (Node 4.x compatible)
 
@@ -66,7 +89,9 @@ All notable changes will be documented in this file.
 [Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v3.2.0...v3.3.0)
 
 
-## [v3.2.0](https://github.com/JS-DevTools/simplifyify/tree/v3.2.0) (2016-11-11)
+
+[v3.2.0](https://github.com/JS-DevTools/simplifyify/tree/v3.2.0) (2016-11-11)
+----------------------------------------------------------------------------------------------------
 
 - Fixed several subtle bugs that were introduced in 3.1.0
 
@@ -74,7 +99,9 @@ All notable changes will be documented in this file.
 [Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v3.1.0...v3.2.0)
 
 
-## [v3.1.0](https://github.com/JS-DevTools/simplifyify/tree/v3.1.0) (2016-11-06)
+
+[v3.1.0](https://github.com/JS-DevTools/simplifyify/tree/v3.1.0) (2016-11-06)
+----------------------------------------------------------------------------------------------------
 
 #### New Feature: [bannerify](https://www.npmjs.com/package/bannerify) support
 Just add a `banner.txt` file to your project, and it'll automatically be added to your output bundle(s). The `banner.txt` file can contain [Lodash templates](https://lodash.com/docs/4.16.6#template), which have access to the full [lodash](https://lodash.com/docs/4.16.6) library as well as [moment-js](http://momentjs.com/) for date/time formatting.  See [this example](https://github.com/JS-DevTools/simplifyify/blob/master/test/test-apps/hello/banner.txt).
@@ -86,7 +113,9 @@ File i/o operations have been optimized in this release. Files that are likely t
 [Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v3.0.0...v3.1.0)
 
 
-## [v3.0.0](https://github.com/JS-DevTools/simplifyify/tree/v3.0.0) (2016-11-02)
+
+[v3.0.0](https://github.com/JS-DevTools/simplifyify/tree/v3.0.0) (2016-11-02)
+----------------------------------------------------------------------------------------------------
 
 #### Major changes in this release:
 
@@ -102,7 +131,9 @@ You can now specify custom options for the built-in Uglifyify and Istanbul trans
 [Full Changelog](https://github.com/JS-DevTools/simplifyify/compare/v2.0.4...v3.0.0)
 
 
-## [v2.0.0](https://github.com/JS-DevTools/simplifyify/tree/v2.0.0) (2015-12-28)
+
+[v2.0.0](https://github.com/JS-DevTools/simplifyify/tree/v2.0.0) (2015-12-28)
+----------------------------------------------------------------------------------------------------
 
 #### Major changes in this release:
 

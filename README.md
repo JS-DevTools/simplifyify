@@ -8,8 +8,8 @@ Simplifyify
 [![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/simplifyify?branch=master)
 [![Dependencies](https://david-dm.org/JS-DevTools/simplifyify.svg)](https://david-dm.org/JS-DevTools/simplifyify)
 
-[![npm](https://img.shields.io/npm/v/simplifyify.svg)](https://www.npmjs.com/package/simplifyify)
-[![License](https://img.shields.io/npm/l/simplifyify.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/v/@jsdevtools/simplifyify.svg)](https://www.npmjs.com/package/@jsdevtools/simplifyify)
+[![License](https://img.shields.io/npm/l/@jsdevtools/simplifyify.svg)](LICENSE)
 
 I constantly find myself using the same Browserify plug-ins and transforms on every project, and I always end up writing pretty much the same Gulp script over and over again.  Simplifyify is the solution to that problem.
 
@@ -47,7 +47,7 @@ Installation
 Install using [npm](https://docs.npmjs.com/about-npm/):
 
 ```bash
-npm install simplifyify
+npm install @jsdevtools/simplifyify
 ```
 
 
@@ -274,7 +274,7 @@ Simplifyify also has a programmatic API, so you can use it directly in your buil
 [Here's the API definition](https://github.com/JS-DevTools/simplifyify/blob/6709bb5bbf59b327b4ced3e833078de8db006b5a/lib/index.js#L9-L28), and [here's a full example](https://github.com/JS-DevTools/simplifyify/blob/6709bb5bbf59b327b4ced3e833078de8db006b5a/bin/simplifyify.js#L71-L102). Just pass an array of strings (file paths and/or glob patterns) and an options param.  You get back an [`EventEmitter`](https://nodejs.org/api/events.html#events_class_events_eventemitter), which fires all the Browserify &amp; Watchify events.
 
 ```javascript
-var simplifyify = require("simplifyify");
+var simplifyify = require("@jsdevtools/simplifyify");
 
 gulp.task("browserify", function(done) {
   simplifyify("lib/*.module.js",

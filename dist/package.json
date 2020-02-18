@@ -1,0 +1,46 @@
+{
+  "name": "simplifyify",
+  "version": "X.X.X",
+  "description": "A simplified Browserify and Watchify CLI",
+  "keywords": [
+    "browserify",
+    "browserify-plugin",
+    "watchify",
+    "cli",
+    "minify",
+    "uglify",
+    "uglifyify",
+    "sourcemap",
+    "source-map",
+    "source map",
+    "exorcist",
+    "istanbul"
+  ],
+  "author": {
+    "name": "James Messinger",
+    "url": "https://jamesmessinger.com"
+  },
+  "homepage": "https://jstools.dev/simplifyify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JS-DevTools/simplifyify.git"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "bin": {
+    "simplifyify": "simplifyify.js"
+  },
+  "files": [
+    "simplifyify.js",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "dependencies": {
+    "@jsdevtools/simplifyify": "X.X.X"
+  },
+  "peerDependencies": {
+    "typescript": "*"
+  }
+}

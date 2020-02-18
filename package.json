@@ -35,15 +35,16 @@
     "lib"
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   },
   "scripts": {
+    "clean": "shx rm -rf .nyc_output coverage",
     "lint": "eslint bin lib test/fixtures test/specs",
     "test": "mocha && npm run lint",
-    "coverage": "nyc --reporter=text --reporter=lcov node_modules/mocha/bin/mocha",
+    "coverage": "nyc node_modules/mocha/bin/mocha",
     "upgrade": "npm-check -u && npm audit fix",
     "bump": "bump --tag --push --all",
-    "release": "npm run upgrade && npm test && npm run bump"
+    "release": "npm run upgrade && npm run clean && npm test && npm run bump"
   },
   "dependencies": {
     "@jsdevtools/browserify-banner": "^2.0.0",

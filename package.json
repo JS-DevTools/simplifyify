@@ -65,6 +65,7 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "@jsdevtools/eslint-config-modular": "^8.0.0",
+    "@jsdevtools/host-environment": "^2.0.2",
     "@jsdevtools/version-bump-prompt": "^6.0.0",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",

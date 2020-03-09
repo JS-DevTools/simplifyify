@@ -1,5 +1,7 @@
 "use strict";
 
+const host = require("@jsdevtools/host-environment");
+
 exports.increaseTimeout = increaseTimeout;
 
 
@@ -7,7 +9,7 @@ exports.increaseTimeout = increaseTimeout;
  * Increases the timeout of a test, if necessary.
  */
 function increaseTimeout (test, timeout) {
-  if (process.env.CI) {
+  if (host.ci) {
     // Increase timeouts when running in CI because slooooow
     timeout *= 4;
   }

@@ -10,8 +10,11 @@ Simplifyify
 
 [![npm](https://img.shields.io/npm/v/@jsdevtools/simplifyify.svg)](https://www.npmjs.com/package/@jsdevtools/simplifyify)
 [![License](https://img.shields.io/npm/l/@jsdevtools/simplifyify.svg)](LICENSE)
+[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/JS-DevTools/simplifyify)
 
 I constantly find myself using the same Browserify plug-ins and transforms on every project, and I always end up writing pretty much the same Gulp script over and over again.  Simplifyify is the solution to that problem.
+
+
 
 Features
 --------------------------
@@ -295,6 +298,7 @@ gulp.task("browserify", function(done) {
 ```
 
 
+
 Contributing
 --------------------------
 Contributions, enhancements, and bug-fixes are welcome!  [File an issue](https://github.com/JS-DevTools/simplifyify/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/simplifyify/pulls).
@@ -316,6 +320,9 @@ To build the project locally on your computer:
 License
 --------------------------
 Simplifyify is 100% free and open-source, under the [MIT license](LICENSE). Use it however you want.
+
+This package is [Treeware](http://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/JS-DevTools/simplifyify) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
+
 
 
 Big Thanks To

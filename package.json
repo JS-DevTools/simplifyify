@@ -1,6 +1,6 @@
 {
   "name": "@jsdevtools/simplifyify",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "A simplified Browserify and Watchify CLI",
   "keywords": [
     "browserify",

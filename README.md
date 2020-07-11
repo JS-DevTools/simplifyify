@@ -2,8 +2,8 @@ Simplifyify
 ============================
 #### A simplified Browserify and Watchify CLI
 
-[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/simplifyify/blob/master/.github/workflows/CI-CD.yaml)
-[![Build Status](https://github.com/JS-DevTools/simplifyify/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/simplifyify/blob/master/.github/workflows/CI-CD.yaml)
+[![Cross-Platform Compatibility](https://jstools.dev/img/badges/os-badges.svg)](https://github.com/JS-DevTools/simplifyify/actions)
+[![Build Status](https://github.com/JS-DevTools/simplifyify/workflows/CI-CD/badge.svg)](https://github.com/JS-DevTools/simplifyify/actions)
 
 [![Coverage Status](https://coveralls.io/repos/github/JS-DevTools/simplifyify/badge.svg?branch=master)](https://coveralls.io/github/JS-DevTools/simplifyify?branch=master)
 [![Dependencies](https://david-dm.org/JS-DevTools/simplifyify.svg)](https://david-dm.org/JS-DevTools/simplifyify)
@@ -301,7 +301,7 @@ gulp.task("browserify", function(done) {
 
 Contributing
 --------------------------
-Contributions, enhancements, and bug-fixes are welcome!  [File an issue](https://github.com/JS-DevTools/simplifyify/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/simplifyify/pulls).
+Contributions, enhancements, and bug-fixes are welcome!  [Open an issue](https://github.com/JS-DevTools/simplifyify/issues) on GitHub and [submit a pull request](https://github.com/JS-DevTools/simplifyify/pulls).
 
 #### Building
 To build the project locally on your computer:

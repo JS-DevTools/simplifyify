@@ -33,7 +33,7 @@ describe("simplifyify --help", () => {
 
   it("should exit with zero if called with --help", (done) => {
     cli.run("--help", (err) => {
-      expect(err).to.be.null;
+      expect(err).to.equal(null);
       done();
     });
   });
@@ -48,7 +48,7 @@ describe("simplifyify --help", () => {
 
   it("should exit with zero if called with -h", (done) => {
     cli.run("--help", (err) => {
-      expect(err).to.be.null;
+      expect(err).to.equal(null);
       done();
     });
   });

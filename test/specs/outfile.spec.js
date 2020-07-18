@@ -170,7 +170,7 @@ describe("simplifyify --outfile", () => {
         assert.fileContents("es5/lib", [
           "index.bundle.js", "hello-world.bundle.js", "say/index.bundle.js"
         ],
-        function (contents) {
+        (contents) => {
           assert.noBanner(contents);
           assert.hasPreamble(contents);
           assert.notMinified(contents);
@@ -181,7 +181,7 @@ describe("simplifyify --outfile", () => {
         assert.fileContents("es5/lib", [
           "index.bundle.min.js", "hello-world.bundle.min.js", "say/index.bundle.min.js"
         ],
-        function (contents) {
+        (contents) => {
           assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents);
@@ -192,7 +192,7 @@ describe("simplifyify --outfile", () => {
         assert.fileContents("es5/lib", [
           "index.bundle.coverage.js", "hello-world.bundle.coverage.js", "say/index.bundle.coverage.js"
         ],
-        function (contents) {
+        (contents) => {
           assert.noBanner(contents);
           assert.hasMinifiedPreamble(contents);
           assert.isMinified(contents, true);
@@ -202,7 +202,7 @@ describe("simplifyify --outfile", () => {
         );
 
         assert.fileContents("es5/lib", ["index.bundle.js.map", "index.bundle.min.js.map"],
-          function (contents) {
+          (contents) => {
             expect(contents.sources).to.contain.members([
               "hello-world.js",
               "index.js",
@@ -211,7 +211,7 @@ describe("simplifyify --outfile", () => {
           }
         );
         assert.fileContents("es5/lib", ["hello-world.bundle.js.map", "hello-world.bundle.min.js.map"],
-          function (contents) {
+          (contents) => {
             expect(contents.sources).to.contain.members([
               "hello-world.js",
               "say/index.js"
@@ -219,7 +219,7 @@ describe("simplifyify --outfile", () => {
           }
         );
         assert.fileContents("es5/lib", ["say/index.bundle.js.map", "say/index.bundle.min.js.map"],
-          function (contents) {
+          (contents) => {
             expect(contents.sources).to.contain.members([
               "index.js"
             ]);

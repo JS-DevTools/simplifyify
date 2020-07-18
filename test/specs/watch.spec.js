@@ -19,7 +19,7 @@ describe("simplifyify --watch", () => {
     originalFileContents = undefined;
   });
 
-  afterEach(function () {
+  afterEach(() => {
     if (modifiedFilePath) {
       // Restore the original contents of the file that was modified to trigger Watchify
       return util.writeFile(modifiedFilePath, originalFileContents);
@@ -122,7 +122,7 @@ describe("simplifyify --watch", () => {
     function onExit (err, stdout, stderr) {
       try {
         // Verify the final results
-        expect(stderr).to.be.empty;
+        expect(stderr).to.have.lengthOf(0);
         expect(stdout).to.contain("es5/lib/index.js --> es5/dist/my-file.js");
         expect(stdout).to.contain("\nes5/lib/say/index.js has changed");
         done();
@@ -223,7 +223,7 @@ describe("simplifyify --watch", () => {
       ]);
 
       assert.fileContents("es5/dist", ["index.bundle.js", "hello-world.bundle.js", "say/index.bundle.js"],
-        function (contents) {
+        (contents) => {
           assert.noBanner(contents);
           assert.hasUmdPreamble(contents);
           assert.notMinified(contents);
@@ -231,7 +231,7 @@ describe("simplifyify --watch", () => {
           assert.noCoverage(contents);
         });
       assert.fileContents("es5/dist", ["index.bundle.min.js", "hello-world.bundle.min.js", "say/index.bundle.min.js"],
-        function (contents) {
+        (contents) => {
           assert.noBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents);
@@ -239,7 +239,7 @@ describe("simplifyify --watch", () => {
           assert.noCoverage(contents);
         });
       assert.fileContents("es5/dist", ["index.bundle.coverage.js", "hello-world.bundle.coverage.js", "say/index.bundle.coverage.js"],
-        function (contents) {
+        (contents) => {
           assert.noBanner(contents);
           assert.hasMinifiedUmdPreamble(contents);
           assert.isMinified(contents, true);
@@ -270,7 +270,7 @@ describe("simplifyify --watch", () => {
     // Verify the final results
     function onExit (err, stdout, stderr) {
       try {
-        expect(stderr).to.be.empty;
+        expect(stderr).to.have.lengthOf(0);
 
         expect(stdout).to.contain("es5/lib/index.js --> es5/dist/index.bundle.js");
         expect(stdout).to.contain("es5/lib/index.js --> es5/dist/index.bundle.js.map");
